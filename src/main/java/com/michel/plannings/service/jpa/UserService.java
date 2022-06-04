@@ -29,7 +29,7 @@ public class UserService implements UtilisateurAbstractService{
 	@Override
 	public Utilisateur obtenirUser(Integer id) {
 
-		Utilisateur user = userRepo.getOne(id);
+		Utilisateur user = userRepo.getReferenceById(id);
 		return user;
 	}
 
@@ -74,7 +74,7 @@ public class UserService implements UtilisateurAbstractService{
 
 	public Utilisateur obtenirUserParlogin(String email, String password) {
 		
-		Utilisateur utilisateur = userRepo.findByEmail(email);
+		Utilisateur utilisateur = userRepo.findByUsername(email);
 		if (encoder.matches(password, utilisateur.getPassword())){
 			
 			return utilisateur;

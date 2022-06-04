@@ -35,7 +35,7 @@ public class TokenController {
 		this.jwtGenerator = jwtGenerator;
 	}
 	
-	@PostMapping("/connexion")
+	@PostMapping("/compte/connexion")
 	public ResponseEntity<UtilisateurAux> generate(@RequestBody final Login login){
 		
 		System.out.println("**Entrée POST service");
@@ -64,7 +64,7 @@ public class TokenController {
 	private Utilisateur existUtilisateur(Login login) {
 		
 		System.out.println("Login user: " + login.getUser());
-		System.out.println("Login user: " + login.getPassword());
+		System.out.println("Login password: " + login.getPassword());
 		System.out.println("Login user: " + passwordEncoder.encode(login.getPassword()));
 		
 		try {
