@@ -22,18 +22,15 @@ import com.michel.plannings.security.JWTAuthenticationFilter;
 import com.michel.plannings.security.JWTAuthenticationProvider;
 import com.michel.plannings.security.JWTSuccesHandler;
 
-
-
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
 @Component
 @Configuration
 public class JWTSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	
-	@Autowired 
+	@Autowired
 	PasswordEncoder passwordEncoder;
-	
+
 	@Autowired
 	private JWTAuthenticationProvider authenticationProvider;
 
@@ -54,17 +51,17 @@ public class JWTSecurityConfig extends WebSecurityConfigurerAdapter {
 		filter.setAuthenticationSuccessHandler(new JWTSuccesHandler());
 		return filter;
 	}
-	
-	
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.csrf().disable().authorizeRequests().antMatchers("/lab-service/connexion/","/lab-service/compte" // solution fonctionnelle 1
+		http.csrf().disable().authorizeRequests().antMatchers("/lab-service/connexion/", "/lab-service/compte" // solution
+																												// fonctionnelle
+																												// 1
 
 		) // toujours autorisée
-				.permitAll().antMatchers(
-						 "/lab-service/private/**") // authentification requise
-												
+				.permitAll().antMatchers("/lab-service/private/**") // authentification requise
+
 				.authenticated().and().exceptionHandling().authenticationEntryPoint(entryPoint).and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
@@ -78,6 +75,4 @@ public class JWTSecurityConfig extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 
-	
-	 
 }

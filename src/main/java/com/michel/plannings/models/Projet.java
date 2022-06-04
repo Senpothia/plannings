@@ -1,5 +1,6 @@
 package com.michel.plannings.models;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -11,20 +12,21 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Projet {
-	
+
 	@Id
 	@GeneratedValue
 	private Integer id;
 	private String nom;
 	private String numero;
+	private LocalDateTime date;
 	private String type; // Verrouillage, contrôle d'accès
-	
+
 	@ManyToOne
-	private Utilisateur chef;  // Le chef produit ou responsable
-	
+	private Utilisateur chef; // Le chef produit ou responsable
+
 	@ManyToMany(mappedBy = "involvedProjets")
-	private List<Utilisateur> ressources;  // Ressources allouées aux projets
-	
+	private List<Utilisateur> ressources; // Ressources allouées aux projets
+
 	@OneToMany(mappedBy = "projet")
 	private List<Phase> phases;
 
@@ -33,21 +35,18 @@ public class Projet {
 		// TODO Auto-generated constructor stub
 	}
 
-	
-
-	public Projet(Integer id, String nom, String numero, String type, Utilisateur chef, List<Utilisateur> ressources,
-			List<Phase> phases) {
+	public Projet(Integer id, String nom, String numero, LocalDateTime date, String type, Utilisateur chef,
+			List<Utilisateur> ressources, List<Phase> phases) {
 		super();
 		this.id = id;
 		this.nom = nom;
 		this.numero = numero;
+		this.date = date;
 		this.type = type;
 		this.chef = chef;
 		this.ressources = ressources;
 		this.phases = phases;
- 	}
-
-
+	}
 
 	public Integer getId() {
 		return id;
@@ -104,7 +103,13 @@ public class Projet {
 	public void setPhases(List<Phase> phases) {
 		this.phases = phases;
 	}
-	
 
+	public LocalDateTime getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDateTime date) {
+		this.date = date;
+	}
 
 }

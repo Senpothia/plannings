@@ -18,14 +18,12 @@ public class Utilisateur {
 	private Integer id;
 	private String nom;
 	private String prenom;
-	private Boolean visiteur;
-	private Boolean admin;
-	private Boolean manager;
-	private Boolean ressource;
 	private String type; // interne CDVI, pretataire externe
 	private String email;
+	private String username;
 	private String password;
 	private boolean enabled;
+	private String role;
 
 	@OneToMany(mappedBy = "ressource")
 	private List<Phase> phases;
@@ -45,30 +43,32 @@ public class Utilisateur {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Utilisateur(Integer id, String nom, String prenom, Boolean visiteur, Boolean admin, Boolean manager,
-			Boolean ressource, String type, String email, String password, boolean enabled, List<Phase> phases,
-			List<Fiche> fiches, List<Projet> managedProjets, List<Projet> involvedProjets) {
-		super();
-		this.id = id;
-		this.nom = nom;
-		this.prenom = prenom;
-		this.visiteur = visiteur;
-		this.admin = admin;
-		this.manager = manager;
-		this.ressource = ressource;
-		this.type = type;
-		this.email = email;
-		this.password = password;
-		this.enabled = enabled;
-		this.phases = phases;
-		this.fiches = fiches;
-		this.managedProjets = managedProjets;
-		this.involvedProjets = involvedProjets;
-	}
+//	
 
 	public Integer getId() {
 		return id;
 	}
+
+	
+
+	public Utilisateur(Integer id, String nom, String prenom, String type, String email, String username, String password,
+		boolean enabled, String role, List<Phase> phases, List<Fiche> fiches, List<Projet> managedProjets,
+		List<Projet> involvedProjets) {
+	super();
+	this.id = id;
+	this.nom = nom;
+	this.prenom = prenom;
+	this.type = type;
+	this.email = email;
+	this.username = username;
+	this.password = password;
+	this.enabled = enabled;
+	this.role = role;
+	this.phases = phases;
+	this.fiches = fiches;
+	this.managedProjets = managedProjets;
+	this.involvedProjets = involvedProjets;
+}
 
 	public void setId(Integer id) {
 		this.id = id;
@@ -90,37 +90,6 @@ public class Utilisateur {
 		this.prenom = prenom;
 	}
 
-	public Boolean getVisiteur() {
-		return visiteur;
-	}
-
-	public void setVisiteur(Boolean visiteur) {
-		this.visiteur = visiteur;
-	}
-
-	public Boolean getAdmin() {
-		return admin;
-	}
-
-	public void setAdmin(Boolean admin) {
-		this.admin = admin;
-	}
-
-	public Boolean getManager() {
-		return manager;
-	}
-
-	public void setManager(Boolean manager) {
-		this.manager = manager;
-	}
-
-	public Boolean getRessource() {
-		return ressource;
-	}
-
-	public void setRessource(Boolean ressource) {
-		this.ressource = ressource;
-	}
 
 	public String getType() {
 		return type;
@@ -131,11 +100,11 @@ public class Utilisateur {
 	}
 
 	public String getEmail() {
-		return email;
+		return username;
 	}
 
 	public void setEmail(String email) {
-		this.email = email;
+		this.username = email;
 	}
 
 	public String getPassword() {
@@ -187,23 +156,20 @@ public class Utilisateur {
 	}
 	
 	public String getUsername() {
-		return email;
+		return username;
 	}
 
 	public void setUsername(String email) {
-		this.email = email;
-	}
-	
-	public String getRole() {
-		
-		if (admin) {return "admin";}
-		if (manager) {return "manager";}
-		if (ressource) {return "ressource";}
-		if (visiteur) {return "visiteur";}
-		return "NONE";
-		
+		this.username = email;
 	}
 
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
 	
 
 }

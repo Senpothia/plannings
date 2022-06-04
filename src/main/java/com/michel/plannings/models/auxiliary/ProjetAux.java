@@ -1,42 +1,45 @@
 package com.michel.plannings.models.auxiliary;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.michel.plannings.models.Projet;
 
 public class ProjetAux {
-	
 
 	private Integer id;
 	private String nom;
 	private String numero;
+	private LocalDateTime date;
 	private String type; // Verrouillage, contrôle d'accès
-	private UtilisateurAux chef;  // Le chef produit ou responsable
-	private List<UtilisateurAux> ressources;  // Ressources allouées aux projets
+	private UtilisateurAux chef; // Le chef produit ou responsable
+	private List<UtilisateurAux> ressources; // Ressources allouées aux projets
 	private List<PhaseAux> phases;
-	
+
 	public ProjetAux() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public ProjetAux(Integer id, String nom, String numero, String type, UtilisateurAux chef,
+	public ProjetAux(Integer id, String nom, String numero, LocalDateTime date, String type, UtilisateurAux chef,
 			List<UtilisateurAux> ressources, List<PhaseAux> phases) {
 		super();
 		this.id = id;
 		this.nom = nom;
 		this.numero = numero;
+		this.date = date;
 		this.type = type;
 		this.chef = chef;
 		this.ressources = ressources;
 		this.phases = phases;
 	}
-	
+
 	public ProjetAux(Projet projet) {
 		super();
 		this.id = projet.getId();
 		this.nom = projet.getNom();
 		this.numero = projet.getNumero();
+		this.date = projet.getDate();
 		this.type = projet.getType();
 		this.chef = new UtilisateurAux(projet.getChef());
 		this.ressources = AuxiliaryUtils.makeListUtilisateursAux(projet.getRessources());
@@ -99,8 +102,12 @@ public class ProjetAux {
 		this.phases = phases;
 	}
 
-	
-	
-	
+	public LocalDateTime getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDateTime date) {
+		this.date = date;
+	}
 
 }

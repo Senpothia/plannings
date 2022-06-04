@@ -14,6 +14,7 @@ public interface FicheAbstractService {
 	public List<Fiche> obtenirFichesParStatut(Boolean statut);
 	public void enregistrerFiche(Fiche fiche);
 	public void modifierFiche(Fiche fiche);
+	public void suprimerFiche(Fiche fiche);
 	
 
 }

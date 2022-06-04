@@ -17,6 +17,7 @@ public class PhaseAux {
 	private String description;
 	private String complement; // Complément d'information: échantillons, version, etc.
 	private String resultat;
+	private Boolean conforme;
 	private Boolean actif;
 	private Boolean suspendu;
 	private List<FicheAux> fiches;
@@ -27,8 +28,8 @@ public class PhaseAux {
 	}
 
 	public PhaseAux(Integer id, Integer numero, ProjetAux projet, String nom, LocalDateTime debut, LocalDateTime fin,
-			UtilisateurAux ressource, String description, String complement, String resultat, Boolean actif,
-			Boolean suspendu, List<FicheAux> fiches) {
+			UtilisateurAux ressource, String description, String complement, String resultat, Boolean conforme,
+			Boolean actif, Boolean suspendu, List<FicheAux> fiches) {
 		super();
 		this.id = id;
 		this.numero = numero;
@@ -40,11 +41,12 @@ public class PhaseAux {
 		this.description = description;
 		this.complement = complement;
 		this.resultat = resultat;
+		this.conforme = conforme;
 		this.actif = actif;
 		this.suspendu = suspendu;
 		this.fiches = fiches;
 	}
-	
+
 	public PhaseAux(Phase phase) {
 		super();
 		this.id = phase.getId();
@@ -57,6 +59,7 @@ public class PhaseAux {
 		this.description = phase.getDescription();
 		this.complement = phase.getComplement();
 		this.resultat = phase.getResultat();
+		this.conforme = phase.getConforme();
 		this.actif = phase.getActif();
 		this.suspendu = phase.getSuspendu();
 		this.fiches = AuxiliaryUtils.makeListFichesAux(phase.getFiches());
@@ -166,6 +169,12 @@ public class PhaseAux {
 		this.fiches = fiches;
 	}
 
-	
+	public Boolean getConforme() {
+		return conforme;
+	}
+
+	public void setConforme(Boolean conforme) {
+		this.conforme = conforme;
+	}
 
 }

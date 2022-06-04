@@ -11,29 +11,29 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Phase {
-	
+
 	@Id
 	@GeneratedValue
 	private Integer id;
 	private Integer numero;
-	
+
 	@ManyToOne
 	private Projet projet;
-	
+
 	private String nom; // nom de la phase
 	private LocalDateTime debut;
 	private LocalDateTime fin;
-	
+
 	@ManyToOne
 	private Utilisateur ressource;
-	
 
 	private String description;
-	private String complement;  // Complément d'information: échantillons, version, etc.
-	private String resultat;
+	private String complement; 	// Complément d'information: échantillons, version, etc.
+	private String resultat; 	// Ennoncé du résultat, sa description textuelle
+	private Boolean conforme;
 	private Boolean actif;
 	private Boolean suspendu;
-	
+
 	@OneToMany(mappedBy = "phase")
 	private List<Fiche> fiches;
 
@@ -42,11 +42,9 @@ public class Phase {
 		// TODO Auto-generated constructor stub
 	}
 
-	
-
 	public Phase(Integer id, Integer numero, Projet projet, String nom, LocalDateTime debut, LocalDateTime fin,
-			Utilisateur ressource, String description, String complement, String resultat, Boolean actif,
-			Boolean suspendu, List<Fiche> fiches) {
+			Utilisateur ressource, String description, String complement, String resultat, Boolean conforme,
+			Boolean actif, Boolean suspendu, List<Fiche> fiches) {
 		super();
 		this.id = id;
 		this.numero = numero;
@@ -58,11 +56,11 @@ public class Phase {
 		this.description = description;
 		this.complement = complement;
 		this.resultat = resultat;
+		this.conforme = conforme;
 		this.actif = actif;
 		this.suspendu = suspendu;
 		this.fiches = fiches;
 	}
-
 
 	public Integer getId() {
 		return id;
@@ -167,13 +165,13 @@ public class Phase {
 	public void setFiches(List<Fiche> fiches) {
 		this.fiches = fiches;
 	}
-	
-	
-		
+
+	public Boolean getConforme() {
+		return conforme;
 	}
 
-	
-	
-	
+	public void setConforme(Boolean conforme) {
+		this.conforme = conforme;
+	}
 
-
+}
