@@ -10,6 +10,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.michel.plannings.models.auxiliary.ProjetAux;
+
 @Entity
 public class Projet {
 
@@ -20,6 +22,7 @@ public class Projet {
 	private String numero;
 	private LocalDateTime date;
 	private String type; // Verrouillage, contrôle d'accès
+	private Boolean statut;
 
 	@ManyToOne
 	private Utilisateur chef; // Le chef produit ou responsable
@@ -35,17 +38,36 @@ public class Projet {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Projet(Integer id, String nom, String numero, LocalDateTime date, String type, Utilisateur chef,
-			List<Utilisateur> ressources, List<Phase> phases) {
+	
+
+	public Projet(Integer id, String nom, String numero, LocalDateTime date, String type, Boolean statut,
+			Utilisateur chef, List<Utilisateur> ressources, List<Phase> phases) {
 		super();
 		this.id = id;
 		this.nom = nom;
 		this.numero = numero;
 		this.date = date;
 		this.type = type;
+		this.statut = statut;
 		this.chef = chef;
 		this.ressources = ressources;
 		this.phases = phases;
+	}
+
+
+
+	public Projet(ProjetAux projet, Utilisateur chef) {
+		
+		super();
+		
+		this.nom = projet.getNom();
+		this.numero = projet.getNumero();
+		this.date = projet.getDate();
+		this.type = projet.getType();
+		this.chef = chef;
+		this.ressources = ressources;
+		this.phases = phases;
+		
 	}
 
 	public Integer getId() {
@@ -111,5 +133,19 @@ public class Projet {
 	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
+
+
+
+	public Boolean getStatut() {
+		return statut;
+	}
+
+
+
+	public void setStatut(Boolean statut) {
+		this.statut = statut;
+	}
+	
+	
 
 }

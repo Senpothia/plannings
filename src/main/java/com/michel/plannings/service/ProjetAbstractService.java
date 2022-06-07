@@ -11,6 +11,7 @@ public interface ProjetAbstractService {
 	Projet obtenirProjetParType(String type);
 	List<Projet> obtenirProjetParChef(Utilisateur chef);
 	List<Projet> obtenirProjetParRessource(Utilisateur ressource);
+	List<Projet> obtenirTousLesProjets();
 	
 	
 	

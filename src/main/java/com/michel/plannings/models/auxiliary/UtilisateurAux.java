@@ -14,10 +14,6 @@ public class UtilisateurAux {
 	private String username;
 	private String password;
 	private boolean enabled;
-	private List<PhaseAux> phases;
-	private List<FicheAux> fiches;
-	private List<ProjetAux> managedProjets;
-	private List<ProjetAux> involvedProjets;
 	private String token;
 	private String role;
 
@@ -26,11 +22,8 @@ public class UtilisateurAux {
 		// TODO Auto-generated constructor stub
 	}
 
-	
-
 	public UtilisateurAux(Integer id, String nom, String prenom, String type, String email, String username,
-			String password, boolean enabled, List<PhaseAux> phases, List<FicheAux> fiches,
-			List<ProjetAux> managedProjets, List<ProjetAux> involvedProjets, String token, String role) {
+			String password, boolean enabled, String token, String role) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -40,15 +33,9 @@ public class UtilisateurAux {
 		this.username = username;
 		this.password = password;
 		this.enabled = enabled;
-		this.phases = phases;
-		this.fiches = fiches;
-		this.managedProjets = managedProjets;
-		this.involvedProjets = involvedProjets;
 		this.token = token;
 		this.role = role;
 	}
-
-
 
 	public UtilisateurAux(Utilisateur utilisateur) {
 		super();
@@ -60,10 +47,6 @@ public class UtilisateurAux {
 		this.username = utilisateur.getEmail();
 		this.password = utilisateur.getPassword();
 		this.enabled = utilisateur.isEnabled();
-		this.phases = AuxiliaryUtils.makeListPhasesAux(utilisateur.getPhases());
-		this.fiches = AuxiliaryUtils.makeListFichesAux(utilisateur.getFiches());
-		this.managedProjets = AuxiliaryUtils.makeListProjetsAux(utilisateur.getManagedProjets());
-		this.involvedProjets = AuxiliaryUtils.makeListProjetsAux(utilisateur.getInvolvedProjets());
 		this.role = utilisateur.getRole();
 	}
 
@@ -115,38 +98,6 @@ public class UtilisateurAux {
 		this.enabled = enabled;
 	}
 
-	public List<PhaseAux> getPhases() {
-		return phases;
-	}
-
-	public void setPhases(List<PhaseAux> phases) {
-		this.phases = phases;
-	}
-
-	public List<FicheAux> getFiches() {
-		return fiches;
-	}
-
-	public void setFiches(List<FicheAux> fiches) {
-		this.fiches = fiches;
-	}
-
-	public List<ProjetAux> getManagedProjets() {
-		return managedProjets;
-	}
-
-	public void setManagedProjets(List<ProjetAux> managedProjets) {
-		this.managedProjets = managedProjets;
-	}
-
-	public List<ProjetAux> getInvolvedProjets() {
-		return involvedProjets;
-	}
-
-	public void setInvolvedProjets(List<ProjetAux> involvedProjets) {
-		this.involvedProjets = involvedProjets;
-	}
-
 	public String getUsername() {
 		return username;
 	}
@@ -178,7 +129,5 @@ public class UtilisateurAux {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
 
 }

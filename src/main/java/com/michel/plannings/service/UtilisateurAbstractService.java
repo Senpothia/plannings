@@ -9,8 +9,7 @@ import com.michel.plannings.models.Utilisateur;
 public interface UtilisateurAbstractService {
 	
 	List<Utilisateur> listerUsers();
-	Utilisateur obtenirUser(Integer id);
-	Utilisateur obtenirUser(String string);
+	Utilisateur obtenirUserParId(Integer id);
 	Utilisateur obtenirUserParEmail(String email);
 	void ajouterUser(Utilisateur user);
 	void modifierUser(Utilisateur user);

@@ -11,28 +11,35 @@ public class ProjetAux {
 	private String nom;
 	private String numero;
 	private LocalDateTime date;
+	private String dateString;
 	private String type; // Verrouillage, contrôle d'accès
-	private UtilisateurAux chef; // Le chef produit ou responsable
-	private List<UtilisateurAux> ressources; // Ressources allouées aux projets
-	private List<PhaseAux> phases;
+	private Boolean statut;
+
+	private Integer chefId;
+	private String nomChef;
 
 	public ProjetAux() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public ProjetAux(Integer id, String nom, String numero, LocalDateTime date, String type, UtilisateurAux chef,
-			List<UtilisateurAux> ressources, List<PhaseAux> phases) {
+	
+
+	public ProjetAux(Integer id, String nom, String numero, LocalDateTime date, String dateString, String type,
+			Boolean statut, Integer chefId, String nomChef) {
 		super();
 		this.id = id;
 		this.nom = nom;
 		this.numero = numero;
 		this.date = date;
+		this.dateString = dateString;
 		this.type = type;
-		this.chef = chef;
-		this.ressources = ressources;
-		this.phases = phases;
+		this.statut = statut;
+		this.chefId = chefId;
+		this.nomChef = nomChef;
 	}
+
+
 
 	public ProjetAux(Projet projet) {
 		super();
@@ -41,9 +48,10 @@ public class ProjetAux {
 		this.numero = projet.getNumero();
 		this.date = projet.getDate();
 		this.type = projet.getType();
-		this.chef = new UtilisateurAux(projet.getChef());
-		this.ressources = AuxiliaryUtils.makeListUtilisateursAux(projet.getRessources());
-		this.phases = AuxiliaryUtils.makeListPhasesAux(projet.getPhases());
+		this.statut = projet.getStatut();
+		this.nomChef = projet.getChef().getPrenom() + " " + projet.getChef().getNom();
+		this.chefId = projet.getChef().getId();
+
 	}
 
 	public Integer getId() {
@@ -78,30 +86,6 @@ public class ProjetAux {
 		this.type = type;
 	}
 
-	public UtilisateurAux getChef() {
-		return chef;
-	}
-
-	public void setChef(UtilisateurAux chef) {
-		this.chef = chef;
-	}
-
-	public List<UtilisateurAux> getRessources() {
-		return ressources;
-	}
-
-	public void setRessources(List<UtilisateurAux> ressources) {
-		this.ressources = ressources;
-	}
-
-	public List<PhaseAux> getPhases() {
-		return phases;
-	}
-
-	public void setPhases(List<PhaseAux> phases) {
-		this.phases = phases;
-	}
-
 	public LocalDateTime getDate() {
 		return date;
 	}
@@ -109,5 +93,43 @@ public class ProjetAux {
 	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
+
+	public Integer getChefId() {
+		return chefId;
+	}
+
+	public void setChefId(Integer chefId) {
+		this.chefId = chefId;
+	}
+
+	public String getDateString() {
+		return dateString;
+	}
+
+	public void setDateString(String dateString) {
+		this.dateString = dateString;
+	}
+
+	public String getNomChef() {
+		return nomChef;
+	}
+
+	public void setNomChef(String nomChef) {
+		this.nomChef = nomChef;
+	}
+
+
+
+	public Boolean getStatut() {
+		return statut;
+	}
+
+
+
+	public void setStatut(Boolean statut) {
+		this.statut = statut;
+	}
+	
+	
 
 }

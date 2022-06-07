@@ -49,6 +49,7 @@ public class UtilisateurController {
 		utilisateur.setPassword(user.getToken());
 		utilisateur.setRole(user.getRole());
 		utilisateur.setUsername(user.getUsername());
+		utilisateur.setType(user.getType());
 		utilisateur.setEnabled(true);
 		userService.ajouterUser(utilisateur);
 	}

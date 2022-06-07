@@ -27,20 +27,13 @@ public class UserService implements UtilisateurAbstractService{
 	}
 
 	@Override
-	public Utilisateur obtenirUser(Integer id) {
+	public Utilisateur obtenirUserParId(Integer id) {
 
 		Utilisateur user = userRepo.getReferenceById(id);
 		return user;
 	}
 
-	@Override
-	public Utilisateur obtenirUser(String string) {
-
-
-		// User user = userRepo.findByIdentity(string);
-
-		return null;
-	}
+	
 
 	@Override
 	public Utilisateur obtenirUserParEmail(String email) {
