@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -27,7 +28,7 @@ public class Projet {
 	@ManyToOne
 	private Utilisateur chef; // Le chef produit ou responsable
 
-	@ManyToMany(mappedBy = "involvedProjets")
+	@ManyToMany(mappedBy = "involvedProjets", fetch = FetchType.LAZY)
 	private List<Utilisateur> ressources; // Ressources allouées aux projets
 
 	@OneToMany(mappedBy = "projet")
@@ -37,8 +38,6 @@ public class Projet {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-	
 
 	public Projet(Integer id, String nom, String numero, LocalDateTime date, String type, Boolean statut,
 			Utilisateur chef, List<Utilisateur> ressources, List<Phase> phases) {
@@ -54,20 +53,19 @@ public class Projet {
 		this.phases = phases;
 	}
 
-
-
 	public Projet(ProjetAux projet, Utilisateur chef) {
-		
+
 		super();
-		
+
 		this.nom = projet.getNom();
 		this.numero = projet.getNumero();
 		this.date = projet.getDate();
 		this.type = projet.getType();
+		this.statut = projet.getStatut();
 		this.chef = chef;
 		this.ressources = ressources;
 		this.phases = phases;
-		
+
 	}
 
 	public Integer getId() {
@@ -134,18 +132,12 @@ public class Projet {
 		this.date = date;
 	}
 
-
-
 	public Boolean getStatut() {
 		return statut;
 	}
 
-
-
 	public void setStatut(Boolean statut) {
 		this.statut = statut;
 	}
-	
-	
 
 }

@@ -29,7 +29,7 @@ public class JWTValidator {
 			jwtUser.setId(Integer.parseInt((String) body.get(Constants.USER_ID)));
 		}catch (Exception e){
 			
-			System.out.println(e);
+			
 		}
 		
 		return jwtUser;

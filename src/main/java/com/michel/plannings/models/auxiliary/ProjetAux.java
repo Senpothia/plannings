@@ -14,19 +14,18 @@ public class ProjetAux {
 	private String dateString;
 	private String type; // Verrouillage, contrôle d'accès
 	private Boolean statut;
-
+	private String statutString;
 	private Integer chefId;
 	private String nomChef;
+	private Boolean affecte;
 
 	public ProjetAux() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	
-
 	public ProjetAux(Integer id, String nom, String numero, LocalDateTime date, String dateString, String type,
-			Boolean statut, Integer chefId, String nomChef) {
+			Boolean statut, String statutString, Integer chefId, String nomChef, Boolean affecte) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -35,11 +34,11 @@ public class ProjetAux {
 		this.dateString = dateString;
 		this.type = type;
 		this.statut = statut;
+		this.statutString = statutString;
 		this.chefId = chefId;
 		this.nomChef = nomChef;
+		this.affecte = affecte;
 	}
-
-
 
 	public ProjetAux(Projet projet) {
 		super();
@@ -49,6 +48,7 @@ public class ProjetAux {
 		this.date = projet.getDate();
 		this.type = projet.getType();
 		this.statut = projet.getStatut();
+		this.statutString = projet.getStatut() ? "Actif" : "Inactif";
 		this.nomChef = projet.getChef().getPrenom() + " " + projet.getChef().getNom();
 		this.chefId = projet.getChef().getId();
 
@@ -118,18 +118,28 @@ public class ProjetAux {
 		this.nomChef = nomChef;
 	}
 
-
-
 	public Boolean getStatut() {
 		return statut;
 	}
 
-
-
 	public void setStatut(Boolean statut) {
 		this.statut = statut;
 	}
-	
-	
+
+	public Boolean getAffecte() {
+		return affecte;
+	}
+
+	public void setAffecte(Boolean affecte) {
+		this.affecte = affecte;
+	}
+
+	public String getStatutString() {
+		return statutString;
+	}
+
+	public void setStatutString(String statutString) {
+		this.statutString = statutString;
+	}
 
 }

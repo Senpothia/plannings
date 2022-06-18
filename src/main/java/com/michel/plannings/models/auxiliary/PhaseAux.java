@@ -3,23 +3,30 @@ package com.michel.plannings.models.auxiliary;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.michel.plannings.constants.Constants;
 import com.michel.plannings.models.Phase;
 
 public class PhaseAux {
 
 	private Integer id;
 	private Integer numero;
-	private ProjetAux projet;
+	private Integer idProjet;
 	private String nom; // nom de la phase
 	private LocalDateTime debut;
+	private String dateDebutString;
 	private LocalDateTime fin;
-	private UtilisateurAux ressource;
+	private String dateFinString;
+	private Integer idRessource;
+	private String nomRessource;
 	private String description;
 	private String complement; // Complément d'information: échantillons, version, etc.
 	private String resultat;
 	private Boolean conforme;
 	private Boolean actif;
 	private Boolean suspendu;
+	private String conformeString;
+	private String actifString;
+	private String suspenduString;
 	private List<FicheAux> fiches;
 
 	public PhaseAux() {
@@ -27,23 +34,30 @@ public class PhaseAux {
 		// TODO Auto-generated constructor stub
 	}
 
-	public PhaseAux(Integer id, Integer numero, ProjetAux projet, String nom, LocalDateTime debut, LocalDateTime fin,
-			UtilisateurAux ressource, String description, String complement, String resultat, Boolean conforme,
-			Boolean actif, Boolean suspendu, List<FicheAux> fiches) {
+	public PhaseAux(Integer id, Integer numero, Integer idProjet, String nom, LocalDateTime debut,
+			String dateDebutString, LocalDateTime fin, String dateFinString, Integer idRessource, String nomRessource,
+			String description, String complement, String resultat, Boolean conforme, Boolean actif, Boolean suspendu,
+			String conformeString, String actifString, String suspenduString, List<FicheAux> fiches) {
 		super();
 		this.id = id;
 		this.numero = numero;
-		this.projet = projet;
+		this.idProjet = idProjet;
 		this.nom = nom;
 		this.debut = debut;
+		this.dateDebutString = dateDebutString;
 		this.fin = fin;
-		this.ressource = ressource;
+		this.dateFinString = dateFinString;
+		this.idRessource = idRessource;
+		this.nomRessource = nomRessource;
 		this.description = description;
 		this.complement = complement;
 		this.resultat = resultat;
 		this.conforme = conforme;
 		this.actif = actif;
 		this.suspendu = suspendu;
+		this.conformeString = conformeString;
+		this.actifString = actifString;
+		this.suspenduString = suspenduString;
 		this.fiches = fiches;
 	}
 
@@ -51,18 +65,25 @@ public class PhaseAux {
 		super();
 		this.id = phase.getId();
 		this.numero = phase.getNumero();
-		this.projet = new ProjetAux(phase.getProjet());
-		this.nom = phase.getResultat();
+		this.idProjet = phase.getProjet().getId();
+		this.nom = phase.getNom();
 		this.debut = phase.getDebut();
+		this.dateDebutString = Constants.convertDateToString(debut);
 		this.fin = phase.getFin();
-		this.ressource = new UtilisateurAux(phase.getRessource());
+		this.dateFinString = Constants.convertDateToString(fin);
+		this.nomRessource = phase.getRessource().getPrenom() + " " + phase.getRessource().getNom();
+		this.idRessource = phase.getRessource().getId();
 		this.description = phase.getDescription();
 		this.complement = phase.getComplement();
 		this.resultat = phase.getResultat();
 		this.conforme = phase.getConforme();
 		this.actif = phase.getActif();
 		this.suspendu = phase.getSuspendu();
+		this.conformeString = phase.getConforme() ? "Conforme" : "Non conforme";
+		this.actifString = phase.getActif() ? "Actif" : "Inactif";
+		this.suspenduString = phase.getSuspendu() ? "Non suspendue" : "Suspendue";
 		this.fiches = AuxiliaryUtils.makeListFichesAux(phase.getFiches());
+
 	}
 
 	public Integer getId() {
@@ -79,14 +100,6 @@ public class PhaseAux {
 
 	public void setNumero(Integer numero) {
 		this.numero = numero;
-	}
-
-	public ProjetAux getProjet() {
-		return projet;
-	}
-
-	public void setProjet(ProjetAux projet) {
-		this.projet = projet;
 	}
 
 	public String getNom() {
@@ -111,14 +124,6 @@ public class PhaseAux {
 
 	public void setFin(LocalDateTime fin) {
 		this.fin = fin;
-	}
-
-	public UtilisateurAux getRessource() {
-		return ressource;
-	}
-
-	public void setRessource(UtilisateurAux ressource) {
-		this.ressource = ressource;
 	}
 
 	public String getDescription() {
@@ -161,20 +166,84 @@ public class PhaseAux {
 		this.suspendu = suspendu;
 	}
 
-	public List<FicheAux> getFiches() {
-		return fiches;
-	}
-
-	public void setFiches(List<FicheAux> fiches) {
-		this.fiches = fiches;
-	}
-
 	public Boolean getConforme() {
 		return conforme;
 	}
 
 	public void setConforme(Boolean conforme) {
 		this.conforme = conforme;
+	}
+
+	public Integer getIdProjet() {
+		return idProjet;
+	}
+
+	public void setIdProjet(Integer idProjet) {
+		this.idProjet = idProjet;
+	}
+
+	public Integer getIdRessource() {
+		return idRessource;
+	}
+
+	public void setIdRessource(Integer idRessource) {
+		this.idRessource = idRessource;
+	}
+
+	public String getDateDebutString() {
+		return dateDebutString;
+	}
+
+	public void setDateDebutString(String dateDebutString) {
+		this.dateDebutString = dateDebutString;
+	}
+
+	public String getDateFinString() {
+		return dateFinString;
+	}
+
+	public void setDateFinString(String dateFinString) {
+		this.dateFinString = dateFinString;
+	}
+
+	public String getConformeString() {
+		return conformeString;
+	}
+
+	public void setConformeString(String conformeString) {
+		this.conformeString = conformeString;
+	}
+
+	public String getActifString() {
+		return actifString;
+	}
+
+	public void setActifString(String actifString) {
+		this.actifString = actifString;
+	}
+
+	public String getSuspenduString() {
+		return suspenduString;
+	}
+
+	public void setSuspenduString(String suspenduString) {
+		this.suspenduString = suspenduString;
+	}
+
+	public String getNomRessource() {
+		return nomRessource;
+	}
+
+	public void setNomRessource(String nomRessource) {
+		this.nomRessource = nomRessource;
+	}
+
+	public List<FicheAux> getFiches() {
+		return fiches;
+	}
+
+	public void setFiches(List<FicheAux> fiches) {
+		this.fiches = fiches;
 	}
 
 }

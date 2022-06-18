@@ -4,10 +4,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Constants {
-
-	public static final int DELAY_MIN = 5;
-	public static final int PROLONGEMENT_WEEK = 4;
-	public static final int PROLONGEMENT_MIN = 4;
+	
+	static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 	public final static String YOUR_SECRET = "secret";
 	public final static String USER_ID = "userId";
@@ -21,6 +19,12 @@ public class Constants {
 				DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
 		return date;
+	}
+	
+	public static String convertDateToString(LocalDateTime date) {
+		
+		String convertedDate =  date.format(formatter);
+		return convertedDate;
 	}
 
 }

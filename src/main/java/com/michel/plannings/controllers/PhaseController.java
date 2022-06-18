@@ -2,6 +2,7 @@ package com.michel.plannings.controllers;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,20 +14,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.michel.plannings.models.Phase;
+import com.michel.plannings.models.Projet;
+import com.michel.plannings.models.auxiliary.AuxiliaryUtils;
 import com.michel.plannings.models.auxiliary.PhaseAux;
 import com.michel.plannings.models.auxiliary.ProjetAux;
+import com.michel.plannings.service.jpa.PhaseService;
+import com.michel.plannings.service.jpa.ProjetService;
 
 
 @RestController
 @RequestMapping("/phase")
 public class PhaseController {
 	
-	@PostMapping("/creer")
-	public void creerPhase(@RequestBody PhaseAux phase) {}
+	@Autowired
+	PhaseService phaseService;
 	
-	@PutMapping("/modifier/{id}")
-	public void modifierPhase(@PathVariable Integer id, @RequestHeader("Authorization") String token,
-			@RequestBody PhaseAux phaseAux){}
+	@Autowired
+	ProjetService projetService;
+	
+	@PostMapping("/creer/{projet}/{ressource}")
+	public void creerPhase(@RequestHeader("Authorization") String token, @RequestBody PhaseAux phase, @PathVariable(name="projet") Integer idProjet, @PathVariable(name="ressource") Integer idRessource) {
+		
+		phaseService.enregistrerPhase(phase, idProjet, idRessource);
+	}
+	
 	
 	@DeleteMapping("/supprimer/{id}")
 	public void supprimerPhase(@PathVariable Integer id, @RequestHeader("Authorization") String token){}
@@ -51,11 +63,30 @@ public class PhaseController {
 		return null;
 	}
 	
-	@GetMapping("/liste/projet/{id}") // récupération de la liste de toutes les phases par projet
-	public List<ProjetAux> phasesParProjet(@RequestHeader("Authorization") String token,
-			@PathVariable(name = "id") Integer id){
+	@GetMapping("/liste/projet/{projet}") // récupération de la liste de toutes les phases par projet
+	public List<PhaseAux> phasesParProjetId(@RequestHeader("Authorization") String token,
+			@PathVariable(name = "projet") Integer idProjet){
 		
-		return null;
+		
+		Projet projet = projetService.obtenirProjetParId(idProjet);
+		List<Phase> phases = projet.getPhases();
+		List<PhaseAux> listePhases = AuxiliaryUtils.makeListPhasesAux(phases);
+		return listePhases;
+	}
+	
+	@GetMapping("/voir/{phase}")
+	PhaseAux phaseParId(@RequestHeader("Authorization") String token, @PathVariable(name = "phase") Integer idPhase) {
+		
+		Phase phase = phaseService.obtenirPhaseParId(idPhase);
+		PhaseAux phaseAux = new PhaseAux(phase);
+		return phaseAux;
+	}
+	
+	@PostMapping("/modifier/{phase}")
+	void modifierPhase(@RequestHeader("Authorization") String token, @RequestBody PhaseAux phase, @PathVariable(name = "phase") Integer idPhase) {
+		
+		
+		phaseService.modifierPhase(phase, idPhase);
 	}
 
 }

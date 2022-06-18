@@ -5,6 +5,7 @@ import java.util.List;
 import com.michel.plannings.models.Fiche;
 import com.michel.plannings.models.Projet;
 import com.michel.plannings.models.Utilisateur;
+import com.michel.plannings.models.auxiliary.FicheAux;
 
 public interface FicheAbstractService {
 	
@@ -15,6 +16,7 @@ public interface FicheAbstractService {
 	public void enregistrerFiche(Fiche fiche);
 	public void modifierFiche(Fiche fiche);
 	public void suprimerFiche(Fiche fiche);
+	void modifierFiche(FicheAux fiche, Integer idFiche);
 	
 
 }

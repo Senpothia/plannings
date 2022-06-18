@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.michel.plannings.models.Projet;
 import com.michel.plannings.models.Utilisateur;
 import com.michel.plannings.repository.UtilisateurRepository;
 import com.michel.plannings.service.UtilisateurAbstractService;
@@ -18,6 +19,9 @@ public class UserService implements UtilisateurAbstractService{
 
 	@Autowired
 	PasswordEncoder encoder;
+	
+	@Autowired
+	ProjetService projetService;
 
 	@Override
 	public List<Utilisateur> listerUsers() {
@@ -76,6 +80,28 @@ public class UserService implements UtilisateurAbstractService{
 
 			return null;
 
+	}
+
+	public void changerStatut(Integer id) {
+		Utilisateur utilisateur = userRepo.getReferenceById(id);
+		utilisateur.setEnabled(!utilisateur.isEnabled());
+		userRepo.save(utilisateur);
+				
+	}
+
+	public void enregistrer(Utilisateur ressource) {
+		userRepo.save(ressource);
+		
+	}
+
+	public void retirerRessourceProjet(Integer idProjet, Integer idRessource) {
+		
+		Utilisateur ressource = obtenirUserParId(idRessource);
+		List<Projet> involvedProjets = ressource.getInvolvedProjets();
+		Projet projet = projetService.obtenirProjetParId(idProjet);
+		involvedProjets.remove(projet);
+		enregistrer(ressource);
+		
 	}
 
 }

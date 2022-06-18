@@ -2,7 +2,9 @@ package com.michel.plannings.models;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -23,7 +25,19 @@ public class Utilisateur {
 	private String username;
 	private String password;
 	private boolean enabled;
-	private String role;
+	private String role;  // USER=VISITEUR, BE = RESSOURCE, CPROD = Chef produit, LABO, RESPBE
+	
+	/*
+	 * 
+	 * USER: Pour consulation uniquement
+	 * BE: Développeur. Intervient dans les phases du projet. Redige les fiches
+	 * CPROD : Creation projet, creation phases, gestion générale
+	 * RESPBE: Responsable BE. Intervient aussi comme BE si besoin
+	 * LABO: Droit administrateur. Détient tous les droits sur le système. Notammet affecte les droits
+	 * 			aux utilisateur
+	 * A la création d'un compte, les droits attribués sont USER
+	 * 
+	 */
 
 	@OneToMany(mappedBy = "ressource")
 	private List<Phase> phases;
@@ -34,7 +48,7 @@ public class Utilisateur {
 	@OneToMany(mappedBy = "chef")
 	private List<Projet> managedProjets;
 
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinTable(name = "affectation", joinColumns = @JoinColumn(name = "utilisateur_id"), inverseJoinColumns = @JoinColumn(name = "project_id"))
 	private List<Projet> involvedProjets;
 
