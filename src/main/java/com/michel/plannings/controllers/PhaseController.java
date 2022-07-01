@@ -1,5 +1,6 @@
 package com.michel.plannings.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +15,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.michel.plannings.models.Fiche;
 import com.michel.plannings.models.Phase;
 import com.michel.plannings.models.Projet;
+import com.michel.plannings.models.Utilisateur;
 import com.michel.plannings.models.auxiliary.AuxiliaryUtils;
 import com.michel.plannings.models.auxiliary.PhaseAux;
 import com.michel.plannings.models.auxiliary.ProjetAux;
+import com.michel.plannings.service.jpa.FicheService;
 import com.michel.plannings.service.jpa.PhaseService;
 import com.michel.plannings.service.jpa.ProjetService;
+import com.michel.plannings.service.jpa.UserService;
 
 
 @RestController
@@ -33,6 +38,10 @@ public class PhaseController {
 	@Autowired
 	ProjetService projetService;
 	
+	@Autowired
+	UserService userService;
+	
+	
 	@PostMapping("/creer/{projet}/{ressource}")
 	public void creerPhase(@RequestHeader("Authorization") String token, @RequestBody PhaseAux phase, @PathVariable(name="projet") Integer idProjet, @PathVariable(name="ressource") Integer idRessource) {
 		
@@ -41,7 +50,12 @@ public class PhaseController {
 	
 	
 	@DeleteMapping("/supprimer/{id}")
-	public void supprimerPhase(@PathVariable Integer id, @RequestHeader("Authorization") String token){}
+	public void supprimerPhase(@PathVariable Integer id, @RequestHeader("Authorization") String token){
+		
+		phaseService.supprimerPhaseParId(id);
+		
+		
+	}
 	
 	@GetMapping("/{id}") // récupération phase par son id
 	public List<ProjetAux> phasesParId(@RequestHeader("Authorization") String token,
@@ -50,18 +64,17 @@ public class PhaseController {
 		return null;
 	}
 	
-	@GetMapping("/liste/ressource/{id}") // récupération de la liste de toutes les phases par ressource
-	public PhaseAux phasesParRessource(@RequestHeader("Authorization") String token,
-			@PathVariable(name = "id") Integer id){
+	@GetMapping("/liste/ressource/{ressource}") // récupération de la liste de toutes les phases par ressource
+	public List<PhaseAux> phasesParRessource(@RequestHeader("Authorization") String token,
+			@PathVariable(name = "ressource") Integer idRessource){
 		
-		return null;
+		Utilisateur ressource = userService.obtenirUserParId(idRessource);
+		List<Phase> phases = phaseService.obtenirPhaseParRessource(ressource);
+		List<PhaseAux> phasesAux = AuxiliaryUtils.makeListPhasesAux(phases); 
+		return phasesAux;
 	}
 	
-	@GetMapping("/liste/statut")  // récupération phase par statut: actif, inactif, suspendu, conforme, non conforme
-	public List<ProjetAux> phasesParStatut(@RequestParam(name = "statut") String statut){
-		
-		return null;
-	}
+	
 	
 	@GetMapping("/liste/projet/{projet}") // récupération de la liste de toutes les phases par projet
 	public List<PhaseAux> phasesParProjetId(@RequestHeader("Authorization") String token,
@@ -88,5 +101,43 @@ public class PhaseController {
 		
 		phaseService.modifierPhase(phase, idPhase);
 	}
+	
+	@GetMapping("/liste/actives/{active}")
+	List<PhaseAux> phasesActives(@RequestHeader("Authorization") String token, @PathVariable(name = "active") Boolean active){
+		
+		
+		List<Phase> phases = phaseService.obtenirPhaseParActif(active);
+		List<PhaseAux> phasesAux = AuxiliaryUtils.makeListPhasesAux(phases);
+		return phasesAux;
+	}
+	
+	@PutMapping("/changer/statut/{phase}/{active}")
+	void changerStatutPhase(@RequestHeader("Authorization") String token,  @PathVariable(name = "phase") Integer idPhase,  @PathVariable(name = "active") boolean active) {
+		
+		phaseService.changerStatutPhaseParId(idPhase);
+		
+
+	}
+	
+	@GetMapping("/vide/liste/projet/{projet}")
+	PhaseAux phasesVideParProjetId(@RequestHeader("Authorization") String token,@PathVariable (name="projet") Integer idProjet){
+		
+		Projet projet = projetService.obtenirProjetParId(idProjet);
+		List<Phase> phases = projet.getPhases();
+		Phase phaseVide = null;
+		for(Phase p: phases) {
+			
+			Integer numero = p.getNumero();
+			if (numero == 0) {phaseVide = p;}
+		}
+		
+		System.out.println("Id phase vide: " + phaseVide.getId());
+		System.out.println("Taille liste de fiches: " + phaseVide.getFiches().size());
+		PhaseAux phase = new PhaseAux(phaseVide);
+		return phase;
+		
+	}
+	
+	
 
 }

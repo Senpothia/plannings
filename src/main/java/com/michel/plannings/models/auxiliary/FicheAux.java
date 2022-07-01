@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import com.michel.plannings.constants.Constants;
 import com.michel.plannings.models.Fiche;
 
-public class FicheAux {
+public class FicheAux implements Comparable<FicheAux>{
 
 	private Integer id;
 	private Integer numero;
@@ -334,6 +334,20 @@ public class FicheAux {
 				+ anomalie + ", statut=" + statut + ", statutString=" + statutString + ", niveau=" + niveau
 				+ ", idPhase=" + idPhase + "]";
 	}
+
+
+
+
+	@Override
+	public int compareTo(FicheAux f) {
+		  return (this.numero - f.numero);
+		
+	}
+
+
+
+
+
 	
 	
 	

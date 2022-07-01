@@ -15,6 +15,7 @@ public class UtilisateurAux {
 	private String username;
 	private String password;
 	private boolean enabled;
+	private boolean autorise;
 	private String statutString;
 	private String token;
 	private String role;
@@ -25,7 +26,8 @@ public class UtilisateurAux {
 	}
 
 	public UtilisateurAux(Integer id, String nom, String prenom, String nomString, String type, String email,
-			String username, String password, boolean enabled, String statutString, String token, String role) {
+			String username, String password, boolean enabled, boolean autorise, String statutString, String token,
+			String role) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -36,6 +38,7 @@ public class UtilisateurAux {
 		this.username = username;
 		this.password = password;
 		this.enabled = enabled;
+		this.autorise = autorise;
 		this.statutString = statutString;
 		this.token = token;
 		this.role = role;
@@ -52,6 +55,7 @@ public class UtilisateurAux {
 		this.username = utilisateur.getEmail();
 		this.password = utilisateur.getPassword();
 		this.enabled = utilisateur.isEnabled();
+		this.autorise = utilisateur.isAutorise();
 		this.statutString = utilisateur.isEnabled() ? "Actif" : "Inactif";
 		this.role = utilisateur.getRole();
 	}
@@ -150,6 +154,14 @@ public class UtilisateurAux {
 
 	public void setNomString(String nomString) {
 		this.nomString = nomString;
+	}
+
+	public boolean isAutorise() {
+		return autorise;
+	}
+
+	public void setAutorise(boolean autorise) {
+		this.autorise = autorise;
 	}
 
 }

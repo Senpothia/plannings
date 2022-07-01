@@ -53,6 +53,7 @@ public class UtilisateurController {
 		utilisateur.setUsername(user.getUsername());
 		utilisateur.setType(user.getType());
 		utilisateur.setEnabled(true);
+		utilisateur.setAutorise(true);
 		userService.ajouterUser(utilisateur);
 	}
 	
@@ -86,5 +87,7 @@ public class UtilisateurController {
 		return ressources;
 
 	}
+	
+	
 
 }

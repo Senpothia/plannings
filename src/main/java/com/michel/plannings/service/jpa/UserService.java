@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.michel.plannings.models.Projet;
 import com.michel.plannings.models.Utilisateur;
+import com.michel.plannings.models.auxiliary.UtilisateurAux;
 import com.michel.plannings.repository.UtilisateurRepository;
 import com.michel.plannings.service.UtilisateurAbstractService;
 
@@ -102,6 +103,23 @@ public class UserService implements UtilisateurAbstractService{
 		involvedProjets.remove(projet);
 		enregistrer(ressource);
 		
+	}
+
+	public List<Utilisateur> obtenirTousLesVisiteurs() {
+		
+		List<Utilisateur> visiteurs = userRepo.findByRole("USER");
+		return visiteurs;
+	}
+
+	
+
+	public void modifierDroitsRessource(UtilisateurAux ressource) {
+		
+		
+		Utilisateur utilisateur = obtenirUserParId(ressource.getId());
+		utilisateur.setRole(ressource.getRole());
+		utilisateur.setAutorise(ressource.isAutorise());
+		enregistrer(utilisateur);
 	}
 
 }

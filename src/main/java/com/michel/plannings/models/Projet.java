@@ -58,7 +58,7 @@ public class Projet {
 		super();
 
 		this.nom = projet.getNom();
-		this.numero = projet.getNumero();
+		//this.numero = projet.getNumero();
 		this.date = projet.getDate();
 		this.type = projet.getType();
 		this.statut = projet.getStatut();

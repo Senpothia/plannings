@@ -1,6 +1,7 @@
 package com.michel.plannings.models.auxiliary;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.michel.plannings.models.Fiche;
@@ -19,6 +20,7 @@ public class AuxiliaryUtils {
 			fichesAux.add(fAux);
 
 		}
+		Collections.sort(fichesAux);
 		return fichesAux;
 	}
 	
@@ -31,6 +33,7 @@ public class AuxiliaryUtils {
 			phasesAux.add(pAux);
 
 		}
+		Collections.sort(phasesAux);
 		return phasesAux;
 	}
 	
@@ -55,6 +58,7 @@ public class AuxiliaryUtils {
 			projetsAux.add(pAux);
 
 		}
+		Collections.sort(projetsAux);
 		return projetsAux;
 	}
 

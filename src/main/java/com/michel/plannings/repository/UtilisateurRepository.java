@@ -1,5 +1,7 @@
 package com.michel.plannings.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -15,6 +17,8 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Intege
 	Utilisateur findByIdentity(String nom);
 
 	Utilisateur findByUsername(String email);
+
+	List<Utilisateur> findByRole(String string);
 
 	
 

@@ -32,7 +32,7 @@ public class Fiche {
 	private String domaine; // électronique, mécanique
 	private String objet; // n° de carte, pièce mécanique, organe affecté
 	private String reponse;
-	private String anomalie;
+	private String anomalie;  // description du symptome, phénomène observé
 	private Boolean statut; // ouverte, fermée
 	private Integer niveau;  // niveau de gravité
 

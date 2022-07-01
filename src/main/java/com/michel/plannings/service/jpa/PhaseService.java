@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.michel.plannings.constants.Constants;
+import com.michel.plannings.models.Fiche;
 import com.michel.plannings.models.Phase;
 import com.michel.plannings.models.Projet;
 import com.michel.plannings.models.Utilisateur;
@@ -24,6 +25,9 @@ public class PhaseService implements PhaseAbstractService{
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	FicheService ficheService;
 
 	@Override
 	public Phase obtenirPhaseParId(Integer id) {
@@ -40,14 +44,15 @@ public class PhaseService implements PhaseAbstractService{
 
 	@Override
 	public List<Phase> obtenirPhaseParRessource(Utilisateur ressource) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Phase> phases = phaseRepo.findByRessource(ressource);
+		return phases;
 	}
 
 	@Override
 	public List<Phase> obtenirPhaseParActif(Boolean actif) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<Phase> phases = phaseRepo.findByActif(actif);
+		return phases;
 	}
 
 	@Override
@@ -71,7 +76,7 @@ public class PhaseService implements PhaseAbstractService{
 		p.setConforme(false);
 		p.setActif(true);
 		p.setSuspendu(false);
-		p.setNumero(phase.getNumero());
+		//p.setNumero(phase.getNumero());
 		p.setNom(phase.getNom());
 		p.setDebut(Constants.formatStringToDate(phase.getDateDebutString()));
 		p.setFin(Constants.formatStringToDate(phase.getDateFinString()));
@@ -80,9 +85,28 @@ public class PhaseService implements PhaseAbstractService{
 		p.setResultat(phase.getResultat());
 		p.setRessource(ressource);
 		p.setProjet(projet);
+		p.setNumero(affecterNumeroPhase());
 		phaseRepo.save(p);
 	}
 	
+	private Integer affecterNumeroPhase() {
+		List<Phase> liste = obtenirToutesLesPhases();
+		Integer numeroMax = 0;
+		for (Phase p: liste) {
+			Integer numeroPhase = p.getNumero();
+			if (numeroPhase>numeroMax) {
+				
+				numeroMax = numeroPhase;
+			}
+		}
+		numeroMax++;
+		return numeroMax;
+	}
+
+	private List<Phase> obtenirToutesLesPhases() {
+		List<Phase> phases = phaseRepo.findAll();
+		return phases;
+	}
 
 	public void modifierPhase(PhaseAux phase, Integer idPhase) {
 		
@@ -99,6 +123,40 @@ public class PhaseService implements PhaseAbstractService{
 		p.setComplement(phase.getComplement());
 		p.setResultat(phase.getResultat());
 		phaseRepo.save(p);
+		
+	}
+
+	public void supprimerPhaseParId(Integer id) {
+		Phase phase = obtenirPhaseParId(id);
+		List<Fiche> fiches = phase.getFiches();
+		for (Fiche f: fiches) {
+			
+			f.setPhase(null);
+			ficheService.enregistrerFiche(f);
+			
+		}
+		phaseRepo.delete(phase);
+		
+	}
+
+	public void changerStatutPhaseParId(Integer idPhase) {
+
+		Phase phase = obtenirPhaseParId(idPhase);
+		phase.setActif(!phase.getActif());
+		phaseRepo.save(phase);
+		
+	}
+
+	public Phase obtenirPhaseVide(Integer numero, Projet projet) {
+		
+		
+		Phase phase = phaseRepo.findByNumeroAndProjet(numero, projet);
+		return phase;
+	}
+
+	public void enregistrerUnePhase(Phase phaseVide) {
+
+		phaseRepo.save(phaseVide);
 		
 	}
 

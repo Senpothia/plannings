@@ -6,11 +6,12 @@ import java.util.List;
 import com.michel.plannings.constants.Constants;
 import com.michel.plannings.models.Phase;
 
-public class PhaseAux {
+public class PhaseAux implements Comparable<PhaseAux>{
 
 	private Integer id;
 	private Integer numero;
 	private Integer idProjet;
+	private String projet; // nom du projet
 	private String nom; // nom de la phase
 	private LocalDateTime debut;
 	private String dateDebutString;
@@ -34,7 +35,7 @@ public class PhaseAux {
 		// TODO Auto-generated constructor stub
 	}
 
-	public PhaseAux(Integer id, Integer numero, Integer idProjet, String nom, LocalDateTime debut,
+	public PhaseAux(Integer id, Integer numero, Integer idProjet, String projet, String nom, LocalDateTime debut,
 			String dateDebutString, LocalDateTime fin, String dateFinString, Integer idRessource, String nomRessource,
 			String description, String complement, String resultat, Boolean conforme, Boolean actif, Boolean suspendu,
 			String conformeString, String actifString, String suspenduString, List<FicheAux> fiches) {
@@ -42,6 +43,7 @@ public class PhaseAux {
 		this.id = id;
 		this.numero = numero;
 		this.idProjet = idProjet;
+		this.projet = projet;
 		this.nom = nom;
 		this.debut = debut;
 		this.dateDebutString = dateDebutString;
@@ -65,6 +67,7 @@ public class PhaseAux {
 		super();
 		this.id = phase.getId();
 		this.numero = phase.getNumero();
+		this.projet = phase.getProjet().getNom();
 		this.idProjet = phase.getProjet().getId();
 		this.nom = phase.getNom();
 		this.debut = phase.getDebut();
@@ -244,6 +247,20 @@ public class PhaseAux {
 
 	public void setFiches(List<FicheAux> fiches) {
 		this.fiches = fiches;
+	}
+
+	public String getProjet() {
+		return projet;
+	}
+
+	public void setProjet(String projet) {
+		this.projet = projet;
+	}
+
+	@Override
+	public int compareTo(PhaseAux p) {
+		
+		 return (this.numero - p.numero);
 	}
 
 }

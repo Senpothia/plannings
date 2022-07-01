@@ -52,6 +52,7 @@ public class TokenController {
 			userAux.setUsername(jwtUser.getUsername());
 			String token = jwtGenerator.generate(jwtUser);
 			userAux.setToken(token);
+			userAux.setAutorise(jwtUser.isAutorise());
 			return new ResponseEntity<UtilisateurAux>(userAux, HttpStatus.OK);
 					
 		}else {

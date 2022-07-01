@@ -1,5 +1,6 @@
 package com.michel.plannings.service.jpa;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.michel.plannings.constants.Constants;
+import com.michel.plannings.models.Fiche;
+import com.michel.plannings.models.Phase;
 import com.michel.plannings.models.Projet;
 import com.michel.plannings.models.Utilisateur;
 import com.michel.plannings.models.auxiliary.PhaseAux;
@@ -22,6 +25,9 @@ public class ProjetService implements ProjetAbstractService {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	PhaseService phaseService;
 	
 	
 	@Override
@@ -54,7 +60,36 @@ public class ProjetService implements ProjetAbstractService {
 		Projet p = new Projet(projet, chef);
 		p.setStatut(true);
 		p.setDate(Constants.formatStringToDate(projet.getDateString()));
+		p.setNumero(affecterNumeroProjet());
 		projetRepo.save(p);
+		
+		Phase phaseVide = new Phase();
+		phaseVide.setProjet(p);
+		phaseVide.setNumero(0);
+		phaseVide.setDebut(LocalDateTime.now());
+		phaseVide.setFin(LocalDateTime.now());
+		phaseVide.setRessource(chef);
+		phaseVide.setActif(true);
+		phaseVide.setConforme(true);
+		phaseVide.setSuspendu(true);
+		phaseService.enregistrerUnePhase(phaseVide);
+		
+	}
+
+	private String affecterNumeroProjet() {
+		List<Projet> liste = obtenirTousLesProjets();
+		Integer numeroMax = 0;
+		
+		for (Projet p : liste) {
+
+			Integer numeroProjet =  Integer.parseInt(p.getNumero()); 
+			if (numeroProjet > numeroMax) {
+
+				numeroMax = numeroProjet;
+			}
+		}
+		numeroMax++;
+		return String.valueOf(numeroMax);
 		
 	}
 

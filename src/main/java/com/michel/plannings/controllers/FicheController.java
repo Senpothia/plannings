@@ -19,9 +19,6 @@ import com.michel.plannings.models.auxiliary.AuxiliaryUtils;
 import com.michel.plannings.models.auxiliary.FicheAux;
 import com.michel.plannings.models.auxiliary.FormFiche;
 import com.michel.plannings.service.jpa.FicheService;
-import com.zaxxer.hikari.metrics.micrometer.MicrometerMetricsTracker;
-
-
 
 @RestController
 @RequestMapping("/fiche")
@@ -30,13 +27,16 @@ public class FicheController {
 	@Autowired
 	FicheService ficheService;
 	
-	@PostMapping("/enregistrer/{phase}/{ressource}")
+	@PostMapping("/enregistrer/{phase}/{ressource}/{projet}")
 	void enregistrerFiche(@RequestHeader("Authorization") String token, 
 			@RequestBody FormFiche ficheForm,
 			@PathVariable(name = "phase") Integer idPhase
-			,@PathVariable(name = "ressource") Integer idRessource){
+			,@PathVariable(name = "ressource") Integer idRessource
+			,@PathVariable(name = "projet") Integer idProjet){
 		
-		Fiche fiche = ficheService.convertirFormFiche(ficheForm, idPhase, idRessource);
+		Fiche fiche = ficheService.convertirFormFiche(ficheForm, idPhase, idRessource, idProjet);
+		Integer numero = ficheService.obtenirNumeroFiche();
+		fiche.setNumero(numero);
 		ficheService.enregistrerFiche(fiche); 
 	}
 	
@@ -101,6 +101,7 @@ public class FicheController {
 		
 		List<Fiche> fichesDelaRessource = ficheService.obtenirToutesLesFiches();
 		List<FicheAux> fichesAux = AuxiliaryUtils.makeListFichesAux(fichesDelaRessource);
+		 
 		return fichesAux;
 		
 	}
@@ -117,6 +118,32 @@ public class FicheController {
 	void changerStatutFiche(@PathVariable(name = "fiche") Integer idFiche) {
 		
 		ficheService.changerStatutFiche(idFiche);
+	}
+	
+	@GetMapping("/liste/toutes/spontanees")
+	List<FicheAux> toutesLesFichesspontanees(@RequestHeader("Authorization")  String token){
+		
+		
+		List<Fiche> fiches = ficheService.obtenirToutesFichesSpontanees();
+		List<FicheAux> fAux = AuxiliaryUtils.makeListFichesAux(fiches);
+		return fAux;
+		
+	}
+	
+	@GetMapping("/liste/ressource/projet/{ressource}/{projet}")
+	List<FicheAux> fichesDeRessourceSurProjet(@RequestHeader("Authorization") String token, @PathVariable(name = "ressource") Integer idRessource, @PathVariable(name = "projet") Integer idProjet){
+		
+		List<Fiche> fiches = ficheService.listeFichesPourRessourceSurProjet(idRessource, idProjet);
+		List<FicheAux> fAux = AuxiliaryUtils.makeListFichesAux(fiches);
+		return fAux;
+	}
+	
+	@GetMapping("/voir/active/{active}")
+	List<FicheAux> toutesLesFichesStatut(@RequestHeader("Authorization") String token, @PathVariable(name = "active") Boolean active){
+		
+		List<Fiche> fiches = ficheService.obtenirFichesParStatut(active);
+		List<FicheAux> listeFichesAux = AuxiliaryUtils.makeListFichesAux(fiches);
+		return listeFichesAux;
 	}
 
 	

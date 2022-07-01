@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.michel.plannings.models.Projet;
 
-public class ProjetAux {
+public class ProjetAux implements Comparable<ProjetAux>{
 
 	private Integer id;
 	private String nom;
@@ -140,6 +140,12 @@ public class ProjetAux {
 
 	public void setStatutString(String statutString) {
 		this.statutString = statutString;
+	}
+
+	@Override
+	public int compareTo(ProjetAux p) {
+		
+		return (this.id - p.id);
 	}
 
 }

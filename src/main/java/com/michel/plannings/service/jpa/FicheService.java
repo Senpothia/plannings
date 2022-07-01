@@ -19,64 +19,65 @@ import com.michel.plannings.repository.ProjetRepository;
 import com.michel.plannings.service.FicheAbstractService;
 
 @Service
-public class FicheService implements FicheAbstractService{
-	
+public class FicheService implements FicheAbstractService {
+
 	@Autowired
 	FicheRepository ficheRepository;
-	
+
 	@Autowired
 	ProjetService projetService;
-	
+
 	@Autowired
 	PhaseService phaseService;
-	
+
 	@Autowired
 	UserService userService;
 
 	@Override
 	public Fiche obtenirFicheParId(Integer Id) {
-		
+
 		Fiche fiche = ficheRepository.getReferenceById(Id);
 		return fiche;
 	}
 
 	@Override
 	public List<Fiche> obtenirFichesParAuteur(Utilisateur auteur) {
-		
+
 		List<Fiche> fiches = ficheRepository.findByAuteur(auteur);
 		return fiches;
 	}
 
 	@Override
 	public List<Fiche> obtenirFichesParProjet(Projet projet) {
-		
+
 		List<Phase> phases = projet.getPhases();
 		List<Fiche> fiches = new ArrayList<>();
-		for(Phase p: phases) {
-			
+		for (Phase p : phases) {
+
 			fiches.addAll(p.getFiches());
 		}
-		
+
 		return fiches;
 	}
 
 	@Override
 	public List<Fiche> obtenirFichesParStatut(Boolean statut) {
-		// TODO Auto-generated method stub
-		return null;
+
+		List<Fiche> fiches = ficheRepository.findByStatut(statut);
+		return fiches;
 	}
 
 	@Override
 	public void enregistrerFiche(Fiche fiche) {
 		ficheRepository.save(fiche);
-		
+
 	}
 
 	@Override
 	public void modifierFiche(FicheAux fiche, Integer idFiche) {
-		
+
 		Fiche f = obtenirFicheParId(idFiche);
-		
+
 		f.setAnomalie(fiche.getIncidence());
 		f.setDate(Constants.formatStringToDate(fiche.getDateString()));
 		f.setNiveau(fiche.getNiveau());
@@ -96,32 +97,50 @@ public class FicheService implements FicheAbstractService{
 		f.setService(fiche.getService());
 		f.setSolution(fiche.getSolution());
 
-		
 		enregistrerFiche(f);
-		
-		
+
 	}
 
 	@Override
 	public void suprimerFiche(Fiche fiche) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	public Fiche convertirFormFiche(FormFiche ficheForm, Integer idPhase, Integer idRessource) {
+	public Fiche convertirFormFiche(FormFiche ficheForm, Integer idPhase, Integer idRessource, Integer idProjet) {
+
 		
-		Phase phase;
-		if(idPhase != 0) {
-			phase = phaseService.obtenirPhaseParId(idPhase);
-		}else {
-			phase = null;
-		}
-		
+
 		Utilisateur ressource = userService.obtenirUserParId(idRessource);
 		Fiche f = new Fiche();
+		
+		Phase phase = null;
+		Projet projet;
+		if (idPhase != 0) {
+			phase = phaseService.obtenirPhaseParId(idPhase);
+			projet = phase.getProjet();
+			f.setProduit(projet.getNom());
+			f.setProjet(projet.getNom());
+		} 
+		
+		if (idPhase == 0 && idProjet == 0){
+			phase = null;
+			projet = null;
+			f.setProduit(ficheForm.getProduit());
+			f.setProjet(ficheForm.getProjet());
+		}
+		
+		if (idPhase == 0 && idProjet != 0){
+			
+			projet = projetService.obtenirProjetParId(idProjet);
+			phase = phaseService.obtenirPhaseVide(0, projet);   // Phase contenant les fiches spontanées du projet
+			f.setProduit(projet.getNom());
+			f.setProjet(projet.getNom());
+		}
+		
 		f.setAuteur(ressource);
 		f.setPhase(phase);
-		f.setAnomalie(ficheForm.getIncidence());
+		f.setAnomalie(ficheForm.getObservation());
 		f.setDate(Constants.formatStringToDate(ficheForm.getDate()));
 		f.setNiveau(ficheForm.getNiveau());
 		f.setNumero(ficheForm.getNumero());
@@ -134,8 +153,8 @@ public class FicheService implements FicheAbstractService{
 		f.setIncidence(ficheForm.getIncidence());
 		f.setObjet(ficheForm.getObjet());
 		f.setObservation(ficheForm.getObservation());
-		f.setProduit(ficheForm.getProduit());
-		f.setProjet(ficheForm.getProjet());
+		//f.setProduit(projet.getNom());
+		//f.setProjet(projet.getNom());
 		f.setReponse(ficheForm.getReponse());
 		f.setService(ficheForm.getService());
 		f.setSolution(ficheForm.getSolution());
@@ -144,9 +163,9 @@ public class FicheService implements FicheAbstractService{
 	}
 
 	public List<Fiche> obtenirFichesParPhaseId(Integer idPhase) {
-	
+
 		Phase phase = phaseService.obtenirPhaseParId(idPhase);
-		List< Fiche> fiches = phase.getFiches();
+		List<Fiche> fiches = phase.getFiches();
 		return fiches;
 	}
 
@@ -162,7 +181,7 @@ public class FicheService implements FicheAbstractService{
 	}
 
 	public List<Fiche> obtenirToutesLesFiches() {
-		
+
 		List<Fiche> fiches = ficheRepository.findAll();
 		return fiches;
 	}
@@ -170,7 +189,7 @@ public class FicheService implements FicheAbstractService{
 	@Override
 	public void modifierFiche(Fiche fiche) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public void changerStatutFiche(Integer idFiche) {
@@ -178,17 +197,55 @@ public class FicheService implements FicheAbstractService{
 		Fiche fiche = obtenirFicheParId(idFiche);
 		fiche.setStatut(!fiche.getStatut());
 		enregistrerFiche(fiche);
-		
+
 	}
 
 	public void suprimerFicheParId(Integer id) {
-		
+
 		Fiche fiche = obtenirFicheParId(id);
 		ficheRepository.delete(fiche);
-		
+
 	}
 
-	
-	
+	public List<Fiche> obtenirToutesFichesSpontanees() {
+
+		List<Fiche> fiches = ficheRepository.findByPhaseNull();
+		return fiches;
+	}
+
+	public List<Fiche> listeFichesPourRessourceSurProjet(Integer idRessource, Integer idProjet) {
+
+		Utilisateur ressource = userService.obtenirUserParId(idRessource);
+		Projet projet = projetService.obtenirProjetParId(idProjet);
+		List<Fiche> fiches = obtenirFichesParAuteur(ressource);
+		List<Fiche> fichesDeRessourcePourProjet = new ArrayList<>();
+		for (Fiche f : fiches) {
+
+			Phase ph = f.getPhase();
+			Projet p = ph.getProjet();
+			if (p.equals(projet)) {
+
+				fichesDeRessourcePourProjet.add(f);
+			}
+		}
+
+		// List<Fiche> fiches = new ArrayList<>();
+		return fichesDeRessourcePourProjet;
+	}
+
+	public Integer obtenirNumeroFiche() {
+		List<Fiche> liste = obtenirToutesLesFiches();
+		Integer numeroMax = 0;
+		for (Fiche f : liste) {
+
+			Integer numeroFiche = f.getNumero();
+			if (numeroFiche > numeroMax) {
+
+				numeroMax = numeroFiche;
+			}
+		}
+		numeroMax++;
+		return numeroMax;
+	}
 
 }

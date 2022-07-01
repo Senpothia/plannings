@@ -13,4 +13,8 @@ public interface FicheRepository extends JpaRepository<Fiche, Integer>{
 
 	List<Fiche> findByAuteur(Utilisateur auteur);
 
+	List<Fiche> findByPhaseNull();
+
+	List<Fiche> findByStatut(Boolean statut);
+
 }

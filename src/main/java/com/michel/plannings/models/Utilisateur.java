@@ -25,6 +25,7 @@ public class Utilisateur {
 	private String username;
 	private String password;
 	private boolean enabled;
+	private boolean autorise;
 	private String role;  // USER=VISITEUR, BE = RESSOURCE, CPROD = Chef produit, LABO, RESPBE
 	
 	/*
@@ -65,9 +66,11 @@ public class Utilisateur {
 
 	
 
+	
+
 	public Utilisateur(Integer id, String nom, String prenom, String type, String email, String username, String password,
-		boolean enabled, String role, List<Phase> phases, List<Fiche> fiches, List<Projet> managedProjets,
-		List<Projet> involvedProjets) {
+		boolean enabled, boolean autorise, String role, List<Phase> phases, List<Fiche> fiches,
+		List<Projet> managedProjets, List<Projet> involvedProjets) {
 	super();
 	this.id = id;
 	this.nom = nom;
@@ -77,6 +80,7 @@ public class Utilisateur {
 	this.username = username;
 	this.password = password;
 	this.enabled = enabled;
+	this.autorise = autorise;
 	this.role = role;
 	this.phases = phases;
 	this.fiches = fiches;
@@ -184,6 +188,16 @@ public class Utilisateur {
 	public void setRole(String role) {
 		this.role = role;
 	}
+
+	public boolean isAutorise() {
+		return autorise;
+	}
+
+	public void setAutorise(boolean autorise) {
+		this.autorise = autorise;
+	}
+	
+	
 	
 
 }

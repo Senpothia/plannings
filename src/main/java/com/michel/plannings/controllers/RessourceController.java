@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,7 +38,7 @@ public class RessourceController {
 		List<UtilisateurAux> ressources = new ArrayList<>();
 		for (UtilisateurAux u : liste) {
 
-			if (u.getRole().equals("BE") || u.getRole().equals("RESBE") || u.getRole().equals("LABO"))
+			if (u.getRole().equals("BE") || u.getRole().equals("RESBE") || u.getRole().equals("LABO") || u.getRole().equals("CPROD") )
 				ressources.add(u);
 		}
 
@@ -133,7 +134,26 @@ public class RessourceController {
 		return ressourcesDisposAux;
 	}
 	
+	@GetMapping("/liste/visiteurs")
+	List<UtilisateurAux> toutsLesVisiteurs(@RequestHeader("Authorization") String token){
+		
+		List<Utilisateur> listeVisiteurs = userService.obtenirTousLesVisiteurs();
+		List<UtilisateurAux> visiteurs = AuxiliaryUtils.makeListUtilisateursAux(listeVisiteurs);
+		return visiteurs;
+	}
 	
+	@PutMapping("/modifier/droits/{id}")
+	void enregistrerDroitsRessource(@PathVariable(name="id") Integer id, @RequestHeader("Authorization") String token, @RequestBody UtilisateurAux ressource) {
+		
+		userService.modifierDroitsRessource(ressource);
+	}
 	
+	@GetMapping("/liste/utilisateurs")
+	List<UtilisateurAux> toutsLesUtilisateurs(@RequestHeader("Authorization") String token){
+		
+		List<Utilisateur> listeUtilisateurs = userService.listerUsers();
+		List<UtilisateurAux> utilisateurs = AuxiliaryUtils.makeListUtilisateursAux(listeUtilisateurs);
+		return utilisateurs;
+	}
 
 }
