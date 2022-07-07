@@ -131,8 +131,7 @@ public class PhaseController {
 			if (numero == 0) {phaseVide = p;}
 		}
 		
-		System.out.println("Id phase vide: " + phaseVide.getId());
-		System.out.println("Taille liste de fiches: " + phaseVide.getFiches().size());
+		
 		PhaseAux phase = new PhaseAux(phaseVide);
 		return phase;
 		

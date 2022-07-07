@@ -32,7 +32,6 @@ public class UtilisateurController {
 	public void modifierCompte(@PathVariable(name="id") Integer id, @RequestHeader("Authorization") String token,
 			@RequestBody UtilisateurAux utilisateurAux) {
 		
-		System.out.println("modifier compte");
 		Utilisateur utilisateur = userService.obtenirUserParId(id);
 		utilisateur.setUsername(utilisateurAux.getUsername());
 		utilisateur.setPrenom(utilisateurAux.getPrenom());
