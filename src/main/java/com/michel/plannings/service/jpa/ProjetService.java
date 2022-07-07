@@ -153,7 +153,7 @@ public class ProjetService implements ProjetAbstractService {
 		
 	}
 
-	private void enregistrerProjet(Projet projet) {
+	public void enregistrerProjet(Projet projet) {
 		projetRepo.save(projet);
 		
 	}
@@ -201,6 +201,11 @@ public class ProjetService implements ProjetAbstractService {
 			}
 		}
 		return ressourcesDisponibles;
+	}
+
+	public void affecterRessource(Utilisateur ressource) {
+		// TODO Auto-generated method stub
+		
 	}
 
 
