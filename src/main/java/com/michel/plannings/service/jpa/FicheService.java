@@ -81,7 +81,7 @@ public class FicheService implements FicheAbstractService {
 		f.setAnomalie(fiche.getIncidence());
 		f.setDate(Constants.formatStringToDate(fiche.getDateString()));
 		f.setNiveau(fiche.getNiveau());
-		f.setNumero(fiche.getNumero());
+		//f.setNumero(fiche.getNumero());
 		f.setStatut(true);
 		f.setCode(fiche.getCode());
 		f.setCirconstance(fiche.getCirconstance());
