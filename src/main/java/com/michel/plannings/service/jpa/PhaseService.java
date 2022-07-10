@@ -88,9 +88,10 @@ public class PhaseService implements PhaseAbstractService{
 		p.setNumero(affecterNumeroPhase());
 		
 		// ajout de la ressource dans la liste des ressources du projet
-		
+		List<Utilisateur> affections = projet.getRessources();
+		if(!affections.contains(ressource)) {
 		projetService.affecterRessourceProjet(idProjet, idRessource);
-		
+		}
 		//////////////////////////////////////////
 		phaseRepo.save(p);
 	}
