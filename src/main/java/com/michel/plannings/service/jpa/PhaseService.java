@@ -118,11 +118,9 @@ public class PhaseService implements PhaseAbstractService{
 	public void modifierPhase(PhaseAux phase, Integer idPhase) {
 		
 		Phase p = obtenirPhaseParId(idPhase);
-		p.setActif(true);
-		p.setConforme(false);
-		p.setActif(true);
-		p.setSuspendu(false);
-		p.setNumero(phase.getNumero());
+		p.setActif(phase.getActif());
+		p.setConforme(phase.getConforme());
+		p.setSuspendu(phase.getSuspendu());
 		p.setNom(phase.getNom());
 		p.setDebut(Constants.formatStringToDate(phase.getDateDebutString()));
 		p.setFin(Constants.formatStringToDate(phase.getDateFinString()));

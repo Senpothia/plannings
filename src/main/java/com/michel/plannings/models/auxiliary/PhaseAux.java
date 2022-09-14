@@ -83,6 +83,7 @@ public class PhaseAux implements Comparable<PhaseAux>{
 		this.actif = phase.getActif();
 		this.suspendu = phase.getSuspendu();
 		this.conformeString = phase.getConforme() ? "Conforme" : "Non conforme";
+		if(!this.conforme && this.actif) {this.conformeString = "En attente";}
 		this.actifString = phase.getActif() ? "Actif" : "Inactif";
 		this.suspenduString = phase.getSuspendu() ? "Suspendue" : "En cours";
 		this.fiches = AuxiliaryUtils.makeListFichesAux(phase.getFiches());

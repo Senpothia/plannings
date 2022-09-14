@@ -82,7 +82,7 @@ public class FicheService implements FicheAbstractService {
 		f.setDate(Constants.formatStringToDate(fiche.getDateString()));
 		f.setNiveau(fiche.getNiveau());
 		//f.setNumero(fiche.getNumero());
-		f.setStatut(true);
+		f.setStatut(fiche.getStatut());
 		f.setCode(fiche.getCode());
 		f.setCirconstance(fiche.getCirconstance());
 		f.setDegre(fiche.getDegre());
@@ -219,14 +219,18 @@ public class FicheService implements FicheAbstractService {
 		Projet projet = projetService.obtenirProjetParId(idProjet);
 		List<Fiche> fiches = obtenirFichesParAuteur(ressource);
 		List<Fiche> fichesDeRessourcePourProjet = new ArrayList<>();
+		System.out.println("Nbre de fiche pour auteur: " + fiches.size());
 		for (Fiche f : fiches) {
 
 			Phase ph = f.getPhase();
-			Projet p = ph.getProjet();
-			if (p.equals(projet)) {
+			if (ph != null) {
+				Projet p = ph.getProjet();
+				if (p.equals(projet)) {
 
-				fichesDeRessourcePourProjet.add(f);
+					fichesDeRessourcePourProjet.add(f);
+				}
 			}
+			
 		}
 
 		// List<Fiche> fiches = new ArrayList<>();

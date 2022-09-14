@@ -53,6 +53,8 @@ public class UtilisateurController {
 		utilisateur.setType(user.getType());
 		utilisateur.setEnabled(true);
 		utilisateur.setAutorise(true);
+		List<Utilisateur> utilisateurs = userService.listerUsers();
+		if (utilisateurs.isEmpty()) { utilisateur.setRole("LABO");}
 		userService.ajouterUser(utilisateur);
 	}
 	

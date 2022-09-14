@@ -98,7 +98,6 @@ public class PhaseController {
 	@PostMapping("/modifier/{phase}")
 	void modifierPhase(@RequestHeader("Authorization") String token, @RequestBody PhaseAux phase, @PathVariable(name = "phase") Integer idPhase) {
 		
-		
 		phaseService.modifierPhase(phase, idPhase);
 	}
 	
