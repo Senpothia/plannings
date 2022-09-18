@@ -34,13 +34,16 @@ public class Projet {
 	@OneToMany(mappedBy = "projet")
 	private List<Phase> phases;
 
+	@OneToMany(mappedBy = "projet")
+	private List<NoteProjet> notes;
+
 	public Projet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
 	public Projet(Integer id, String nom, String numero, LocalDateTime date, String type, Boolean statut,
-			Utilisateur chef, List<Utilisateur> ressources, List<Phase> phases) {
+			Utilisateur chef, List<Utilisateur> ressources, List<Phase> phases, List<NoteProjet> notes) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -51,6 +54,7 @@ public class Projet {
 		this.chef = chef;
 		this.ressources = ressources;
 		this.phases = phases;
+		this.notes = notes;
 	}
 
 	public Projet(ProjetAux projet, Utilisateur chef) {
@@ -58,7 +62,7 @@ public class Projet {
 		super();
 
 		this.nom = projet.getNom();
-		//this.numero = projet.getNumero();
+		// this.numero = projet.getNumero();
 		this.date = projet.getDate();
 		this.type = projet.getType();
 		this.statut = projet.getStatut();
@@ -138,6 +142,14 @@ public class Projet {
 
 	public void setStatut(Boolean statut) {
 		this.statut = statut;
+	}
+
+	public List<NoteProjet> getNotes() {
+		return notes;
+	}
+
+	public void setNotes(List<NoteProjet> notes) {
+		this.notes = notes;
 	}
 
 }

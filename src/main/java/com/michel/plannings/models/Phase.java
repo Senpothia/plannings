@@ -28,14 +28,17 @@ public class Phase {
 	private Utilisateur ressource;
 
 	private String description;
-	private String complement; 	// Complément d'information: échantillons, version, etc.
-	private String resultat; 	// Ennoncé du résultat, sa description textuelle
+	private String complement; // Complément d'information: échantillons, version, etc.
+	private String resultat; // Ennoncé du résultat, sa description textuelle
 	private Boolean conforme;
 	private Boolean actif;
 	private Boolean suspendu;
 
 	@OneToMany(mappedBy = "phase")
 	private List<Fiche> fiches;
+
+	@OneToMany(mappedBy = "phase")
+	private List<NotePhase> notes;
 
 	public Phase() {
 		super();
@@ -44,7 +47,7 @@ public class Phase {
 
 	public Phase(Integer id, Integer numero, Projet projet, String nom, LocalDateTime debut, LocalDateTime fin,
 			Utilisateur ressource, String description, String complement, String resultat, Boolean conforme,
-			Boolean actif, Boolean suspendu, List<Fiche> fiches) {
+			Boolean actif, Boolean suspendu, List<Fiche> fiches, List<NotePhase> notes) {
 		super();
 		this.id = id;
 		this.numero = numero;
@@ -60,6 +63,7 @@ public class Phase {
 		this.actif = actif;
 		this.suspendu = suspendu;
 		this.fiches = fiches;
+		this.notes = notes;
 	}
 
 	public Integer getId() {
@@ -172,6 +176,14 @@ public class Phase {
 
 	public void setConforme(Boolean conforme) {
 		this.conforme = conforme;
+	}
+
+	public List<NotePhase> getNotes() {
+		return notes;
+	}
+
+	public void setNotes(List<NotePhase> notes) {
+		this.notes = notes;
 	}
 
 }
