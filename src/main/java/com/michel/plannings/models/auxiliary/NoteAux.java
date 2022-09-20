@@ -3,6 +3,7 @@ package com.michel.plannings.models.auxiliary;
 import java.time.LocalDateTime;
 
 import com.michel.plannings.constants.Constants;
+import com.michel.plannings.models.NotePhase;
 import com.michel.plannings.models.NoteProjet;
 
 public class NoteAux implements Comparable<NoteAux> {
@@ -42,9 +43,23 @@ public class NoteAux implements Comparable<NoteAux> {
 		this.stringDate = Constants.convertDateToString(this.date);
 		this.texte = note.getTexte();
 		this.idAuteur = note.getAuteur().getId();
+		this.nomAuteur = note.getAuteur().getPrenom() + " " + note.getAuteur().getNom();
 		this.idSource = note.getProjet().getId();
 	}
 
+	
+	public NoteAux(NotePhase note) {
+		super();
+		this.id = note.getId();
+		this.numero = note.getNumero();
+		this.date = note.getDate();
+		this.stringDate = Constants.convertDateToString(this.date);
+		this.texte = note.getTexte();
+		this.idAuteur = note.getAuteur().getId();
+		this.nomAuteur = note.getAuteur().getPrenom() + " " + note.getAuteur().getNom();
+		this.idSource = note.getPhase().getId();
+	}
+	
 	public Integer getId() {
 		return id;
 	}

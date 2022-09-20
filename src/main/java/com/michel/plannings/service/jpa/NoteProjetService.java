@@ -86,7 +86,7 @@ public class NoteProjetService {
 		return nomAuteur;
 	}
 
-	public NoteAux obbtenirSimpleNote(Integer idNote) {
+	public NoteAux obtenirSimpleNote(Integer idNote) {
 		
 		NoteProjet note = noteProjetRepo.getReferenceById(idNote);
 		NoteAux nAux = new NoteAux(note);

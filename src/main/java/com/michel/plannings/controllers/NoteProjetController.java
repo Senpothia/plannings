@@ -39,7 +39,7 @@ public class NoteProjetController {
 	@GetMapping("/projet/note/voir/{idNote}")
 	NoteAux obtenirSimpleNoteProjet(@RequestHeader("Authorization") String token, @PathVariable(name = "idNote") Integer idNote) {
 		
-		NoteAux note = noteprojetService.obbtenirSimpleNote(idNote);
+		NoteAux note = noteprojetService.obtenirSimpleNote(idNote);
 		
 		return note;
 	}

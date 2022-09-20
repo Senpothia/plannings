@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.michel.plannings.models.Fiche;
+import com.michel.plannings.models.NotePhase;
 import com.michel.plannings.models.NoteProjet;
 import com.michel.plannings.models.Phase;
 import com.michel.plannings.models.Projet;
@@ -75,5 +76,21 @@ public class AuxiliaryUtils {
 		Collections.sort(notesAux);
 		return notesAux;
 	}
+	
+	
+	public static List<NoteAux> makeListNotesAuxForPhase(List<NotePhase> notes) {
+
+		List<NoteAux> notesAux = new ArrayList<>();
+		for (NotePhase n : notes) {
+
+			NoteAux nAux = new NoteAux(n);
+			notesAux.add(nAux);
+
+		}
+		Collections.sort(notesAux);
+		return notesAux;
+	}
+	
+	
 
 }
