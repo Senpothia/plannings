@@ -36,6 +36,9 @@ public class Projet {
 
 	@OneToMany(mappedBy = "projet")
 	private List<NoteProjet> notes;
+	
+	@OneToMany(mappedBy = "projet")
+	private List<Alerte> alertes;
 
 	public Projet() {
 		super();
@@ -151,5 +154,15 @@ public class Projet {
 	public void setNotes(List<NoteProjet> notes) {
 		this.notes = notes;
 	}
+
+	public List<Alerte> getAlertes() {
+		return alertes;
+	}
+
+	public void setAlertes(List<Alerte> alertes) {
+		this.alertes = alertes;
+	}
+	
+	
 
 }

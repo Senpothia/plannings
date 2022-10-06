@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.michel.plannings.models.Alerte;
 import com.michel.plannings.models.Fiche;
 import com.michel.plannings.models.NotePhase;
 import com.michel.plannings.models.NoteProjet;
@@ -89,6 +90,42 @@ public class AuxiliaryUtils {
 		}
 		Collections.sort(notesAux);
 		return notesAux;
+	}
+	
+	
+	public static List<AlerteAux> makeListAlertesAux(List<Alerte> alertes) {
+
+		List<AlerteAux> alertesAux = new ArrayList<>();
+		for (Alerte a : alertes) {
+
+			AlerteAux aAux = new AlerteAux(a);
+			alertesAux.add(aAux);
+
+		}
+		Collections.sort(alertesAux);
+		return alertesAux;
+	}
+	
+	
+	public static String convertUrgenceToString(Integer urgence) {
+
+		switch (urgence) {
+		case 1:
+
+			return "normale";
+
+		case 2:
+
+			return "haute";
+
+		case 3:
+
+			return "très haute";
+
+		}
+
+		return null;
+
 	}
 	
 	
