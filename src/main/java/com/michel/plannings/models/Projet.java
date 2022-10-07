@@ -36,9 +36,12 @@ public class Projet {
 
 	@OneToMany(mappedBy = "projet")
 	private List<NoteProjet> notes;
-	
+
 	@OneToMany(mappedBy = "projet")
 	private List<Alerte> alertes;
+
+	@OneToMany(mappedBy = "projet")
+	private List<Serie> series;
 
 	public Projet() {
 		super();
@@ -46,7 +49,8 @@ public class Projet {
 	}
 
 	public Projet(Integer id, String nom, String numero, LocalDateTime date, String type, Boolean statut,
-			Utilisateur chef, List<Utilisateur> ressources, List<Phase> phases, List<NoteProjet> notes) {
+			Utilisateur chef, List<Utilisateur> ressources, List<Phase> phases, List<NoteProjet> notes,
+			List<Alerte> alertes, List<Serie> series) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -58,6 +62,8 @@ public class Projet {
 		this.ressources = ressources;
 		this.phases = phases;
 		this.notes = notes;
+		this.alertes = alertes;
+		this.series = series;
 	}
 
 	public Projet(ProjetAux projet, Utilisateur chef) {
@@ -162,7 +168,13 @@ public class Projet {
 	public void setAlertes(List<Alerte> alertes) {
 		this.alertes = alertes;
 	}
-	
-	
+
+	public List<Serie> getSeries() {
+		return series;
+	}
+
+	public void setSeries(List<Serie> series) {
+		this.series = series;
+	}
 
 }

@@ -24,6 +24,9 @@ public class NotePhase {
 	@ManyToOne
 	private Phase phase;
 	
+	@ManyToOne
+	private Suite suite;
+	
 	public NotePhase() {
 		super();
 		// TODO Auto-generated constructor stub

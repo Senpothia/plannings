@@ -40,6 +40,9 @@ public class Phase {
 	@OneToMany(mappedBy = "phase")
 	private List<NotePhase> notes;
 
+	@OneToMany(mappedBy = "phase")
+	private List<Suite> suites;
+
 	public Phase() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -47,7 +50,7 @@ public class Phase {
 
 	public Phase(Integer id, Integer numero, Projet projet, String nom, LocalDateTime debut, LocalDateTime fin,
 			Utilisateur ressource, String description, String complement, String resultat, Boolean conforme,
-			Boolean actif, Boolean suspendu, List<Fiche> fiches, List<NotePhase> notes) {
+			Boolean actif, Boolean suspendu, List<Fiche> fiches, List<NotePhase> notes, List<Suite> suites) {
 		super();
 		this.id = id;
 		this.numero = numero;
@@ -64,6 +67,7 @@ public class Phase {
 		this.suspendu = suspendu;
 		this.fiches = fiches;
 		this.notes = notes;
+		this.suites = suites;
 	}
 
 	public Integer getId() {
@@ -184,6 +188,14 @@ public class Phase {
 
 	public void setNotes(List<NotePhase> notes) {
 		this.notes = notes;
+	}
+
+	public List<Suite> getSuites() {
+		return suites;
+	}
+
+	public void setSuites(List<Suite> suites) {
+		this.suites = suites;
 	}
 
 }

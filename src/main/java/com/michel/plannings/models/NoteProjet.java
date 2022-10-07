@@ -22,6 +22,10 @@ public class NoteProjet {
 
 	@ManyToOne
 	private Projet projet;
+	
+	@ManyToOne
+	private Serie serie;
+
 
 	public NoteProjet() {
 		super();
