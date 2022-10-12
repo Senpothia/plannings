@@ -102,6 +102,16 @@ public class NotePhase {
 	public void setPhase(Phase phase) {
 		this.phase = phase;
 	}
+
+
+	public Suite getSuite() {
+		return suite;
+	}
+
+
+	public void setSuite(Suite suite) {
+		this.suite = suite;
+	}
 	
 	
 	

@@ -3,7 +3,11 @@ package com.michel.plannings.models.auxiliary;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class SuiteAux {
+import com.michel.plannings.constants.Constants;
+import com.michel.plannings.models.Serie;
+import com.michel.plannings.models.Suite;
+
+public class SuiteAux implements Comparable<SuiteAux>{
 
 	private Integer id;
 	private String nom;
@@ -41,6 +45,41 @@ public class SuiteAux {
 		this.projet = projet;
 		this.phase = phase;
 		this.notes = notes;
+	}
+	
+	public SuiteAux(Serie serie) {
+		super();
+		this.id = serie.getId();
+		this.nom = serie.getNom();
+		this.idAuteur = serie.getAuteur().getId();
+		this.nomAuteur = serie.getAuteur().getPrenom() + " " + serie.getAuteur().getNom();
+		this.date = serie.getDate();
+		this.stringDate = Constants.convertDateToString(serie.getDate());
+		this.numero = serie.getNumero();
+		this.actif = serie.getActif();
+		this.actifString = serie.getActif() ? "Active" : "Inactive";;
+		this.idProjet = serie.getProjet().getId();
+		this.projet = new ProjetAux(serie.getProjet());
+		this.phase = null;
+		this.notes = AuxiliaryUtils.makeListNotesAux(serie.getNotes());
+	}
+	
+	
+	public SuiteAux(Suite suite) {
+		super();
+		this.id = suite.getId();
+		this.nom = suite.getNom();
+		this.idAuteur = suite.getAuteur().getId();
+		this.nomAuteur = suite.getAuteur().getPrenom() + " " + suite.getAuteur().getNom();
+		this.date = suite.getDate();
+		this.stringDate = Constants.convertDateToString(suite.getDate());
+		this.numero = suite.getNumero();
+		this.actif = suite.getActif();
+		this.actifString = suite.getActif() ? "Active" : "Inactive";;
+		this.idProjet = null;
+		this.projet = null;
+		this.phase = new PhaseAux(suite.getPhase());
+		this.notes = AuxiliaryUtils.makeListNotesAuxForPhase(suite.getNotes());
 	}
 
 	public Integer getId() {
@@ -145,6 +184,12 @@ public class SuiteAux {
 
 	public void setNotes(List<NoteAux> notes) {
 		this.notes = notes;
+	}
+	
+	@Override
+	public int compareTo(SuiteAux n) {
+
+		return (this.id - n.id);
 	}
 
 }

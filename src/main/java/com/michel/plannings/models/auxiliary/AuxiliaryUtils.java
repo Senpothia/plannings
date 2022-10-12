@@ -10,6 +10,8 @@ import com.michel.plannings.models.NotePhase;
 import com.michel.plannings.models.NoteProjet;
 import com.michel.plannings.models.Phase;
 import com.michel.plannings.models.Projet;
+import com.michel.plannings.models.Serie;
+import com.michel.plannings.models.Suite;
 import com.michel.plannings.models.Utilisateur;
 
 public class AuxiliaryUtils {
@@ -105,6 +107,35 @@ public class AuxiliaryUtils {
 		Collections.sort(alertesAux);
 		return alertesAux;
 	}
+	
+	
+	public static List<SuiteAux> makeListSuiteAuxForSeries(List<Serie> series) {
+
+		List<SuiteAux> suitesAux = new ArrayList<>();
+		for (Serie s : series) {
+
+			SuiteAux sAux = new SuiteAux(s);
+			suitesAux.add(sAux);
+
+		}
+		Collections.sort(suitesAux);
+		return suitesAux;
+	}
+	
+	
+	public static List<SuiteAux> makeListSuiteAuxForSuites(List<Suite> suites) {
+
+		List<SuiteAux> suitesAux = new ArrayList<>();
+		for (Suite s : suites) {
+
+			SuiteAux sAux = new SuiteAux(s);
+			suitesAux.add(sAux);
+
+		}
+		Collections.sort(suitesAux);
+		return suitesAux;
+	}
+	
 	
 	
 	public static String convertUrgenceToString(Integer urgence) {

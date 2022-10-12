@@ -16,14 +16,20 @@ public class NoteAux implements Comparable<NoteAux> {
 	private String nomAuteur;
 	private Integer idAuteur;
 	private Integer idSource; // source: projet ou phase
+	private String nomProjet;
+	private String nomPhase;
+	private String nomSerie;
+	private String nomSuite;
 
 	public NoteAux() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
+	
+
 	public NoteAux(Integer id, Integer numero, LocalDateTime date, String stringDate, String texte, String nomAuteur,
-			Integer idAuteur, Integer idSource) {
+			Integer idAuteur, Integer idSource, String nomProjet, String nomPhase, String nomSerie, String nomSuite) {
 		super();
 		this.id = id;
 		this.numero = numero;
@@ -33,7 +39,13 @@ public class NoteAux implements Comparable<NoteAux> {
 		this.nomAuteur = nomAuteur;
 		this.idAuteur = idAuteur;
 		this.idSource = idSource;
+		this.nomProjet = nomProjet;
+		this.nomPhase = nomPhase;
+		this.nomSerie = nomSerie;
+		this.nomSuite = nomSuite;
 	}
+
+
 
 	public NoteAux(NoteProjet note) {
 		super();
@@ -45,9 +57,13 @@ public class NoteAux implements Comparable<NoteAux> {
 		this.idAuteur = note.getAuteur().getId();
 		this.nomAuteur = note.getAuteur().getPrenom() + " " + note.getAuteur().getNom();
 		this.idSource = note.getProjet().getId();
+		this.nomProjet = note.getProjet().getNom();
+		this.nomPhase = null;
+		try {this.nomSerie = note.getSerie().getNom();}catch(Exception e) {this.nomSerie = null;};
+		
+		this.nomSuite = null;
 	}
 
-	
 	public NoteAux(NotePhase note) {
 		super();
 		this.id = note.getId();
@@ -58,8 +74,15 @@ public class NoteAux implements Comparable<NoteAux> {
 		this.idAuteur = note.getAuteur().getId();
 		this.nomAuteur = note.getAuteur().getPrenom() + " " + note.getAuteur().getNom();
 		this.idSource = note.getPhase().getId();
+		this.nomProjet = note.getPhase().getProjet().getNom();
+		this.nomPhase = note.getPhase().getNom();
+		this.nomSerie = null;
+		try {this.nomSuite = note.getSuite().getNom();}catch (Exception e) {
+			this.nomSuite = null;
+		}
+		
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -123,6 +146,48 @@ public class NoteAux implements Comparable<NoteAux> {
 	public void setNomAuteur(String nomAuteur) {
 		this.nomAuteur = nomAuteur;
 	}
+
+	public String getNomProjet() {
+		return nomProjet;
+	}
+
+	public void setNomProjet(String nomProjet) {
+		this.nomProjet = nomProjet;
+	}
+
+	public String getNomPhase() {
+		return nomPhase;
+	}
+
+	public void setNomPhase(String nomPhase) {
+		this.nomPhase = nomPhase;
+	}
+	
+	
+
+	public String getNomSerie() {
+		return nomSerie;
+	}
+
+
+
+	public void setNomSerie(String nomSerie) {
+		this.nomSerie = nomSerie;
+	}
+
+
+
+	public String getNomSuite() {
+		return nomSuite;
+	}
+
+
+
+	public void setNomSuite(String nomSuite) {
+		this.nomSuite = nomSuite;
+	}
+
+
 
 	@Override
 	public int compareTo(NoteAux n) {

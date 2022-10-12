@@ -17,6 +17,7 @@ public class AlerteAux implements Comparable<AlerteAux> {
 	private String nomAuteur;
 	private Integer idAuteur;
 	private Integer idProjet;
+	private String nomProjet;
 	private Integer urgence;
 	private String urgenceString;
 	private Boolean actif;
@@ -29,8 +30,10 @@ public class AlerteAux implements Comparable<AlerteAux> {
 		// TODO Auto-generated constructor stub
 	}
 
+	
+
 	public AlerteAux(Integer id, Integer numero, LocalDateTime date, String stringDate, String texte, String nomAuteur,
-			Integer idAuteur, Integer idProjet, Integer urgence, String urgenceString, Boolean actif,
+			Integer idAuteur, Integer idProjet, String nomProjet, Integer urgence, String urgenceString, Boolean actif,
 			String actifString, Boolean suspendu, String suspenduString) {
 		super();
 		this.id = id;
@@ -41,6 +44,7 @@ public class AlerteAux implements Comparable<AlerteAux> {
 		this.nomAuteur = nomAuteur;
 		this.idAuteur = idAuteur;
 		this.idProjet = idProjet;
+		this.nomProjet = nomProjet;
 		this.urgence = urgence;
 		this.urgenceString = urgenceString;
 		this.actif = actif;
@@ -48,6 +52,8 @@ public class AlerteAux implements Comparable<AlerteAux> {
 		this.suspendu = suspendu;
 		this.suspenduString = suspenduString;
 	}
+
+
 
 	public AlerteAux(Alerte alerte) {
 		super();
@@ -59,8 +65,9 @@ public class AlerteAux implements Comparable<AlerteAux> {
 		this.idAuteur = alerte.getAuteur().getId();
 		this.nomAuteur = alerte.getAuteur().getPrenom() + " " + alerte.getAuteur().getNom();
 		this.idProjet = alerte.getProjet().getId();
+		this.nomProjet = alerte.getProjet().getNom();
 		this.urgence = alerte.getUrgence();
-		this.urgenceString = AuxiliaryUtils.convertUrgenceToString(urgence);
+		this.urgenceString = AuxiliaryUtils.convertUrgenceToString(alerte.getUrgence());
 		this.actif = alerte.getActif();
 		this.actifString = alerte.getActif() ? "Active" : "Inactive";
 		this.suspendu = alerte.getSuspendu();
@@ -179,6 +186,20 @@ public class AlerteAux implements Comparable<AlerteAux> {
 	public void setUrgenceString(String urgenceString) {
 		this.urgenceString = urgenceString;
 	}
+	
+	
+
+	public String getNomProjet() {
+		return nomProjet;
+	}
+
+
+
+	public void setNomProjet(String nomProjet) {
+		this.nomProjet = nomProjet;
+	}
+
+
 
 	@Override
 	public int compareTo(AlerteAux n) {

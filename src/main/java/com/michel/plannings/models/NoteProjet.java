@@ -90,4 +90,14 @@ public class NoteProjet {
 		this.projet = projet;
 	}
 
+	public Serie getSerie() {
+		return serie;
+	}
+
+	public void setSerie(Serie serie) {
+		this.serie = serie;
+	}
+	
+	
+
 }
