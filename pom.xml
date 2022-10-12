@@ -79,7 +79,7 @@
 	</dependencyManagement>
 
 	<build>
-		<finalName>plannings2</finalName>
+		<finalName>plannings3</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
