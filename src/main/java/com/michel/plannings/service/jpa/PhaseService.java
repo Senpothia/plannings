@@ -7,31 +7,41 @@ import org.springframework.stereotype.Service;
 
 import com.michel.plannings.constants.Constants;
 import com.michel.plannings.models.Fiche;
+import com.michel.plannings.models.NotePhase;
 import com.michel.plannings.models.Phase;
 import com.michel.plannings.models.Projet;
+import com.michel.plannings.models.Suite;
 import com.michel.plannings.models.Utilisateur;
 import com.michel.plannings.models.auxiliary.PhaseAux;
+import com.michel.plannings.repository.NotePhaseRepository;
 import com.michel.plannings.repository.PhaseRepository;
+import com.michel.plannings.repository.SuiteRepository;
 import com.michel.plannings.service.PhaseAbstractService;
 
 @Service
-public class PhaseService implements PhaseAbstractService{
-	
+public class PhaseService implements PhaseAbstractService {
+
 	@Autowired
 	PhaseRepository phaseRepo;
-	
+
 	@Autowired
 	ProjetService projetService;
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	FicheService ficheService;
 
+	@Autowired
+	NotePhaseRepository notePhaseRepo;
+	
+	@Autowired
+	SuiteRepository suiteRepo;
+
 	@Override
 	public Phase obtenirPhaseParId(Integer id) {
-		
+
 		Phase phase = phaseRepo.getReferenceById(id);
 		return phase;
 	}
@@ -50,7 +60,7 @@ public class PhaseService implements PhaseAbstractService{
 
 	@Override
 	public List<Phase> obtenirPhaseParActif(Boolean actif) {
-		
+
 		List<Phase> phases = phaseRepo.findByActif(actif);
 		return phases;
 	}
@@ -68,7 +78,7 @@ public class PhaseService implements PhaseAbstractService{
 	}
 
 	public void enregistrerPhase(PhaseAux phase, Integer idProjet, Integer idRessource) {
-		
+
 		Projet projet = projetService.obtenirProjetParId(idProjet);
 		Utilisateur ressource = userService.obtenirUserParId(idRessource);
 		Phase p = new Phase();
@@ -76,7 +86,7 @@ public class PhaseService implements PhaseAbstractService{
 		p.setConforme(false);
 		p.setActif(true);
 		p.setSuspendu(false);
-		//p.setNumero(phase.getNumero());
+		// p.setNumero(phase.getNumero());
 		p.setNom(phase.getNom());
 		p.setDebut(Constants.formatStringToDate(phase.getDateDebutString()));
 		p.setFin(Constants.formatStringToDate(phase.getDateFinString()));
@@ -86,23 +96,20 @@ public class PhaseService implements PhaseAbstractService{
 		p.setRessource(ressource);
 		p.setProjet(projet);
 		p.setNumero(affecterNumeroPhase());
-		
-		// ajout de la ressource dans la liste des ressources du projet
 		List<Utilisateur> affections = projet.getRessources();
-		if(!affections.contains(ressource)) {
-		projetService.affecterRessourceProjet(idProjet, idRessource);
+		if (!affections.contains(ressource)) {
+			projetService.affecterRessourceProjet(idProjet, idRessource);
 		}
-		//////////////////////////////////////////
 		phaseRepo.save(p);
 	}
-	
+
 	private Integer affecterNumeroPhase() {
 		List<Phase> liste = obtenirToutesLesPhases();
 		Integer numeroMax = 0;
-		for (Phase p: liste) {
+		for (Phase p : liste) {
 			Integer numeroPhase = p.getNumero();
-			if (numeroPhase>numeroMax) {
-				
+			if (numeroPhase > numeroMax) {
+
 				numeroMax = numeroPhase;
 			}
 		}
@@ -116,7 +123,7 @@ public class PhaseService implements PhaseAbstractService{
 	}
 
 	public void modifierPhase(PhaseAux phase, Integer idPhase) {
-		
+
 		Phase p = obtenirPhaseParId(idPhase);
 		p.setActif(phase.getActif());
 		p.setConforme(phase.getConforme());
@@ -128,20 +135,32 @@ public class PhaseService implements PhaseAbstractService{
 		p.setComplement(phase.getComplement());
 		p.setResultat(phase.getResultat());
 		phaseRepo.save(p);
-		
+
 	}
 
 	public void supprimerPhaseParId(Integer id) {
 		Phase phase = obtenirPhaseParId(id);
 		List<Fiche> fiches = phase.getFiches();
-		for (Fiche f: fiches) {
-			
+		for (Fiche f : fiches) {
 			f.setPhase(null);
 			ficheService.enregistrerFiche(f);
+		}
+
+		List<NotePhase> notes = phase.getNotes();
+		for (NotePhase n : notes) {
+
+			n.setPhase(null);
+			n.setSuite(null);
+			notePhaseRepo.save(n);
+		}
+		
+		List<Suite> suites = phase.getSuites();
+		for(Suite s: suites) {
 			
+			suiteRepo.delete(s);
 		}
 		phaseRepo.delete(phase);
-		
+
 	}
 
 	public void changerStatutPhaseParId(Integer idPhase) {
@@ -149,12 +168,11 @@ public class PhaseService implements PhaseAbstractService{
 		Phase phase = obtenirPhaseParId(idPhase);
 		phase.setActif(!phase.getActif());
 		phaseRepo.save(phase);
-		
+
 	}
 
 	public Phase obtenirPhaseVide(Integer numero, Projet projet) {
-		
-		
+
 		Phase phase = phaseRepo.findByNumeroAndProjet(numero, projet);
 		return phase;
 	}
@@ -162,7 +180,7 @@ public class PhaseService implements PhaseAbstractService{
 	public void enregistrerUnePhase(Phase phaseVide) {
 
 		phaseRepo.save(phaseVide);
-		
+
 	}
 
 }
