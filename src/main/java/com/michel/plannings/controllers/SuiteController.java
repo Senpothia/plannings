@@ -66,7 +66,12 @@ public class SuiteController {
 		return suiteAux;
 	}
 
-	
+	@GetMapping("/phase/historique/supprimer/{idSuite}")
+	void supprimerSuite(@RequestHeader("Authorization") String token, @PathVariable(name = "idSuite") Integer idSuite) {
+		
+		suiteService.supprimerSuite(idSuite);
+	}
+
 	
 
 }

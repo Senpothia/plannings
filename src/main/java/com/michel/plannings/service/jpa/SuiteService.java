@@ -100,4 +100,17 @@ public class SuiteService implements SuiteAbstractService {
 		
 	}
 
+	public void supprimerSuite(Integer idSuite) {
+		
+		Suite suite = obtenirSuiteParId(idSuite);
+		List<NotePhase> notes = suite.getNotes();
+		for(NotePhase n: notes) {
+			
+			n.setPhase(null);
+			notePhaseRepo.delete(n);
+		}
+		suiteRepo.delete(suite);
+		
+	}
+
 }

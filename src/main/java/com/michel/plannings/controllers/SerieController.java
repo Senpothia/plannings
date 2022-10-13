@@ -63,5 +63,14 @@ public class SerieController {
 		SuiteAux suite = new SuiteAux(serie);
 		return suite;
 	}
+	
+	
+	@GetMapping("/projet/historique/supprimer/{idSerie}")
+	void supprimerSerie(@RequestHeader("Authorization") String token, @PathVariable(name = "idSerie") Integer idSerie) {
+		
+		
+		serieService.supprimerSerie(idSerie);
+		
+	}
 
 }

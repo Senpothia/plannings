@@ -96,4 +96,17 @@ public class SerieService implements SerieAbstractService {
 		
 	}
 
+	public void supprimerSerie(Integer idSerie) {
+		
+		Serie serie = obtenirSerieParId(idSerie);
+		List<NoteProjet> notes = serie.getNotes();
+		for(NoteProjet n: notes) {
+			
+			n.setSerie(null);
+			noteProjetRepo.save(n);
+		}
+		serieRepo.delete(serie);
+	
+	}
+
 }
