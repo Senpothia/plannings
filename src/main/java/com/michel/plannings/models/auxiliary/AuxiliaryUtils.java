@@ -159,6 +159,16 @@ public class AuxiliaryUtils {
 
 	}
 	
+	public static NoteProjet convertNotePhToNotePrjt(NotePhase notePhase) {
+		
+		NoteProjet noteProjet = new NoteProjet();
+		noteProjet.setAuteur(notePhase.getAuteur());
+		noteProjet.setDate(notePhase.getDate());
+		noteProjet.setProjet(notePhase.getPhase().getProjet());
+		noteProjet.setTexte(notePhase.getTexte());
+		return noteProjet;
+	}
+	
 	
 
 }
