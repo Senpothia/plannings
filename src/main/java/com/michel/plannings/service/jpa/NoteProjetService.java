@@ -37,6 +37,7 @@ public class NoteProjetService {
 		Integer numero = affecterNumero();
 		n.setNumero(numero);
 		n.setDate(Constants.formatStringToDate(note.getStringDate()));
+		n.setActive(true);
 		noteProjetRepo.save(n);
 	}
 
@@ -100,6 +101,7 @@ public class NoteProjetService {
 		NoteProjet n = noteProjetRepo.getReferenceById(note.getId());
 		n.setDate(Constants.formatStringToDate(note.getStringDate()));
 		n.setTexte(note.getTexte());
+		n.setActive(note.getActive());
 		noteProjetRepo.save(n);
 		
 	}
@@ -109,6 +111,13 @@ public class NoteProjetService {
 		NoteProjet n = noteProjetRepo.getReferenceById(idNote);
 		noteProjetRepo.delete(n);
 	
+	}
+	
+	public void changerStatutNoteProjet(Integer idNote) {
+		
+		NoteProjet n = noteProjetRepo.getReferenceById(idNote);
+		n.setActive(!n.getActive());
+		noteProjetRepo.save(n);
 	}
 	
 	

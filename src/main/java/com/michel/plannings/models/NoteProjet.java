@@ -16,30 +16,33 @@ public class NoteProjet {
 	private Integer numero;
 	private LocalDateTime date;
 	private String texte;
+	private Boolean active;
 
 	@ManyToOne
 	private Utilisateur auteur;
 
 	@ManyToOne
 	private Projet projet;
-	
+
 	@ManyToOne
 	private Serie serie;
-
 
 	public NoteProjet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public NoteProjet(Integer id, Integer numero, LocalDateTime date, String texte, Utilisateur auteur, Projet projet) {
+	public NoteProjet(Integer id, Integer numero, LocalDateTime date, String texte, Boolean active, Utilisateur auteur,
+			Projet projet, Serie serie) {
 		super();
 		this.id = id;
 		this.numero = numero;
 		this.date = date;
 		this.texte = texte;
+		this.active = active;
 		this.auteur = auteur;
 		this.projet = projet;
+		this.serie = serie;
 	}
 
 	public Integer getId() {
@@ -97,7 +100,13 @@ public class NoteProjet {
 	public void setSerie(Serie serie) {
 		this.serie = serie;
 	}
-	
-	
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
 
 }

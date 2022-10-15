@@ -60,6 +60,12 @@ public class NotePhaseController {
 	
 	}
 	
+	@GetMapping("/changer/statut/note/phase/{idNote}")
+	public void changerStatutNotePhase(@RequestHeader("Authorization") String token, @PathVariable(name = "idNote") Integer idNote) {
+		
+		notePhaseService.changerStatutNotePhase(idNote);
+	}
+	
 	
 	
 	

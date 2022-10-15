@@ -40,6 +40,7 @@ public class NotePhaseService {
 		Integer numero = affecterNumero();
 		n.setNumero(numero);
 		n.setDate(Constants.formatStringToDate(note.getStringDate()));
+		n.setActive(true);
 		notePhaseRepo.save(n);
 
 	}
@@ -103,6 +104,14 @@ public class NotePhaseService {
 		Utilisateur u = note.getAuteur();
 		String nomAuteur = u.getPrenom() + " " + u.getNom();
 		return nomAuteur;
+	}
+	
+	public void changerStatutNotePhase(Integer idNote) {
+		
+		NotePhase n = notePhaseRepo.getReferenceById(idNote);
+		n.setActive(!n.getActive());
+		notePhaseRepo.save(n);
+		
 	}
 
 }

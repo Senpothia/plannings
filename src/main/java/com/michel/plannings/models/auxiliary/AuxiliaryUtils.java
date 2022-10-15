@@ -166,6 +166,7 @@ public class AuxiliaryUtils {
 		noteProjet.setDate(notePhase.getDate());
 		noteProjet.setProjet(notePhase.getPhase().getProjet());
 		noteProjet.setTexte(notePhase.getTexte());
+		noteProjet.setActive(notePhase.getActive());
 		return noteProjet;
 	}
 	

@@ -20,16 +20,17 @@ public class NoteAux implements Comparable<NoteAux> {
 	private String nomPhase;
 	private String nomSerie;
 	private String nomSuite;
+	private Boolean active;
+	private String activeString;
 
 	public NoteAux() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	
-
 	public NoteAux(Integer id, Integer numero, LocalDateTime date, String stringDate, String texte, String nomAuteur,
-			Integer idAuteur, Integer idSource, String nomProjet, String nomPhase, String nomSerie, String nomSuite) {
+			Integer idAuteur, Integer idSource, String nomProjet, String nomPhase, String nomSerie, String nomSuite,
+			Boolean active, String activeString) {
 		super();
 		this.id = id;
 		this.numero = numero;
@@ -43,9 +44,9 @@ public class NoteAux implements Comparable<NoteAux> {
 		this.nomPhase = nomPhase;
 		this.nomSerie = nomSerie;
 		this.nomSuite = nomSuite;
+		this.active = active;
+		this.activeString = activeString;
 	}
-
-
 
 	public NoteAux(NoteProjet note) {
 		super();
@@ -59,9 +60,15 @@ public class NoteAux implements Comparable<NoteAux> {
 		this.idSource = note.getProjet().getId();
 		this.nomProjet = note.getProjet().getNom();
 		this.nomPhase = null;
-		try {this.nomSerie = note.getSerie().getNom();}catch(Exception e) {this.nomSerie = null;};
-		
+		try {
+			this.nomSerie = note.getSerie().getNom();
+		} catch (Exception e) {
+			this.nomSerie = null;
+		}
+		;
 		this.nomSuite = null;
+		this.active = note.getActive();
+		this.activeString = note.getActive() ? "Active" : "Inactive";
 	}
 
 	public NoteAux(NotePhase note) {
@@ -77,10 +84,13 @@ public class NoteAux implements Comparable<NoteAux> {
 		this.nomProjet = note.getPhase().getProjet().getNom();
 		this.nomPhase = note.getPhase().getNom();
 		this.nomSerie = null;
-		try {this.nomSuite = note.getSuite().getNom();}catch (Exception e) {
+		try {
+			this.nomSuite = note.getSuite().getNom();
+		} catch (Exception e) {
 			this.nomSuite = null;
 		}
-		
+		this.active = note.getActive();
+		this.activeString = note.getActive() ? "Active" : "Inactive";
 	}
 
 	public Integer getId() {
@@ -162,32 +172,38 @@ public class NoteAux implements Comparable<NoteAux> {
 	public void setNomPhase(String nomPhase) {
 		this.nomPhase = nomPhase;
 	}
-	
-	
 
 	public String getNomSerie() {
 		return nomSerie;
 	}
 
-
-
 	public void setNomSerie(String nomSerie) {
 		this.nomSerie = nomSerie;
 	}
-
-
 
 	public String getNomSuite() {
 		return nomSuite;
 	}
 
-
-
 	public void setNomSuite(String nomSuite) {
 		this.nomSuite = nomSuite;
 	}
 
+	public Boolean getActive() {
+		return active;
+	}
 
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	public String getActiveString() {
+		return activeString;
+	}
+
+	public void setActiveString(String activeString) {
+		this.activeString = activeString;
+	}
 
 	@Override
 	public int compareTo(NoteAux n) {
