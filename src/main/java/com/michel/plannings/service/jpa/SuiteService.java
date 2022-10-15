@@ -100,6 +100,7 @@ public class SuiteService implements SuiteAbstractService {
 		Phase phase = suite.getPhase();
 		n.setPhase(phase);
 		n.setSuite(suite);
+		n.setActive(true);
 		notePhaseRepo.save(n);
 
 	}

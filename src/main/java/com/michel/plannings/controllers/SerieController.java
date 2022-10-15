@@ -25,7 +25,7 @@ public class SerieController {
 	SerieService serieService;
 	
 	@GetMapping("/series/projet/{idProjet}")
-	List<SuiteAux> obtenirSerieParProjet(@RequestHeader("Authorization") String token,@PathVariable(name = "idProjet") Integer idProjet){
+	List<SuiteAux> obtenirSeriesParProjet(@RequestHeader("Authorization") String token,@PathVariable(name = "idProjet") Integer idProjet){
 		
 		List<Serie> series = serieService.obtenirSerieParProjetId(idProjet);
 		List<SuiteAux> suitesAux = AuxiliaryUtils.makeListSuiteAuxForSeries(series);

@@ -90,6 +90,7 @@ public class SerieService implements SerieAbstractService {
 		n.setNumero(affecterNumero());
 		Serie serie = obtenirSerieParId(note.getIdSource());
 		Projet projet = serie.getProjet();
+		n.setActive(true);
 		n.setProjet(projet);
 		n.setSerie(serie);
 		noteProjetRepo.save(n);
