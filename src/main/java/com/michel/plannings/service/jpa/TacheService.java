@@ -37,8 +37,7 @@ public class TacheService implements TacheAbstractService {
 		t.setActif(true);
 		t.setSuspendu(false);
 		t.setUrgence(tache.getUrgence());
-		Integer numero = u.getTaches().size();
-		t.setNumero(numero + 1);
+		t.setNumero(affecterNumero(u));
 		tacheRepository.save(t);
 		
 	}
@@ -73,6 +72,21 @@ public class TacheService implements TacheAbstractService {
 		t.setFin(AuxiliaryUtils.makeDateFromStrings(tache, 1));
 		t.setUrgence(tache.getUrgence());
 		tacheRepository.save(t);
+	}
+	
+	private Integer affecterNumero(Utilisateur u) {
+		
+		Integer numero = 0;
+		List<Tache> taches = u.getTaches();
+		for(Tache t : taches) {
+			
+			Integer num = t.getNumero();
+			if(num>numero) {
+				numero = num;
+			}
+		}
+		
+		return numero + 1;
 	}
 
 }
