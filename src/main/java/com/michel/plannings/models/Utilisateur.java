@@ -26,17 +26,16 @@ public class Utilisateur {
 	private String password;
 	private boolean enabled;
 	private boolean autorise;
-	private String role;  // USER=VISITEUR, BE = RESSOURCE, CPROD = Chef produit, LABO, RESPBE
-	
+	private String role; // USER=VISITEUR, BE = RESSOURCE, CPROD = Chef produit, LABO, RESPBE
+
 	/*
 	 * 
-	 * USER: Pour consulation uniquement
-	 * BE: Développeur. Intervient dans les phases du projet. Redige les fiches
-	 * CPROD : Creation projet, creation phases, gestion générale
-	 * RESPBE: Responsable BE. Intervient aussi comme BE si besoin
-	 * LABO: Droit administrateur. Détient tous les droits sur le système. Notammet affecte les droits
-	 * 			aux utilisateur
-	 * A la création d'un compte, les droits attribués sont USER
+	 * USER: Pour consulation uniquement BE: Développeur. Intervient dans les phases
+	 * du projet. Redige les fiches CPROD : Creation projet, creation phases,
+	 * gestion générale RESPBE: Responsable BE. Intervient aussi comme BE si besoin
+	 * LABO: Droit administrateur. Détient tous les droits sur le système. Notammet
+	 * affecte les droits aux utilisateur A la création d'un compte, les droits
+	 * attribués sont USER
 	 * 
 	 */
 
@@ -46,10 +45,13 @@ public class Utilisateur {
 	@OneToMany(mappedBy = "auteur")
 	private List<Fiche> fiches;
 
+	@OneToMany(mappedBy = "ressource")
+	private List<Tache> taches;
+
 	@OneToMany(mappedBy = "chef")
 	private List<Projet> managedProjets;
 
-	@ManyToMany(fetch=FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JoinTable(name = "affectation", joinColumns = @JoinColumn(name = "utilisateur_id"), inverseJoinColumns = @JoinColumn(name = "project_id"))
 	private List<Projet> involvedProjets;
 
@@ -64,29 +66,26 @@ public class Utilisateur {
 		return id;
 	}
 
-	
-
-	
-
-	public Utilisateur(Integer id, String nom, String prenom, String type, String email, String username, String password,
-		boolean enabled, boolean autorise, String role, List<Phase> phases, List<Fiche> fiches,
-		List<Projet> managedProjets, List<Projet> involvedProjets) {
-	super();
-	this.id = id;
-	this.nom = nom;
-	this.prenom = prenom;
-	this.type = type;
-	this.email = email;
-	this.username = username;
-	this.password = password;
-	this.enabled = enabled;
-	this.autorise = autorise;
-	this.role = role;
-	this.phases = phases;
-	this.fiches = fiches;
-	this.managedProjets = managedProjets;
-	this.involvedProjets = involvedProjets;
-}
+	public Utilisateur(Integer id, String nom, String prenom, String type, String email, String username,
+			String password, boolean enabled, boolean autorise, String role, List<Phase> phases, List<Fiche> fiches,
+			List<Tache> taches, List<Projet> managedProjets, List<Projet> involvedProjets) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.type = type;
+		this.email = email;
+		this.username = username;
+		this.password = password;
+		this.enabled = enabled;
+		this.autorise = autorise;
+		this.role = role;
+		this.phases = phases;
+		this.fiches = fiches;
+		this.taches = taches;
+		this.managedProjets = managedProjets;
+		this.involvedProjets = involvedProjets;
+	}
 
 	public void setId(Integer id) {
 		this.id = id;
@@ -107,7 +106,6 @@ public class Utilisateur {
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
-
 
 	public String getType() {
 		return type;
@@ -172,7 +170,7 @@ public class Utilisateur {
 	public void setInvolvedProjets(List<Projet> involvedProjets) {
 		this.involvedProjets = involvedProjets;
 	}
-	
+
 	public String getUsername() {
 		return username;
 	}
@@ -196,8 +194,13 @@ public class Utilisateur {
 	public void setAutorise(boolean autorise) {
 		this.autorise = autorise;
 	}
-	
-	
-	
+
+	public List<Tache> getTaches() {
+		return taches;
+	}
+
+	public void setTaches(List<Tache> taches) {
+		this.taches = taches;
+	}
 
 }
