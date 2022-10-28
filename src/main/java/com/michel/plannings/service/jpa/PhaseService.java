@@ -86,6 +86,7 @@ public class PhaseService implements PhaseAbstractService {
 		p.setConforme(false);
 		p.setActif(true);
 		p.setSuspendu(false);
+		p.setPassable(false);
 		// p.setNumero(phase.getNumero());
 		p.setNom(phase.getNom());
 		p.setDebut(Constants.formatStringToDate(phase.getDateDebutString()));
@@ -93,6 +94,7 @@ public class PhaseService implements PhaseAbstractService {
 		p.setDescription(phase.getDescription());
 		p.setComplement(phase.getComplement());
 		p.setResultat(phase.getResultat());
+		p.setReserve(phase.getReserve());
 		p.setRessource(ressource);
 		p.setProjet(projet);
 		p.setNumero(affecterNumeroPhase());
@@ -128,12 +130,14 @@ public class PhaseService implements PhaseAbstractService {
 		p.setActif(phase.getActif());
 		p.setConforme(phase.getConforme());
 		p.setSuspendu(phase.getSuspendu());
+		p.setPassable(phase.getPassable());
 		p.setNom(phase.getNom());
 		p.setDebut(Constants.formatStringToDate(phase.getDateDebutString()));
 		p.setFin(Constants.formatStringToDate(phase.getDateFinString()));
 		p.setDescription(phase.getDescription());
 		p.setComplement(phase.getComplement());
 		p.setResultat(phase.getResultat());
+		p.setReserve(phase.getReserve());
 		phaseRepo.save(p);
 
 	}

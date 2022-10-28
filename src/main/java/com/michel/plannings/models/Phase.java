@@ -30,6 +30,8 @@ public class Phase {
 	private String description;
 	private String complement; // Complément d'information: échantillons, version, etc.
 	private String resultat; // Ennoncé du résultat, sa description textuelle
+	private String reserve;
+	private Boolean passable;
 	private Boolean conforme;
 	private Boolean actif;
 	private Boolean suspendu;
@@ -48,9 +50,12 @@ public class Phase {
 		// TODO Auto-generated constructor stub
 	}
 
+	
+
 	public Phase(Integer id, Integer numero, Projet projet, String nom, LocalDateTime debut, LocalDateTime fin,
-			Utilisateur ressource, String description, String complement, String resultat, Boolean conforme,
-			Boolean actif, Boolean suspendu, List<Fiche> fiches, List<NotePhase> notes, List<Suite> suites) {
+			Utilisateur ressource, String description, String complement, String resultat, String reserve,
+			Boolean passable, Boolean conforme, Boolean actif, Boolean suspendu, List<Fiche> fiches,
+			List<NotePhase> notes, List<Suite> suites) {
 		super();
 		this.id = id;
 		this.numero = numero;
@@ -62,6 +67,8 @@ public class Phase {
 		this.description = description;
 		this.complement = complement;
 		this.resultat = resultat;
+		this.reserve = reserve;
+		this.passable = passable;
 		this.conforme = conforme;
 		this.actif = actif;
 		this.suspendu = suspendu;
@@ -69,6 +76,8 @@ public class Phase {
 		this.notes = notes;
 		this.suites = suites;
 	}
+
+
 
 	public Integer getId() {
 		return id;
@@ -197,5 +206,31 @@ public class Phase {
 	public void setSuites(List<Suite> suites) {
 		this.suites = suites;
 	}
+
+
+
+	public String getReserve() {
+		return reserve;
+	}
+
+
+
+	public void setReserve(String reserve) {
+		this.reserve = reserve;
+	}
+
+
+
+	public Boolean getPassable() {
+		return passable;
+	}
+
+
+
+	public void setPassable(Boolean passable) {
+		this.passable = passable;
+	}
+	
+	
 
 }

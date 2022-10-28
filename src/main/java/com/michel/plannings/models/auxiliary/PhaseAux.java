@@ -6,7 +6,7 @@ import java.util.List;
 import com.michel.plannings.constants.Constants;
 import com.michel.plannings.models.Phase;
 
-public class PhaseAux implements Comparable<PhaseAux>{
+public class PhaseAux implements Comparable<PhaseAux> {
 
 	private Integer id;
 	private Integer numero;
@@ -22,6 +22,9 @@ public class PhaseAux implements Comparable<PhaseAux>{
 	private String description;
 	private String complement; // Complément d'information: échantillons, version, etc.
 	private String resultat;
+	private String reserve;
+	private Boolean passable;
+	private String passableString;
 	private Boolean conforme;
 	private Boolean actif;
 	private Boolean suspendu;
@@ -37,8 +40,9 @@ public class PhaseAux implements Comparable<PhaseAux>{
 
 	public PhaseAux(Integer id, Integer numero, Integer idProjet, String projet, String nom, LocalDateTime debut,
 			String dateDebutString, LocalDateTime fin, String dateFinString, Integer idRessource, String nomRessource,
-			String description, String complement, String resultat, Boolean conforme, Boolean actif, Boolean suspendu,
-			String conformeString, String actifString, String suspenduString, List<FicheAux> fiches) {
+			String description, String complement, String resultat, String reserve, Boolean passable,
+			String passableString, Boolean conforme, Boolean actif, Boolean suspendu, String conformeString,
+			String actifString, String suspenduString, List<FicheAux> fiches) {
 		super();
 		this.id = id;
 		this.numero = numero;
@@ -54,6 +58,9 @@ public class PhaseAux implements Comparable<PhaseAux>{
 		this.description = description;
 		this.complement = complement;
 		this.resultat = resultat;
+		this.reserve = reserve;
+		this.passable = passable;
+		this.passableString = passableString;
 		this.conforme = conforme;
 		this.actif = actif;
 		this.suspendu = suspendu;
@@ -79,13 +86,23 @@ public class PhaseAux implements Comparable<PhaseAux>{
 		this.description = phase.getDescription();
 		this.complement = phase.getComplement();
 		this.resultat = phase.getResultat();
+		this.reserve = phase.getReserve();
+		this.passable = phase.getPassable();
+		this.passableString = phase.getPassable() ? "Oui" : "Aucune";
 		this.conforme = phase.getConforme();
 		this.actif = phase.getActif();
 		this.suspendu = phase.getSuspendu();
 		this.conformeString = phase.getConforme() ? "Conforme" : "Non conforme";
+		/* Tant que la phase est active, la conformité est indéterminée.
+		 Elle est indiquée comme étant en cours.
+		Pour permettre un affichage Conforme / Non-conforme la phase doit être désactivée.
+		*/
 		if(!this.conforme && this.actif) {this.conformeString = "En attente";}
+		if (passable) {
+			this.conformeString = "Passable";
+		}
 		this.actifString = phase.getActif() ? "Actif" : "Inactif";
-		this.suspenduString = phase.getSuspendu() ? "Suspendue" : "En cours";
+		this.suspenduString = phase.getSuspendu() ? "Oui" : "Non";
 		this.fiches = AuxiliaryUtils.makeListFichesAux(phase.getFiches());
 
 	}
@@ -258,10 +275,34 @@ public class PhaseAux implements Comparable<PhaseAux>{
 		this.projet = projet;
 	}
 
+	public String getReserve() {
+		return reserve;
+	}
+
+	public void setReserve(String reserve) {
+		this.reserve = reserve;
+	}
+
+	public Boolean getPassable() {
+		return passable;
+	}
+
+	public void setPassable(Boolean passable) {
+		this.passable = passable;
+	}
+
+	public String getPassableString() {
+		return passableString;
+	}
+
+	public void setPassableString(String passableString) {
+		this.passableString = passableString;
+	}
+
 	@Override
 	public int compareTo(PhaseAux p) {
-		
-		 return (this.numero - p.numero);
+
+		return (this.numero - p.numero);
 	}
 
 }
