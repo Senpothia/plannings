@@ -71,7 +71,7 @@ public class AlerteAux implements Comparable<AlerteAux> {
 		this.actif = alerte.getActif();
 		this.actifString = alerte.getActif() ? "Active" : "Inactive";
 		this.suspendu = alerte.getSuspendu();
-		this.suspenduString = alerte.getSuspendu() ? "Suspendu" : "En cours";
+		this.suspenduString = alerte.getSuspendu() ? "Suspendue" : "En cours";
 
 	}
 

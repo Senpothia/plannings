@@ -71,6 +71,7 @@ public class TacheService implements TacheAbstractService {
 		t.setDebut(AuxiliaryUtils.makeDateFromStrings(tache, 0));
 		t.setFin(AuxiliaryUtils.makeDateFromStrings(tache, 1));
 		t.setUrgence(tache.getUrgence());
+		t.setSuspendu(tache.getSuspendu());
 		tacheRepository.save(t);
 	}
 	

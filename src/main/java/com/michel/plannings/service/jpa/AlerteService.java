@@ -88,6 +88,7 @@ public class AlerteService implements AlerteAbstractService{
 		a.setDate(Constants.formatStringToDate(alerte.getStringDate()));
 		a.setTexte(alerte.getTexte());
 		a.setUrgence(alerte.getUrgence());
+		a.setSuspendu(alerte.getSuspendu());
 		alerteRepo.save(a);
 		
 	}
