@@ -61,8 +61,8 @@ public class TacheAux implements Comparable<TacheAux>{
 		this.debutString = Constants.convertDateToString(debut);
 		this.fin = tache.getFin();
 		this.finString = Constants.convertDateToString(fin);
-		this.heureDebut = "10:30"; // TODO: à compléter
-		this.heureFin = "12:50"; // TODO: compléter
+		this.heureDebut = Constants.getHourFormDate(debut);
+		this.heureFin = Constants.getHourFormDate(fin);
 		this.texte = tache.getTexte();
 		this.commentaire = tache.getCommentaire();
 		this.urgence = tache.getUrgence();

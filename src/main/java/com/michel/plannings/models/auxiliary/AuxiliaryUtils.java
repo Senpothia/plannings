@@ -188,7 +188,7 @@ public class AuxiliaryUtils {
 		String date = null;
 		switch (i) {
 		case 0:
-			
+
 			date = tache.getDebutString() + " " + tache.getHeureDebut();
 			break;
 
@@ -199,7 +199,7 @@ public class AuxiliaryUtils {
 		default:
 			break;
 		}
-		
+
 		localDateTime = LocalDateTime.parse(date, formatter);
 		return localDateTime;
 	}

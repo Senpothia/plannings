@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 public class Constants {
 	
 	static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+	static DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("HH:mm");
 
 	public final static String YOUR_SECRET = "secret";
 	public final static String USER_ID = "userId";
@@ -25,6 +26,13 @@ public class Constants {
 		
 		String convertedDate =  date.format(formatter);
 		return convertedDate;
+	}
+
+	public static String getHourFormDate(LocalDateTime debut) {
+		
+		String heure =  debut.format(formatter2);
+		System.err.println("Date convertie: " + heure);
+		return heure;
 	}
 
 }
