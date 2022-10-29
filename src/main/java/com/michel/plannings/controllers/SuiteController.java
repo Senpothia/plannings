@@ -72,6 +72,12 @@ public class SuiteController {
 		suiteService.supprimerSuite(idSuite);
 	}
 
-	
+	@GetMapping("/suites/phase/{idPhase}/{idAuteur}")
+	List<SuiteAux> obtenirSuitesParPhaseAuteur(@RequestHeader("Authorization") String token,  @PathVariable(name = "idPhase") Integer idPhase, @PathVariable(name = "idAuteur") Integer idAuteur){
+		
+		List<Suite> suites = suiteService.obtenirSuiteParPhaseIdAuteurId(idPhase, idAuteur);
+		List<SuiteAux> suitesAux = AuxiliaryUtils.makeListSuiteAuxForSuites(suites);
+		return suitesAux;
+	}
 
 }

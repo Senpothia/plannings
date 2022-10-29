@@ -1,9 +1,13 @@
 package com.michel.plannings.service.jpa;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.michel.plannings.constants.Constants;
 import com.michel.plannings.models.Alerte;
@@ -15,8 +19,8 @@ import com.michel.plannings.repository.AlerteRepository;
 import com.michel.plannings.service.AlerteAbstractService;
 
 @Service
-public class AlerteService implements AlerteAbstractService{
-	
+public class AlerteService implements AlerteAbstractService {
+
 	@Autowired
 	AlerteRepository alerteRepo;
 
@@ -26,9 +30,8 @@ public class AlerteService implements AlerteAbstractService{
 	@Autowired
 	ProjetService projetService;
 
-
 	public void ajouterAlerte(AlerteAux alerte) {
-		
+
 		Utilisateur u = userService.obtenirUserParId(alerte.getIdAuteur());
 		Alerte a = new Alerte();
 		a.setAuteur(u);
@@ -44,7 +47,7 @@ public class AlerteService implements AlerteAbstractService{
 		alerteRepo.save(a);
 
 	}
-	
+
 	private Integer affecterNumero() {
 
 		Integer numero = 0;
@@ -70,14 +73,14 @@ public class AlerteService implements AlerteAbstractService{
 	}
 
 	public List<Alerte> obtenirAlertesParProjet(Integer idProjet) {
-		
+
 		Projet p = projetService.obtenirProjetParId(idProjet);
 		List<Alerte> alertes = p.getAlertes();
 		return alertes;
 	}
 
 	public Alerte obtenirAlerteParId(Integer idAlerte) {
-		
+
 		Alerte alerte = alerteRepo.getReferenceById(idAlerte);
 		return alerte;
 	}
@@ -90,21 +93,21 @@ public class AlerteService implements AlerteAbstractService{
 		a.setUrgence(alerte.getUrgence());
 		a.setSuspendu(alerte.getSuspendu());
 		alerteRepo.save(a);
-		
+
 	}
 
 	public void changerStatutAlerte(Integer idAlerte) {
-		
+
 		Alerte a = alerteRepo.getReferenceById(idAlerte);
 		a.setActif(!a.getActif());
 		alerteRepo.save(a);
 	}
 
 	public void supprimerAlerte(Integer idAlerte) {
-		
+
 		Alerte alerte = obtenirAlerteParId(idAlerte);
 		alerteRepo.delete(alerte);
-		
+
 	}
 
 	public List<Alerte> alertesParStatut(Boolean actif) {
@@ -113,8 +116,34 @@ public class AlerteService implements AlerteAbstractService{
 		return alertes;
 	}
 
-	
+	public List<Alerte> obtenirAlertesParProjetAuteur(Integer idProjet, Integer idAuteur) {
 
-	
+		Projet p = projetService.obtenirProjetParId(idProjet);
+		List<Alerte> alertes = p.getAlertes();
+		List<Alerte> alertesTriees = new ArrayList<>();
+		for (Alerte a : alertes) {
+
+			if (a.getAuteur().getId() == idAuteur) {
+
+				alertesTriees.add(a);
+			}
+		}
+		return alertesTriees;
+	}
+
+	public List<Alerte> alertesParStatutAuteur(Boolean actif, Integer idAuteur) {
+
+		List<Alerte> alertes = alerteRepo.findByActif(actif);
+		List<Alerte> alertesTriees = new ArrayList<>();
+		for (Alerte a : alertes) {
+
+			if (a.getAuteur().getId() == idAuteur) {
+
+				alertesTriees.add(a);
+			}
+		}
+		return alertesTriees;
+
+	}
 
 }

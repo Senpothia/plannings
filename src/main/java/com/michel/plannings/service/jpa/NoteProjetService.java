@@ -1,5 +1,6 @@
 package com.michel.plannings.service.jpa;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,12 +68,12 @@ public class NoteProjetService {
 	}
 
 	public List<NoteAux> obtenirNotesProjet(Integer idProjet) {
-		
+
 		Projet p = projetService.obtenirProjetParId(idProjet);
 		List<NoteProjet> notes = p.getNotes();
 		List<NoteAux> nAux = AuxiliaryUtils.makeListNotesAux(notes);
-		for(NoteAux n: nAux) {
-			
+		for (NoteAux n : nAux) {
+
 			String nomAuteur = recupererAuteur(n);
 			n.setNomAuteur(nomAuteur);
 		}
@@ -80,7 +81,7 @@ public class NoteProjetService {
 	}
 
 	private String recupererAuteur(NoteAux n) {
-		
+
 		NoteProjet note = noteProjetRepo.getReferenceById(n.getId());
 		Utilisateur u = note.getAuteur();
 		String nomAuteur = u.getPrenom() + " " + u.getNom();
@@ -88,7 +89,7 @@ public class NoteProjetService {
 	}
 
 	public NoteAux obtenirSimpleNote(Integer idNote) {
-		
+
 		NoteProjet note = noteProjetRepo.getReferenceById(idNote);
 		NoteAux nAux = new NoteAux(note);
 		String nomAuteur = recupererAuteur(nAux);
@@ -97,29 +98,51 @@ public class NoteProjetService {
 	}
 
 	public void modifierNote(NoteAux note) {
-		
+
 		NoteProjet n = noteProjetRepo.getReferenceById(note.getId());
 		n.setDate(Constants.formatStringToDate(note.getStringDate()));
 		n.setTexte(note.getTexte());
 		n.setActive(note.getActive());
 		noteProjetRepo.save(n);
-		
+
 	}
 
 	public void supprimerNoteProjet(Integer idNote) {
-		
+
 		NoteProjet n = noteProjetRepo.getReferenceById(idNote);
 		noteProjetRepo.delete(n);
-	
+
 	}
-	
+
 	public void changerStatutNoteProjet(Integer idNote) {
-		
+
 		NoteProjet n = noteProjetRepo.getReferenceById(idNote);
 		n.setActive(!n.getActive());
 		noteProjetRepo.save(n);
 	}
-	
-	
+
+	public List<NoteAux> obtenirNotesProjetAuteur(Integer idProjet, Integer idAuteur) {
+
+		Projet p = projetService.obtenirProjetParId(idProjet);
+		List<NoteProjet> notes = p.getNotes();
+		List<NoteProjet> listeNotesTriee = new ArrayList<>();
+		for (NoteProjet n : notes) {
+			
+			if(n.getAuteur().getId() ==  idAuteur) {
+			listeNotesTriee.add(n);
+				
+			}
+
+		}
+		List<NoteAux> nAux = AuxiliaryUtils.makeListNotesAux(listeNotesTriee);
+		for (NoteAux n : nAux) {
+
+			String nomAuteur = recupererAuteur(n);
+			n.setNomAuteur(nomAuteur);
+
+		}
+		return nAux;
+
+	}
 
 }

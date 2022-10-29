@@ -1,5 +1,6 @@
 package com.michel.plannings.service.jpa;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class SerieService implements SerieAbstractService {
 		
 		 Projet projet = projetService.obtenirProjetParId(idProjet);
 		 List<Serie> series = projet.getSeries();
-		return series;
+		 return series;
 	}
 
 	public void enregistrerSerie(SuiteAux suite) {
@@ -108,6 +109,22 @@ public class SerieService implements SerieAbstractService {
 		}
 		serieRepo.delete(serie);
 	
+	}
+
+	public List<Serie> obtenirSeriesParProjetIdAuteurId(Integer idProjet, Integer idAuteur) {
+		
+		 Projet projet = projetService.obtenirProjetParId(idProjet);
+		 List<Serie> series = projet.getSeries();
+		 List<Serie> seriesTriees = new ArrayList<>();
+		 for(Serie s: series) {
+			 
+			 if(s.getAuteur().getId() == idAuteur) {
+				 
+				 seriesTriees.add(s);
+			 }
+		 }
+		 return seriesTriees;
+		 
 	}
 
 }

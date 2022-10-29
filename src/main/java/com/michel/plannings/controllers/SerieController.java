@@ -72,5 +72,14 @@ public class SerieController {
 		serieService.supprimerSerie(idSerie);
 		
 	}
+	
+	@GetMapping("/series/projet/{idProjet}/{idAuteur}")
+	List<SuiteAux> obtenirSeriesParProjetAuteur(@RequestHeader("Authorization") String token,@PathVariable(name = "idProjet") Integer idProjet,@PathVariable(name = "idAuteur") Integer idAuteur){
+		
+		List<Serie> series = serieService.obtenirSeriesParProjetIdAuteurId(idProjet, idAuteur);
+		List<SuiteAux> suitesAux = AuxiliaryUtils.makeListSuiteAuxForSeries(series);
+		return suitesAux;
+		
+	}
 
 }

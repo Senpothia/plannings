@@ -219,7 +219,7 @@ public class FicheService implements FicheAbstractService {
 		Projet projet = projetService.obtenirProjetParId(idProjet);
 		List<Fiche> fiches = obtenirFichesParAuteur(ressource);
 		List<Fiche> fichesDeRessourcePourProjet = new ArrayList<>();
-		System.out.println("Nbre de fiche pour auteur: " + fiches.size());
+		
 		for (Fiche f : fiches) {
 
 			Phase ph = f.getPhase();

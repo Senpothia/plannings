@@ -34,6 +34,13 @@ public class NoteProjetController {
 		List<NoteAux> notes = noteProjetService.obtenirNotesProjet(idProjet);
 		return notes;
 	}
+	
+	@GetMapping("/notes/projet/{idProjet}/{idAuteur}")
+	List<NoteAux> obtenirNotesProjetAuteur(@RequestHeader("Authorization") String token, @PathVariable(name = "idProjet") Integer idProjet, @PathVariable(name = "idAuteur") Integer idAuteur){
+		
+		List<NoteAux> notes = noteProjetService.obtenirNotesProjetAuteur(idProjet, idAuteur);
+		return notes;
+	}
 
 	@GetMapping("/projet/note/voir/{idNote}")
 	NoteAux obtenirSimpleNoteProjet(@RequestHeader("Authorization") String token,

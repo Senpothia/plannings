@@ -1,5 +1,6 @@
 package com.michel.plannings.service.jpa;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,6 +112,21 @@ public class NotePhaseService {
 		NotePhase n = notePhaseRepo.getReferenceById(idNote);
 		n.setActive(!n.getActive());
 		notePhaseRepo.save(n);
+		
+	}
+
+	public List<NotePhase> listeNotesPhaseAuteur(Integer idPhase, Integer idAuteur) {
+
+		Phase p = phaseService.obtenirPhaseParId(idPhase);
+		List<NotePhase> notes = p.getNotes();
+		List<NotePhase> listeNotes = new ArrayList<>();
+		for(NotePhase n: notes) {
+			
+			if(n.getAuteur().getId() == idAuteur) {
+				listeNotes.add(n);
+			}
+		}
+		return listeNotes;
 		
 	}
 

@@ -37,6 +37,14 @@ public class NotePhaseController {
 		return nAux;
 	}
 	
+	@GetMapping("/notes/liste/{idPhase}/{idAuteur}")
+	List<NoteAux> obtenirListeNotesPhaseAuteur(@RequestHeader("Authorization") String token, @PathVariable(name = "idPhase") Integer idPhase, @PathVariable(name = "idAuteur") Integer idAuteur){
+		
+		List<NotePhase> notes = notePhaseService.listeNotesPhaseAuteur(idPhase, idAuteur);
+		List<NoteAux> nAux = AuxiliaryUtils.makeListNotesAuxForPhase(notes);
+		return nAux;
+	}
+	
 	@GetMapping("/phase/note/voir/{idNote}")
 	NoteAux obtenirSimpleNotePhase(@RequestHeader("Authorization") String token, @PathVariable(name = "idNote") Integer idNote) {
 		

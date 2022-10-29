@@ -135,4 +135,20 @@ public class SuiteService implements SuiteAbstractService {
 
 	}
 
+	public List<Suite> obtenirSuiteParPhaseIdAuteurId(Integer idPhase, Integer idAuteur) {
+		
+		Phase phase = phaseService.obtenirPhaseParId(idPhase);
+		List<Suite> suites = phase.getSuites();
+		List<Suite> suitesTriees = new ArrayList<>();
+		for(Suite s: suites) {
+			
+			if(s.getAuteur().getId() == idAuteur) {
+				
+				suitesTriees.add(s);
+			}
+		}
+		
+		return suitesTriees;
+	}
+
 }

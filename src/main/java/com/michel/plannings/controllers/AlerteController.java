@@ -42,6 +42,17 @@ public class AlerteController {
 		return aAux;
 	}
 	
+	
+	@GetMapping("/alertes/projet/{idProjet}/{idAuteur}")
+	List<AlerteAux> obtenirAlertesParProjetAuteur(@RequestHeader("Authorization") String token,@PathVariable(name = "idProjet") Integer idProjet,@PathVariable(name = "idAuteur") Integer idAuteur){
+		
+		List<Alerte> alertes =  alerteService.obtenirAlertesParProjetAuteur(idProjet, idAuteur);
+		List<AlerteAux> aAux = AuxiliaryUtils.makeListAlertesAux(alertes);
+		return aAux;
+	}
+	
+	
+	
 	@GetMapping("/alerte/voir/{idAlerte}")
 	AlerteAux obtenirSimpleAlerte(@RequestHeader("Authorization") String token,@PathVariable(name = "idAlerte") Integer idAlerte) {
 		
@@ -76,12 +87,19 @@ public class AlerteController {
 	@GetMapping("/alertes/liste/actives/{actif}")
 	List<AlerteAux> obtenirListeActives(@RequestHeader("Authorization") String token, @PathVariable(name = "actif") Boolean actif){
 		
-		List<Alerte>  alertes =  alerteService.alertesParStatut(actif);;
+		List<Alerte>  alertes =  alerteService.alertesParStatut(actif);
 		List<AlerteAux> aAux = AuxiliaryUtils.makeListAlertesAux(alertes);
 		return aAux;
 		
 	}
 	
-	
+	@GetMapping("/alertes/liste/actives/{actif}/{idAuteur}")
+	List<AlerteAux> obtenirListeActivesAuteur(@RequestHeader("Authorization") String token,@PathVariable(name = "actif") Boolean actif,@PathVariable(name = "idAuteur") Integer idAuteur){
+		
+		List<Alerte>  alertes =  alerteService.alertesParStatutAuteur(actif, idAuteur);
+		List<AlerteAux> aAux = AuxiliaryUtils.makeListAlertesAux(alertes);
+		return aAux;
+		
+	}
 
 }
