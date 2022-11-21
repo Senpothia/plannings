@@ -72,6 +72,7 @@ public class ProjetService implements ProjetAbstractService {
 		phaseVide.setActif(true);
 		phaseVide.setConforme(true);
 		phaseVide.setSuspendu(true);
+		phaseVide.setPassable(false);
 		phaseService.enregistrerUnePhase(phaseVide);
 		
 	}
