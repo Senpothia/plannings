@@ -5,7 +5,7 @@ import java.time.temporal.ChronoUnit;
 
 import com.michel.plannings.models.auxiliary.AuxiliaryUtils;
 
-public class GanttRow {
+public class GanttRow implements Comparable <GanttRow>{
 
 	private String taskId;
 	private String taskName;
@@ -29,7 +29,7 @@ public class GanttRow {
 		this.ressource = phase.getRessource().getNom();
 		this.startDate = AuxiliaryUtils.convertDateToString(phase.getDebut());
 		this.endDate = AuxiliaryUtils.convertDateToString(phase.getFin());
-		this.duration = (int) ChronoUnit.HOURS.between(phase.getFin(), phase.getDebut());
+		this.duration = 0;
 		this.percent = 0;
 		this.dependencies = null;
 
@@ -97,6 +97,13 @@ public class GanttRow {
 
 	public void setRessource(String ressource) {
 		this.ressource = ressource;
+	}
+	
+	@Override
+	public int compareTo(GanttRow ganttRow) {
+		int id = Integer.parseInt(this.taskId);
+		int idRow = Integer.parseInt(ganttRow.taskId);
+		return (id - idRow);
 	}
 
 

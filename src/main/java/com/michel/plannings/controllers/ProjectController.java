@@ -1,6 +1,7 @@
 package com.michel.plannings.controllers;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.michel.plannings.models.GanttRow;
 import com.michel.plannings.models.Projet;
 import com.michel.plannings.models.Utilisateur;
 
@@ -186,6 +188,15 @@ public class ProjectController {
 		List<Utilisateur> ressources = projetService.listeRessourcesPourProjetId(id);
 		List<UtilisateurAux> ressourcesAux = AuxiliaryUtils.makeListUtilisateursAux(ressources);
 		return ressourcesAux;
+	}
+	
+	@GetMapping("/gantt/{id}") // récupération diagramme de Gantt par id projet
+	public List<GanttRow> ganttProjetParId(@RequestHeader("Authorization") String token, @PathVariable(name = "id") Integer id) {
+
+		Projet projet = projetService.obtenirProjetParId(id);
+		List<GanttRow> ganttRows = AuxiliaryUtils.makeListGanttRows(projet.getPhases());
+		Collections.sort(ganttRows);
+		return ganttRows;
 	}
 
 }

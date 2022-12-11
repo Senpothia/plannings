@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.michel.plannings.models.Alerte;
 import com.michel.plannings.models.Fiche;
+import com.michel.plannings.models.GanttRow;
 import com.michel.plannings.models.NotePhase;
 import com.michel.plannings.models.NoteProjet;
 import com.michel.plannings.models.Phase;
@@ -209,6 +210,17 @@ public class AuxiliaryUtils {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		String stringDate = date.format(formatter);
 		return stringDate;
+	}
+
+	public static List<GanttRow> makeListGanttRows(List<Phase> phases) {
+		
+		List<GanttRow> rows = new ArrayList<>();
+		for(Phase p: phases) {
+			
+			GanttRow r = new GanttRow(p);
+			rows.add(r);
+		}
+		return rows;
 	}
 
 }
