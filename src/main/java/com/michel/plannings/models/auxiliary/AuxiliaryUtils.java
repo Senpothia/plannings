@@ -204,4 +204,11 @@ public class AuxiliaryUtils {
 		return localDateTime;
 	}
 
+	public static String convertDateToString(LocalDateTime date) {
+
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		String stringDate = date.format(formatter);
+		return stringDate;
+	}
+
 }
