@@ -32,17 +32,20 @@ public class PhaseAux implements Comparable<PhaseAux> {
 	private String actifString;
 	private String suspenduString;
 	private List<FicheAux> fiches;
+	private Integer avancement;
 
 	public PhaseAux() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
+
+
 	public PhaseAux(Integer id, Integer numero, Integer idProjet, String projet, String nom, LocalDateTime debut,
 			String dateDebutString, LocalDateTime fin, String dateFinString, Integer idRessource, String nomRessource,
 			String description, String complement, String resultat, String reserve, Boolean passable,
 			String passableString, Boolean conforme, Boolean actif, Boolean suspendu, String conformeString,
-			String actifString, String suspenduString, List<FicheAux> fiches) {
+			String actifString, String suspenduString, List<FicheAux> fiches, Integer avancement) {
 		super();
 		this.id = id;
 		this.numero = numero;
@@ -68,7 +71,10 @@ public class PhaseAux implements Comparable<PhaseAux> {
 		this.actifString = actifString;
 		this.suspenduString = suspenduString;
 		this.fiches = fiches;
+		this.avancement = avancement;
 	}
+
+
 
 	public PhaseAux(Phase phase) {
 		super();
@@ -104,6 +110,7 @@ public class PhaseAux implements Comparable<PhaseAux> {
 		this.actifString = phase.getActif() ? "Actif" : "Inactif";
 		this.suspenduString = phase.getSuspendu() ? "Oui" : "Non";
 		this.fiches = AuxiliaryUtils.makeListFichesAux(phase.getFiches());
+		this.avancement = phase.getAvancement();
 
 	}
 
@@ -297,6 +304,16 @@ public class PhaseAux implements Comparable<PhaseAux> {
 
 	public void setPassableString(String passableString) {
 		this.passableString = passableString;
+	}
+	
+	
+
+	public Integer getAvancement() {
+		return avancement;
+	}
+
+	public void setAvancement(Integer avancement) {
+		this.avancement = avancement;
 	}
 
 	@Override

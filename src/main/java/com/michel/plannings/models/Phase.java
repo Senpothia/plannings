@@ -2,10 +2,16 @@ package com.michel.plannings.models;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -35,6 +41,7 @@ public class Phase {
 	private Boolean conforme;
 	private Boolean actif;
 	private Boolean suspendu;
+	private Integer avancement;
 
 	@OneToMany(mappedBy = "phase")
 	private List<Fiche> fiches;
@@ -45,17 +52,19 @@ public class Phase {
 	@OneToMany(mappedBy = "phase")
 	private List<Suite> suites;
 
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@JoinTable(name = "dependances", joinColumns = @JoinColumn(name = "secondaire_id"), inverseJoinColumns = @JoinColumn(name = "primaire_id"))
+	private Set<Phase> dependances;
+
 	public Phase() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	
-
 	public Phase(Integer id, Integer numero, Projet projet, String nom, LocalDateTime debut, LocalDateTime fin,
 			Utilisateur ressource, String description, String complement, String resultat, String reserve,
-			Boolean passable, Boolean conforme, Boolean actif, Boolean suspendu, List<Fiche> fiches,
-			List<NotePhase> notes, List<Suite> suites) {
+			Boolean passable, Boolean conforme, Boolean actif, Boolean suspendu, Integer avancement, List<Fiche> fiches,
+			List<NotePhase> notes, List<Suite> suites, Set<Phase> dependances) {
 		super();
 		this.id = id;
 		this.numero = numero;
@@ -72,12 +81,12 @@ public class Phase {
 		this.conforme = conforme;
 		this.actif = actif;
 		this.suspendu = suspendu;
+		this.avancement = avancement;
 		this.fiches = fiches;
 		this.notes = notes;
 		this.suites = suites;
+		this.dependances = dependances;
 	}
-
-
 
 	public Integer getId() {
 		return id;
@@ -207,30 +216,36 @@ public class Phase {
 		this.suites = suites;
 	}
 
-
-
 	public String getReserve() {
 		return reserve;
 	}
-
-
 
 	public void setReserve(String reserve) {
 		this.reserve = reserve;
 	}
 
-
-
 	public Boolean getPassable() {
 		return passable;
 	}
 
-
-
 	public void setPassable(Boolean passable) {
 		this.passable = passable;
 	}
-	
-	
+
+	public Integer getAvancement() {
+		return avancement;
+	}
+
+	public void setAvancement(Integer avancement) {
+		this.avancement = avancement;
+	}
+
+	public Set<Phase> getDependances() {
+		return dependances;
+	}
+
+	public void setDependances(Set<Phase> dependances) {
+		this.dependances = dependances;
+	}
 
 }

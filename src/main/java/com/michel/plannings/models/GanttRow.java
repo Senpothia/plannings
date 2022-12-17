@@ -2,10 +2,13 @@ package com.michel.plannings.models;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import com.michel.plannings.models.auxiliary.AuxiliaryUtils;
 
-public class GanttRow implements Comparable <GanttRow>{
+public class GanttRow implements Comparable<GanttRow> {
 
 	private String taskId;
 	private String taskName;
@@ -21,7 +24,6 @@ public class GanttRow implements Comparable <GanttRow>{
 		// TODO Auto-generated constructor stub
 	}
 
-
 	public GanttRow(Phase phase) {
 
 		this.taskId = String.valueOf(phase.getId());
@@ -30,9 +32,29 @@ public class GanttRow implements Comparable <GanttRow>{
 		this.startDate = AuxiliaryUtils.convertDateToString(phase.getDebut());
 		this.endDate = AuxiliaryUtils.convertDateToString(phase.getFin());
 		this.duration = 0;
-		this.percent = 0;
-		this.dependencies = null;
+		this.percent = phase.getAvancement();
+		this.dependencies = makeDependancies(phase);
 
+	}
+
+	private String makeDependancies(Phase phase) {
+
+		String dependencies = new String();
+		Object[] dependances  = phase.getDependances().toArray();
+		if (dependances.length !=0) {
+			
+			dependencies = String.valueOf(dependances[0]);
+			for (int i=1; i<dependances.length;i++) {
+
+				dependencies = dependencies + "," + dependances[i];
+			}
+			return dependencies;
+			
+		} else {
+			return null;
+		}
+
+	
 	}
 
 	public String getTaskId() {
@@ -90,7 +112,7 @@ public class GanttRow implements Comparable <GanttRow>{
 	public void setDependencies(String dependencies) {
 		this.dependencies = dependencies;
 	}
-	
+
 	public String getRessource() {
 		return ressource;
 	}
@@ -98,13 +120,12 @@ public class GanttRow implements Comparable <GanttRow>{
 	public void setRessource(String ressource) {
 		this.ressource = ressource;
 	}
-	
+
 	@Override
 	public int compareTo(GanttRow ganttRow) {
 		int id = Integer.parseInt(this.taskId);
 		int idRow = Integer.parseInt(ganttRow.taskId);
 		return (id - idRow);
 	}
-
 
 }
