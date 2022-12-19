@@ -4,7 +4,7 @@ import com.michel.plannings.models.auxiliary.AuxiliaryUtils;
 
 public class GanttRow implements Comparable<GanttRow> {
 
-	private String taskId;
+	private String taskId; 		 // id de la phase converti en string
 	private String taskName;
 	private String ressource;
 	private String startDate;
@@ -27,32 +27,11 @@ public class GanttRow implements Comparable<GanttRow> {
 		this.endDate = AuxiliaryUtils.convertDateToString(phase.getFin());
 		this.duration = 0;
 		this.percent = phase.getAvancement();
-		this.dependencies = makeDependancies(phase);
+		this.dependencies = "";
 
 	}
 
-	private String makeDependancies(Phase phase) {
-
-		/*
-		String dependencies = new String();
-		Object[] dependances  = phase.getDependances().toArray();
-		if (dependances.length !=0) {
-			
-			dependencies = String.valueOf(dependances[0]);
-			for (int i=1; i<dependances.length;i++) {
-
-				dependencies = dependencies + "," + dependances[i];
-			}
-			return dependencies;
-			
-		} else {
-			return null;
-		}
-		*/
-		return null;
 	
-	}
-
 	public String getTaskId() {
 		return taskId;
 	}

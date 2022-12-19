@@ -23,6 +23,8 @@ import com.michel.plannings.models.Utilisateur;
 import com.michel.plannings.models.auxiliary.AuxiliaryUtils;
 import com.michel.plannings.models.auxiliary.ProjetAux;
 import com.michel.plannings.models.auxiliary.UtilisateurAux;
+import com.michel.plannings.service.jpa.DependanceService;
+import com.michel.plannings.service.jpa.GanttRowService;
 import com.michel.plannings.service.jpa.ProjetService;
 import com.michel.plannings.service.jpa.UserService;
 
@@ -35,6 +37,12 @@ public class ProjectController {
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	DependanceService dependanceService;
+	
+	@Autowired
+	GanttRowService ganttRowService;
 
 	@PostMapping("/creer")
 	public void creerProjet(@RequestHeader("Authorization") String token, @RequestBody ProjetAux projet) {
@@ -196,6 +204,10 @@ public class ProjectController {
 		Projet projet = projetService.obtenirProjetParId(id);
 		List<GanttRow> ganttRows = AuxiliaryUtils.makeListGanttRows(projet.getPhases());
 		Collections.sort(ganttRows);
+		for(GanttRow r: ganttRows) {
+			
+			r.setDependencies(ganttRowService.getGraphDependencies(r));
+		}
 		return ganttRows;
 	}
 
