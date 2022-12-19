@@ -1,7 +1,9 @@
 package com.michel.plannings.models.auxiliary;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import com.michel.plannings.constants.Constants;
 import com.michel.plannings.models.Phase;
@@ -33,19 +35,21 @@ public class PhaseAux implements Comparable<PhaseAux> {
 	private String suspenduString;
 	private List<FicheAux> fiches;
 	private Integer avancement;
+	private Boolean liaison; // flag indiquant une liaison avec une phase spécifique (passée en paramètre
+								// d'une méthode)
+	private List<PhaseAux> dependances;
 
 	public PhaseAux() {
 		super();
-		// TODO Auto-generated constructor stub
+
 	}
-
-
 
 	public PhaseAux(Integer id, Integer numero, Integer idProjet, String projet, String nom, LocalDateTime debut,
 			String dateDebutString, LocalDateTime fin, String dateFinString, Integer idRessource, String nomRessource,
 			String description, String complement, String resultat, String reserve, Boolean passable,
 			String passableString, Boolean conforme, Boolean actif, Boolean suspendu, String conformeString,
-			String actifString, String suspenduString, List<FicheAux> fiches, Integer avancement) {
+			String actifString, String suspenduString, List<FicheAux> fiches, Integer avancement, Boolean liaison,
+			List<PhaseAux> dependances) {
 		super();
 		this.id = id;
 		this.numero = numero;
@@ -72,9 +76,9 @@ public class PhaseAux implements Comparable<PhaseAux> {
 		this.suspenduString = suspenduString;
 		this.fiches = fiches;
 		this.avancement = avancement;
+		this.liaison = liaison;
+		this.dependances = dependances;
 	}
-
-
 
 	public PhaseAux(Phase phase) {
 		super();
@@ -99,11 +103,14 @@ public class PhaseAux implements Comparable<PhaseAux> {
 		this.actif = phase.getActif();
 		this.suspendu = phase.getSuspendu();
 		this.conformeString = phase.getConforme() ? "Conforme" : "Non conforme";
-		/* Tant que la phase est active, la conformité est indéterminée.
-		 Elle est indiquée comme étant en cours.
-		Pour permettre un affichage Conforme / Non-conforme la phase doit être désactivée.
-		*/
-		if(!this.conforme && this.actif) {this.conformeString = "En attente";}
+		/*
+		 * Tant que la phase est active, la conformité est indéterminée. Elle est
+		 * indiquée comme étant en cours. Pour permettre un affichage Conforme /
+		 * Non-conforme la phase doit être désactivée.
+		 */
+		if (!this.conforme && this.actif) {
+			this.conformeString = "En attente";
+		}
 		if (passable) {
 			this.conformeString = "Passable";
 		}
@@ -111,6 +118,8 @@ public class PhaseAux implements Comparable<PhaseAux> {
 		this.suspenduString = phase.getSuspendu() ? "Oui" : "Non";
 		this.fiches = AuxiliaryUtils.makeListFichesAux(phase.getFiches());
 		this.avancement = phase.getAvancement();
+		this.liaison = false;
+		this.dependances = new ArrayList<>();
 
 	}
 
@@ -305,8 +314,6 @@ public class PhaseAux implements Comparable<PhaseAux> {
 	public void setPassableString(String passableString) {
 		this.passableString = passableString;
 	}
-	
-	
 
 	public Integer getAvancement() {
 		return avancement;
@@ -316,10 +323,26 @@ public class PhaseAux implements Comparable<PhaseAux> {
 		this.avancement = avancement;
 	}
 
+	public Boolean getLiaison() {
+		return liaison;
+	}
+
+	public void setLiaison(Boolean liaison) {
+		this.liaison = liaison;
+	}
+
 	@Override
 	public int compareTo(PhaseAux p) {
 
 		return (this.numero - p.numero);
+	}
+
+	public List<PhaseAux> getDependances() {
+		return dependances;
+	}
+
+	public void setDependances(List<PhaseAux> dependances) {
+		this.dependances = dependances;
 	}
 
 }

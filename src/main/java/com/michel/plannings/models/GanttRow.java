@@ -1,11 +1,5 @@
 package com.michel.plannings.models;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import com.michel.plannings.models.auxiliary.AuxiliaryUtils;
 
 public class GanttRow implements Comparable<GanttRow> {
@@ -39,6 +33,7 @@ public class GanttRow implements Comparable<GanttRow> {
 
 	private String makeDependancies(Phase phase) {
 
+		/*
 		String dependencies = new String();
 		Object[] dependances  = phase.getDependances().toArray();
 		if (dependances.length !=0) {
@@ -53,7 +48,8 @@ public class GanttRow implements Comparable<GanttRow> {
 		} else {
 			return null;
 		}
-
+		*/
+		return null;
 	
 	}
 

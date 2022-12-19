@@ -16,7 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Phase {
+public class Phase implements Comparable<Phase> {
 
 	@Id
 	@GeneratedValue
@@ -52,10 +52,6 @@ public class Phase {
 	@OneToMany(mappedBy = "phase")
 	private List<Suite> suites;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-	@JoinTable(name = "dependances", joinColumns = @JoinColumn(name = "secondaire_id"), inverseJoinColumns = @JoinColumn(name = "primaire_id"))
-	private Set<Phase> dependances;
-
 	public Phase() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -64,7 +60,7 @@ public class Phase {
 	public Phase(Integer id, Integer numero, Projet projet, String nom, LocalDateTime debut, LocalDateTime fin,
 			Utilisateur ressource, String description, String complement, String resultat, String reserve,
 			Boolean passable, Boolean conforme, Boolean actif, Boolean suspendu, Integer avancement, List<Fiche> fiches,
-			List<NotePhase> notes, List<Suite> suites, Set<Phase> dependances) {
+			List<NotePhase> notes, List<Suite> suites) {
 		super();
 		this.id = id;
 		this.numero = numero;
@@ -85,7 +81,6 @@ public class Phase {
 		this.fiches = fiches;
 		this.notes = notes;
 		this.suites = suites;
-		this.dependances = dependances;
 	}
 
 	public Integer getId() {
@@ -240,12 +235,10 @@ public class Phase {
 		this.avancement = avancement;
 	}
 
-	public Set<Phase> getDependances() {
-		return dependances;
-	}
+	@Override
+	public int compareTo(Phase p) {
 
-	public void setDependances(Set<Phase> dependances) {
-		this.dependances = dependances;
+		return (this.numero - p.numero);
 	}
 
 }

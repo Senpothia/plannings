@@ -4,7 +4,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.michel.plannings.models.Alerte;
 import com.michel.plannings.models.Fiche;
@@ -17,9 +21,12 @@ import com.michel.plannings.models.Serie;
 import com.michel.plannings.models.Suite;
 import com.michel.plannings.models.Tache;
 import com.michel.plannings.models.Utilisateur;
+import com.michel.plannings.repository.DependanceRepository;
+import com.michel.plannings.service.jpa.DependanceService;
+import com.michel.plannings.service.jpa.PhaseService;
 
 public class AuxiliaryUtils {
-
+	
 	public static List<FicheAux> makeListFichesAux(List<Fiche> fiches) {
 
 		List<FicheAux> fichesAux = new ArrayList<>();
@@ -34,7 +41,8 @@ public class AuxiliaryUtils {
 	}
 
 	public static List<PhaseAux> makeListPhasesAux(List<Phase> phases) {
-
+		
+		
 		List<PhaseAux> phasesAux = new ArrayList<>();
 		for (Phase p : phases) {
 
@@ -45,6 +53,8 @@ public class AuxiliaryUtils {
 		Collections.sort(phasesAux);
 		return phasesAux;
 	}
+	
+	
 
 	public static List<UtilisateurAux> makeListUtilisateursAux(List<Utilisateur> utilisateurs) {
 
@@ -222,5 +232,7 @@ public class AuxiliaryUtils {
 		}
 		return rows;
 	}
+	
+	
 
 }

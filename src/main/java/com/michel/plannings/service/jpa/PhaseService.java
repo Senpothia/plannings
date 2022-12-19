@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.michel.plannings.constants.Constants;
+import com.michel.plannings.models.Dependance;
 import com.michel.plannings.models.Fiche;
 import com.michel.plannings.models.NotePhase;
 import com.michel.plannings.models.Phase;
@@ -36,6 +37,9 @@ public class PhaseService implements PhaseAbstractService {
 	@Autowired
 	NotePhaseRepository notePhaseRepo;
 	
+	@Autowired
+	DependanceService dependanceService;
+
 	@Autowired
 	SuiteRepository suiteRepo;
 
@@ -158,10 +162,10 @@ public class PhaseService implements PhaseAbstractService {
 			n.setSuite(null);
 			notePhaseRepo.save(n);
 		}
-		
+
 		List<Suite> suites = phase.getSuites();
-		for(Suite s: suites) {
-			
+		for (Suite s : suites) {
+
 			suiteRepo.delete(s);
 		}
 		phaseRepo.delete(phase);
@@ -185,6 +189,38 @@ public class PhaseService implements PhaseAbstractService {
 	public void enregistrerUnePhase(Phase phaseVide) {
 
 		phaseRepo.save(phaseVide);
+
+	}
+
+	public void creerDependance(Integer idDependance, Integer idPhase, boolean statut) {
+
+	
+
+		/*
+		 * if (!statut) {
+		 * 
+		 * System.err.println(LocalDateTime.now() + ": ajout dépendance");
+		 * phase.getDependances().add(dependance);
+		 * 
+		 * } else {
+		 * 
+		 * System.err.println(LocalDateTime.now() + ": suppression dépendance");
+		 * phase.getDependances().remove(dependance);
+		 * 
+		 * }
+		 */
+
+		if(!statut) {
+			
+			Dependance d = new Dependance();
+			d.setAntecedente(idDependance);
+			d.setSuivante(idPhase);
+			dependanceService.creerDependance(d);
+		}else {
+			
+			dependanceService.supprimerDependance(idPhase, idDependance);
+			
+		}
 
 	}
 

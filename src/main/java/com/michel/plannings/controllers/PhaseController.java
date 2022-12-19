@@ -12,17 +12,16 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.michel.plannings.models.Fiche;
+import com.michel.plannings.models.Dependance;
 import com.michel.plannings.models.Phase;
 import com.michel.plannings.models.Projet;
 import com.michel.plannings.models.Utilisateur;
 import com.michel.plannings.models.auxiliary.AuxiliaryUtils;
 import com.michel.plannings.models.auxiliary.PhaseAux;
 import com.michel.plannings.models.auxiliary.ProjetAux;
-import com.michel.plannings.service.jpa.FicheService;
+import com.michel.plannings.service.jpa.DependanceService;
 import com.michel.plannings.service.jpa.PhaseService;
 import com.michel.plannings.service.jpa.ProjetService;
 import com.michel.plannings.service.jpa.UserService;
@@ -40,6 +39,9 @@ public class PhaseController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	DependanceService dependanceService;
 	
 	
 	@PostMapping("/creer/{projet}/{ressource}")
@@ -134,6 +136,21 @@ public class PhaseController {
 		PhaseAux phase = new PhaseAux(phaseVide);
 		return phase;
 		
+	}
+	
+	@GetMapping("/liaison/selection/{phase}/{dependance}/{statut}")
+	void creerLiaison(@RequestHeader("Authorization") String token, @PathVariable(name = "phase") Integer idPhase, @PathVariable(name = "dependance") Integer idDependance, @PathVariable(name = "statut") boolean statut) {
+		
+		phaseService.creerDependance(idDependance, idPhase, statut);
+		
+		
+	}
+	
+	@GetMapping("/liaison/dependances/{phase}")
+	List<Dependance> obtenirDependances(@RequestHeader("Authorization") String token,@PathVariable(name = "phase") Integer idPhase){
+		
+		List<Dependance> dependances = dependanceService.listeDependances(idPhase);
+		return dependances;
 	}
 	
 	
