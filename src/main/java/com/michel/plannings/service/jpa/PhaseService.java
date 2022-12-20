@@ -194,22 +194,6 @@ public class PhaseService implements PhaseAbstractService {
 
 	public void creerDependance(Integer idDependance, Integer idPhase, boolean statut) {
 
-	
-
-		/*
-		 * if (!statut) {
-		 * 
-		 * System.err.println(LocalDateTime.now() + ": ajout dépendance");
-		 * phase.getDependances().add(dependance);
-		 * 
-		 * } else {
-		 * 
-		 * System.err.println(LocalDateTime.now() + ": suppression dépendance");
-		 * phase.getDependances().remove(dependance);
-		 * 
-		 * }
-		 */
-
 		if(!statut) {
 			
 			Dependance d = new Dependance();
@@ -222,6 +206,15 @@ public class PhaseService implements PhaseAbstractService {
 			
 		}
 
+	}
+
+	public void modifierPhaseSurLiaison(PhaseAux phase, Integer idPhase) {
+		
+		Phase p = obtenirPhaseParId(idPhase);
+		p.setDebut(Constants.formatStringToDate(phase.getDateDebutString()));
+		p.setFin(Constants.formatStringToDate(phase.getDateFinString()));
+		phaseRepo.save(p);
+		
 	}
 
 }

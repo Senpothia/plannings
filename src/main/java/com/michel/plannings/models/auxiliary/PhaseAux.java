@@ -38,18 +38,20 @@ public class PhaseAux implements Comparable<PhaseAux> {
 	private Boolean liaison; // flag indiquant une liaison avec une phase spécifique (passée en paramètre
 								// d'une méthode)
 	private List<PhaseAux> dependances;
+	private Boolean conflit;
 
 	public PhaseAux() {
 		super();
 
 	}
 
+	
 	public PhaseAux(Integer id, Integer numero, Integer idProjet, String projet, String nom, LocalDateTime debut,
 			String dateDebutString, LocalDateTime fin, String dateFinString, Integer idRessource, String nomRessource,
 			String description, String complement, String resultat, String reserve, Boolean passable,
 			String passableString, Boolean conforme, Boolean actif, Boolean suspendu, String conformeString,
 			String actifString, String suspenduString, List<FicheAux> fiches, Integer avancement, Boolean liaison,
-			List<PhaseAux> dependances) {
+			List<PhaseAux> dependances, Boolean conflit) {
 		super();
 		this.id = id;
 		this.numero = numero;
@@ -78,7 +80,9 @@ public class PhaseAux implements Comparable<PhaseAux> {
 		this.avancement = avancement;
 		this.liaison = liaison;
 		this.dependances = dependances;
+		this.conflit = conflit;
 	}
+
 
 	public PhaseAux(Phase phase) {
 		super();
@@ -120,6 +124,7 @@ public class PhaseAux implements Comparable<PhaseAux> {
 		this.avancement = phase.getAvancement();
 		this.liaison = false;
 		this.dependances = new ArrayList<>();
+		this.conflit = false;
 
 	}
 
@@ -344,5 +349,17 @@ public class PhaseAux implements Comparable<PhaseAux> {
 	public void setDependances(List<PhaseAux> dependances) {
 		this.dependances = dependances;
 	}
+
+
+	public Boolean getConflit() {
+		return conflit;
+	}
+
+
+	public void setConflit(Boolean conflit) {
+		this.conflit = conflit;
+	}
+	
+	
 
 }

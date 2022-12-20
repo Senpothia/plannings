@@ -153,6 +153,13 @@ public class PhaseController {
 		return dependances;
 	}
 	
+	@PostMapping("/modifier/liaison/{phase}")
+	void modifierPhasePourLiaison(@RequestHeader("Authorization") String token, @RequestBody PhaseAux phase, @PathVariable(name = "phase") Integer idPhase) {
+		
+		phaseService.modifierPhaseSurLiaison(phase, idPhase);
+		
+	}
+	
 	
 
 }
