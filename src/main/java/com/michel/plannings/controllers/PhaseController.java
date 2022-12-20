@@ -160,6 +160,16 @@ public class PhaseController {
 		
 	}
 	
+	@GetMapping("/liaison/antecedents/{phase}")
+	List<Dependance> obtenirAntecedents(@RequestHeader("Authorization") String token, @PathVariable(name = "phase") Integer idPhase){
+		
+		List<Dependance> antecedents = dependanceService.listesAntecedents(idPhase);
+		return antecedents;
+	}
+		
+		
+	
+	
 	
 
 }

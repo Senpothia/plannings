@@ -39,19 +39,19 @@ public class PhaseAux implements Comparable<PhaseAux> {
 								// d'une méthode)
 	private List<PhaseAux> dependances;
 	private Boolean conflit;
+	private Boolean antecedent;
 
 	public PhaseAux() {
 		super();
 
 	}
 
-	
 	public PhaseAux(Integer id, Integer numero, Integer idProjet, String projet, String nom, LocalDateTime debut,
 			String dateDebutString, LocalDateTime fin, String dateFinString, Integer idRessource, String nomRessource,
 			String description, String complement, String resultat, String reserve, Boolean passable,
 			String passableString, Boolean conforme, Boolean actif, Boolean suspendu, String conformeString,
 			String actifString, String suspenduString, List<FicheAux> fiches, Integer avancement, Boolean liaison,
-			List<PhaseAux> dependances, Boolean conflit) {
+			List<PhaseAux> dependances, Boolean conflit, Boolean antecedent) {
 		super();
 		this.id = id;
 		this.numero = numero;
@@ -81,8 +81,8 @@ public class PhaseAux implements Comparable<PhaseAux> {
 		this.liaison = liaison;
 		this.dependances = dependances;
 		this.conflit = conflit;
+		this.antecedent = antecedent;
 	}
-
 
 	public PhaseAux(Phase phase) {
 		super();
@@ -125,6 +125,7 @@ public class PhaseAux implements Comparable<PhaseAux> {
 		this.liaison = false;
 		this.dependances = new ArrayList<>();
 		this.conflit = false;
+		this.antecedent = false;
 
 	}
 
@@ -350,16 +351,20 @@ public class PhaseAux implements Comparable<PhaseAux> {
 		this.dependances = dependances;
 	}
 
-
 	public Boolean getConflit() {
 		return conflit;
 	}
 
-
 	public void setConflit(Boolean conflit) {
 		this.conflit = conflit;
 	}
-	
-	
+
+	public Boolean getAntecedent() {
+		return antecedent;
+	}
+
+	public void setAntecedent(Boolean antecedent) {
+		this.antecedent = antecedent;
+	}
 
 }

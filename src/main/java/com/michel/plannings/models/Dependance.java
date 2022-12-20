@@ -15,6 +15,9 @@ public class Dependance {
 	private Integer suivante;	  // id de la phase considérée relativement à la dépendance
 
 	public Dependance() {
+		
+		
+		
 		super();
 		// TODO Auto-generated constructor stub
 	}

@@ -37,4 +37,12 @@ public class DependanceService implements DependanceAbstractService{
 		dependanceRepo.delete(d);
 	}
 
+
+
+	public List<Dependance> listesAntecedents(Integer idPhase) {
+		
+		List<Dependance> antecedents = dependanceRepo.findByAntecedente(idPhase);
+		return antecedents;
+	}
+
 }

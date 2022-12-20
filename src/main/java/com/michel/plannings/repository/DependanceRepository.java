@@ -14,6 +14,8 @@ public interface DependanceRepository extends JpaRepository<Dependance, Integer>
 
 	Dependance getBySuivanteAndAntecedente(Integer idPhase, Integer idDependance);
 
+	List<Dependance> findByAntecedente(Integer idPhase);
+
 	
 
 }
