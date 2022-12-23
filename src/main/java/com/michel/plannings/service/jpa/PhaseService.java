@@ -1,5 +1,6 @@
 package com.michel.plannings.service.jpa;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class PhaseService implements PhaseAbstractService {
 
 	@Autowired
 	NotePhaseRepository notePhaseRepo;
-	
+
 	@Autowired
 	DependanceService dependanceService;
 
@@ -194,27 +195,43 @@ public class PhaseService implements PhaseAbstractService {
 
 	public void creerDependance(Integer idDependance, Integer idPhase, boolean statut) {
 
-		if(!statut) {
-			
+		if (!statut) {
+
 			Dependance d = new Dependance();
 			d.setAntecedente(idDependance);
 			d.setSuivante(idPhase);
 			dependanceService.creerDependance(d);
-		}else {
-			
+		} else {
+
 			dependanceService.supprimerDependance(idPhase, idDependance);
-			
+
 		}
 
 	}
 
 	public void modifierPhaseSurLiaison(PhaseAux phase, Integer idPhase) {
-		
-		Phase p = obtenirPhaseParId(idPhase);
-		p.setDebut(Constants.formatStringToDate(phase.getDateDebutString()));
-		p.setFin(Constants.formatStringToDate(phase.getDateFinString()));
-		phaseRepo.save(p);
-		
+
+		if (phase.getDecalage() != 0) {
+
+			List<Integer> dependances = dependanceService.getDependenciesChain(idPhase);
+			decalerPhases(dependances, phase.getDecalage());
+		} else {
+
+		}
+
+	}
+
+	private void decalerPhases(List<Integer> dependances, Integer days) {
+
+		System.err.println("Nbre de days: " + days);
+		for (Integer d : dependances) {
+
+			Phase p = obtenirPhaseParId(d);
+			p.setDebut(p.getDebut().plusDays(days));
+			p.setFin(p.getFin().plusDays(days));
+			phaseRepo.save(p);
+		}
+
 	}
 
 }

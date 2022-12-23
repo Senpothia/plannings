@@ -24,10 +24,11 @@ public class GanttRowService implements GanttRowAbstractServive {
 		List<Dependance> dependances = dependanceService.listeDependances(idPhase);
 		for (Dependance d : dependances) {
 
-			dependencies = String.valueOf(d.getAntecedente()) + ",";
+			dependencies = dependencies + String.valueOf(d.getAntecedente()) + ",";
 
 		}
-
+		
+		System.err.println("gantRow " + idPhase + " " + dependencies);
 		return dependencies;
 	}
 
