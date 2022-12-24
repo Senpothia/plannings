@@ -167,9 +167,19 @@ public class PhaseController {
 		return antecedents;
 	}
 		
+	@GetMapping("/projet/supprimer/liaisons/{projet}")
+	void supprimerLiaisions(@RequestHeader("Authorization") String token, @PathVariable(name = "projet") Integer idProjet) {
 		
+		dependanceService.supprimerDependanceProjet(idProjet);
+	}
 	
-	
+	@GetMapping("/projet/dependances/{projet}")
+	List<Dependance> obtenirDependancesProjet(@RequestHeader("Authorization") String token, @PathVariable(name = "projet") Integer idProjet){
+		
+		List<Dependance> dependances = dependanceService.listeDependancesProjet(idProjet);
+		return dependances;
+		
+	}
 	
 
 }

@@ -117,4 +117,17 @@ public class DependanceService implements DependanceAbstractService {
 		return chain;
 	}
 
+	public void supprimerDependanceProjet(Integer idProjet) {
+		
+		List<Dependance> dependances = dependanceRepo.findByProjet(idProjet);
+		dependanceRepo.deleteAll(dependances);
+		
+	}
+
+	public List<Dependance> listeDependancesProjet(Integer idProjet) {
+		
+		List<Dependance> dependances = dependanceRepo.findByProjet(idProjet);
+		return dependances;
+	}
+
 }

@@ -16,6 +16,8 @@ public interface DependanceRepository extends JpaRepository<Dependance, Integer>
 
 	List<Dependance> findByAntecedente(Integer idPhase);
 
+	List<Dependance> findByProjet(Integer idProjet);
+
 	
 
 }
