@@ -171,6 +171,16 @@ public class PhaseService implements PhaseAbstractService {
 		}
 		phaseRepo.delete(phase);
 
+		List<Dependance> dependances = dependanceService.listesAntecedents(id);
+		dependances.addAll(dependanceService.listeSuivantes(id));
+		if (!dependances.isEmpty()) {
+
+			for (Dependance d : dependances) {
+
+				dependanceService.supprimerSimpleDependance(d);
+			}
+		}
+
 	}
 
 	public void changerStatutPhaseParId(Integer idPhase) {
@@ -196,14 +206,14 @@ public class PhaseService implements PhaseAbstractService {
 	public void creerDependance(Integer idDependance, Integer idPhase, boolean statut) {
 
 		if (!statut) {
-			
+
 			Integer projetId = obtenirPhaseParId(idPhase).getProjet().getId();
 			Dependance d = new Dependance();
 			d.setProjet(projetId);
 			d.setAntecedente(idDependance);
 			d.setSuivante(idPhase);
 			dependanceService.creerDependance(d);
-			
+
 		} else {
 
 			dependanceService.supprimerDependance(idPhase, idDependance);
@@ -219,8 +229,6 @@ public class PhaseService implements PhaseAbstractService {
 			List<Integer> dependances = dependanceService.getDependenciesChain(idPhase);
 			decalerPhases(dependances, phase.getDecalage());
 		} else {
-			
-			
 
 		}
 

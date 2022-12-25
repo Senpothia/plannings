@@ -39,6 +39,12 @@ public class DependanceService implements DependanceAbstractService {
 		List<Dependance> antecedents = dependanceRepo.findByAntecedente(idPhase);
 		return antecedents;
 	}
+	
+	public List<Dependance> listeSuivantes(Integer idPhase) {
+
+		List<Dependance> suivantes = dependanceRepo.findBySuivante(idPhase);
+		return suivantes;
+	}
 
 	public List<Integer> getDependenciesChain(Integer idPhase) {
 
@@ -128,6 +134,12 @@ public class DependanceService implements DependanceAbstractService {
 		
 		List<Dependance> dependances = dependanceRepo.findByProjet(idProjet);
 		return dependances;
+	}
+
+	public void supprimerSimpleDependance(Dependance d) {
+		
+		dependanceRepo.delete(d);
+		
 	}
 
 }
