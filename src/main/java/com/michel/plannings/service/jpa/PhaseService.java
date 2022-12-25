@@ -1,6 +1,7 @@
 package com.michel.plannings.service.jpa;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -245,6 +246,60 @@ public class PhaseService implements PhaseAbstractService {
 			phaseRepo.save(p);
 		}
 
+	}
+
+	public List<LocalDateTime> obtenirDatesLimites(Integer idPhase) {
+
+		List<LocalDateTime> dates = new ArrayList<>();
+		LocalDateTime limiteInf = null;
+		LocalDateTime limiteSup = null;
+		List<Dependance> antecedentes = dependanceService.listeSuivantes(idPhase);
+		for (Dependance d : antecedentes) {
+
+			Phase p = obtenirPhaseParId(d.getAntecedente());
+			if (limiteInf == null) {
+
+				limiteInf = p.getFin();
+
+			} else {
+
+				if (limiteInf.isBefore(p.getFin())) {
+
+					limiteInf = p.getFin();
+				}
+			}
+		}
+		if (limiteInf != null) {
+
+			dates.add(limiteInf);
+		}
+
+		System.err.println("date limite inf:" + limiteInf);
+
+		List<Dependance> suivantes = dependanceService.listesAntecedents(idPhase);
+
+		for (Dependance d : suivantes) {
+
+			Phase p = obtenirPhaseParId(d.getSuivante());
+			if (limiteSup == null) {
+
+				limiteSup = p.getDebut();
+
+			} else {
+
+				if (limiteSup.isAfter(p.getDebut())) {
+
+					limiteInf = p.getDebut();
+				}
+			}
+		}
+		if (limiteSup != null) {
+
+			dates.add(limiteSup);
+		}
+
+		System.err.println("date limite sup:" + limiteSup);
+		return dates;
 	}
 
 }
