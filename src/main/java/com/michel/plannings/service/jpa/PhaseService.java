@@ -1,6 +1,8 @@
 package com.michel.plannings.service.jpa;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -225,13 +227,115 @@ public class PhaseService implements PhaseAbstractService {
 
 	public void modifierPhaseSurLiaison(PhaseAux phase, Integer idPhase) {
 
-		if (phase.getDecalage() != 0) {
+		if (phase.getDecalage() != 0) { // traitement d'un décalage défini par l'utilisateur
 
 			List<Integer> dependances = dependanceService.getDependenciesChain(idPhase);
 			decalerPhases(dependances, phase.getDecalage());
-		} else {
+		} else { // traitement d'un interval de temps défini par l'utilisateur
 
-		}
+			List<LocalDateTime> dates = obtenirDatesLimites(idPhase);
+
+			System.err.println("modifierPhaseSurLiaison");
+			System.err.println("Date debut: " + phase.getDateDebutString());
+			System.err.println("Date fin: " + phase.getDateFinString());
+			System.err.println("droite: " + phase.getDroite());
+			System.err.println("gauche: " + phase.getGauche());
+			System.err.println("Limite gauche: " + dates.get(0));
+			System.err.println("Limite droite: " + dates.get(1));
+
+			LocalDateTime debut = LocalDateTime.parse(phase.getDateDebutString() + " " + "00:00:00",
+					DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+			LocalDateTime fin = LocalDateTime.parse(phase.getDateFinString() + " " + "00:00:00",
+					DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+			List<Integer> dependancesGauche = new ArrayList<>();
+			List<Integer> dependancesDroite = new ArrayList<>();
+			long hoursRight = 0;
+			long hoursLeft = 0;
+			Boolean decalageDroite = false;
+			Boolean decalageGauche = false;
+
+			if (dates.get(0) == null && dates.get(1) == null) {
+
+				System.err.println("enregistrement sans contrainte");
+				modifierDatesPhase(phase, idPhase);
+				return;
+			}
+
+			if (dates.get(0) != null) { // traitement d'une limite à gauche
+
+				System.err.println("enregistrement avec contraintes");
+				if (debut.isBefore(dates.get(0))) {
+
+					if (phase.getGauche()) { // décalage à gauche autorisé
+
+						Duration duration = Duration.between(dates.get(0), debut);
+						hoursLeft = (int) duration.toHours();
+
+						System.err.println("heuresLeft: " + hoursLeft);
+						dependancesGauche = dependanceService.getDependenciesChainLeft(idPhase);
+						System.err.println("nbre dep gauche: " + dependancesGauche.size());
+						if (!dependancesGauche.isEmpty()) {
+
+							decalageGauche = true;
+						}
+					} else {
+
+						return;
+					}
+				} else {
+				}
+
+			} // fin traitement d'une limite à gauche
+
+			if (dates.get(1) != null) { // traitement d'une limite à droite
+
+				if (fin.isAfter(dates.get(1))) {
+
+					if (phase.getDroite()) { // décalage à droite autorisé
+
+						Duration duration = Duration.between(dates.get(1), fin);
+						hoursRight = (int) duration.toHours();
+						System.err.println("heuresRight: " + hoursRight);
+						dependancesDroite = dependanceService.getDependenciesChainRight(idPhase);
+						System.err.println("nbre dep droite: " + dependancesDroite.size());
+						if (!dependancesDroite.isEmpty()) {
+
+							decalageDroite = true;
+						}
+					} else {
+
+						return;
+					}
+				} else {
+				}
+
+				if (decalageDroite) {
+
+					System.err.println("Décalage droite requis");
+					decalerPhasesHeures(dependancesDroite, hoursRight);
+				}
+
+				if (decalageGauche) {
+
+					System.err.println("Décalage gauche requis");
+					decalerPhasesHeures(dependancesGauche, hoursLeft);
+				}
+
+				modifierDatesPhase(phase, idPhase);
+
+			} // fin traitement d'une limite à droite
+
+		} // fin traitement d'un interval de temps défini par l'utilisateur
+
+	}
+
+	private void modifierDatesPhase(PhaseAux phase, Integer idPhase) {
+
+		Phase p = obtenirPhaseParId(idPhase);
+		p.setDebut(Constants.formatStringToDate(phase.getDateDebutString()));
+		p.setFin(Constants.formatStringToDate(phase.getDateFinString()));
+		phaseRepo.save(p);
 
 	}
 
@@ -243,6 +347,19 @@ public class PhaseService implements PhaseAbstractService {
 			Phase p = obtenirPhaseParId(d);
 			p.setDebut(p.getDebut().plusDays(days));
 			p.setFin(p.getFin().plusDays(days));
+			phaseRepo.save(p);
+		}
+
+	}
+
+	private void decalerPhasesHeures(List<Integer> dependances, long hours) {
+
+		System.err.println("Nbre d'heures: " + hours);
+		for (Integer d : dependances) {
+
+			Phase p = obtenirPhaseParId(d);
+			p.setDebut(p.getDebut().plusHours(hours));
+			p.setFin(p.getFin().plusHours(hours));
 			phaseRepo.save(p);
 		}
 
@@ -269,10 +386,8 @@ public class PhaseService implements PhaseAbstractService {
 				}
 			}
 		}
-		if (limiteInf != null) {
 
-			dates.add(limiteInf);
-		}
+		dates.add(limiteInf);
 
 		System.err.println("date limite inf:" + limiteInf);
 
@@ -293,13 +408,52 @@ public class PhaseService implements PhaseAbstractService {
 				}
 			}
 		}
-		if (limiteSup != null) {
 
-			dates.add(limiteSup);
-		}
+		dates.add(limiteSup);
 
 		System.err.println("date limite sup:" + limiteSup);
 		return dates;
 	}
+
+	public String resetTest() {
+		
+		String debut1 = "2022-12-26T00:00:00";
+		String fin1 = "2022-12-29T00:00:00";
+		
+		String debut2 = "2022-12-31T00:00:00";
+		String fin2 = "2023-01-02T00:00:00";
+		
+		String debut3 = "2023-01-04T00:00:00";
+		String fin3 = "2023-01-06T00:00:00";
+		
+		List<Integer> phases = new ArrayList<>();
+		
+		List<String> debuts = new ArrayList<>();
+		debuts.add(debut1);
+		debuts.add(debut2);
+		debuts.add(debut3);
+		
+		List<String> fins = new ArrayList<>();
+		fins.add(fin1);
+		fins.add(fin2);
+		fins.add(fin3);
+		
+		phases.add(43);
+		phases.add(44);
+		phases.add(45);
+		
+		for(int i=0; i<3; i++) {
+			
+			Phase p = obtenirPhaseParId(phases.get(i));
+			p.setDebut(LocalDateTime.parse(debuts.get(i)));
+			p.setFin(LocalDateTime.parse(fins.get(i)));
+			phaseRepo.save(p);
+		}
+		
+		return "ok";
+		
+	}
+	
+	
 
 }

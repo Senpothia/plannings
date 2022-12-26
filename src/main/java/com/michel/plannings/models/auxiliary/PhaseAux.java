@@ -41,6 +41,12 @@ public class PhaseAux implements Comparable<PhaseAux> {
 	private Boolean conflit;
 	private Boolean antecedent;
 	private Integer decalage;
+	private Boolean droite;
+	private Boolean gauche;
+	private LocalDateTime limiteInf;
+	private LocalDateTime limiteSup;
+	private String limInfString;
+	private String limSupString;
 
 	public PhaseAux() {
 		super();
@@ -52,7 +58,9 @@ public class PhaseAux implements Comparable<PhaseAux> {
 			String description, String complement, String resultat, String reserve, Boolean passable,
 			String passableString, Boolean conforme, Boolean actif, Boolean suspendu, String conformeString,
 			String actifString, String suspenduString, List<FicheAux> fiches, Integer avancement, Boolean liaison,
-			List<PhaseAux> dependances, Boolean conflit, Boolean antecedent, Integer decalage) {
+			List<PhaseAux> dependances, Boolean conflit, Boolean antecedent, Integer decalage, Boolean droite,
+			Boolean gauche, LocalDateTime limiteInf, LocalDateTime limiteSup, String limInfString,
+			String limSupString) {
 		super();
 		this.id = id;
 		this.numero = numero;
@@ -84,6 +92,12 @@ public class PhaseAux implements Comparable<PhaseAux> {
 		this.conflit = conflit;
 		this.antecedent = antecedent;
 		this.decalage = decalage;
+		this.droite = droite;
+		this.gauche = gauche;
+		this.limiteInf = limiteInf;
+		this.limiteSup = limiteSup;
+		this.limInfString = limInfString;
+		this.limSupString = limSupString;
 	}
 
 	public PhaseAux(Phase phase) {
@@ -129,6 +143,12 @@ public class PhaseAux implements Comparable<PhaseAux> {
 		this.conflit = false;
 		this.antecedent = false;
 		this.decalage = 0;
+		this.droite = false;
+		this.gauche = false;
+		this.limiteInf = null;
+		this.limiteSup = null;
+		this.limInfString = "";
+		this.limSupString = "";
 
 	}
 
@@ -376,6 +396,54 @@ public class PhaseAux implements Comparable<PhaseAux> {
 
 	public void setDecalage(Integer decalage) {
 		this.decalage = decalage;
+	}
+
+	public Boolean getDroite() {
+		return droite;
+	}
+
+	public void setDroite(Boolean droite) {
+		this.droite = droite;
+	}
+
+	public Boolean getGauche() {
+		return gauche;
+	}
+
+	public void setGauche(Boolean gauche) {
+		this.gauche = gauche;
+	}
+
+	public LocalDateTime getLimiteInf() {
+		return limiteInf;
+	}
+
+	public void setLimiteInf(LocalDateTime limiteInf) {
+		this.limiteInf = limiteInf;
+	}
+
+	public LocalDateTime getLimiteSup() {
+		return limiteSup;
+	}
+
+	public void setLimiteSup(LocalDateTime limiteSup) {
+		this.limiteSup = limiteSup;
+	}
+
+	public String getLimInfString() {
+		return limInfString;
+	}
+
+	public void setLimInfString(String limInfString) {
+		this.limInfString = limInfString;
+	}
+
+	public String getLimSupString() {
+		return limSupString;
+	}
+
+	public void setLimSupString(String limSupString) {
+		this.limSupString = limSupString;
 	}
 
 }

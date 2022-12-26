@@ -191,5 +191,12 @@ public class PhaseController {
 		List<LocalDateTime> dates = phaseService.obtenirDatesLimites(idPhase);
 		return dates;
 	}
+	
+	@GetMapping("/reset/test")
+	public void reset() {
+		
+		phaseService.resetTest();
+		
+	}
 
 }

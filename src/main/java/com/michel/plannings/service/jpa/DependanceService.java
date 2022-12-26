@@ -39,7 +39,7 @@ public class DependanceService implements DependanceAbstractService {
 		List<Dependance> antecedents = dependanceRepo.findByAntecedente(idPhase);
 		return antecedents;
 	}
-	
+
 	public List<Dependance> listeSuivantes(Integer idPhase) {
 
 		List<Dependance> suivantes = dependanceRepo.findBySuivante(idPhase);
@@ -109,7 +109,7 @@ public class DependanceService implements DependanceAbstractService {
 			lecteur++;
 
 		}
-		
+
 		lecteur = 1;
 		while (listePrecedantes[lecteur] != 0) {
 
@@ -124,22 +124,107 @@ public class DependanceService implements DependanceAbstractService {
 	}
 
 	public void supprimerDependanceProjet(Integer idProjet) {
-		
+
 		List<Dependance> dependances = dependanceRepo.findByProjet(idProjet);
 		dependanceRepo.deleteAll(dependances);
-		
+
 	}
 
 	public List<Dependance> listeDependancesProjet(Integer idProjet) {
-		
+
 		List<Dependance> dependances = dependanceRepo.findByProjet(idProjet);
 		return dependances;
 	}
 
 	public void supprimerSimpleDependance(Dependance d) {
-		
+
 		dependanceRepo.delete(d);
-		
+
+	}
+
+	public List<Integer> getDependenciesChainLeft(Integer idPhase) {
+
+		int[] listePrecedantes = new int[100];
+		for (int i = 0; i < 100; i++) {
+
+			listePrecedantes[i] = 0;
+		}
+		List<Integer> chain = new ArrayList<>();
+		int lecteur = 0;
+		int enregistreur = 0;
+
+		listePrecedantes[enregistreur] = idPhase;
+		enregistreur++;
+
+		while (listePrecedantes[lecteur] != 0) {
+
+			List<Dependance> dependances = dependanceRepo.findBySuivante(listePrecedantes[lecteur]);
+			if (!dependances.isEmpty()) {
+
+				for (Dependance d : dependances) {
+
+					System.err.println(d.toString());
+					listePrecedantes[enregistreur] = d.getAntecedente();
+					enregistreur++;
+				}
+			}
+
+			lecteur++;
+		}
+
+		lecteur = 1;
+		while (listePrecedantes[lecteur] != 0) {
+
+			chain.add(listePrecedantes[lecteur]);
+			lecteur++;
+		}
+
+		return chain;
+	}
+
+	public List<Integer> getDependenciesChainRight(Integer idPhase) {
+
+		int[] listeSuivantes = new int[100];
+
+		for (int i = 0; i < 100; i++) {
+
+			listeSuivantes[i] = 0;
+
+		}
+		List<Integer> chain = new ArrayList<>();
+		int lecteur = 0;
+		int enregistreur = 0;
+		listeSuivantes[enregistreur] = idPhase;
+
+		enregistreur++;
+
+		while (listeSuivantes[lecteur] != 0) {
+
+			List<Dependance> dependances = dependanceRepo.findByAntecedente(listeSuivantes[lecteur]);
+			if (!dependances.isEmpty()) {
+
+				for (Dependance d : dependances) {
+
+					System.err.println(d.toString());
+					listeSuivantes[enregistreur] = d.getSuivante();
+					enregistreur++;
+
+				}
+
+			}
+
+			lecteur++;
+
+		}
+
+		lecteur = 0;
+		while (listeSuivantes[lecteur] != 0) {
+
+			chain.add(listeSuivantes[lecteur]);
+			lecteur++;
+		}
+
+		return chain;
 	}
 
 }
