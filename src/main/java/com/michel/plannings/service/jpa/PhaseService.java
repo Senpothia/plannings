@@ -456,4 +456,16 @@ public class PhaseService implements PhaseAbstractService {
 
 	}
 
+	public void majTablePhase() {
+		
+		List<Phase> phases = phaseRepo.findAll();
+		for(Phase p: phases) {
+			
+			p.setAvancement(0);
+			phaseRepo.save(p);
+			
+		}
+		
+	}
+
 }

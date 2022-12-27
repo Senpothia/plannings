@@ -198,5 +198,12 @@ public class PhaseController {
 		phaseService.resetTest();
 		
 	}
+	
+	@GetMapping("/maj/table")
+	public void majTable() {
+		
+		phaseService.majTablePhase();
+		
+	}
 
 }
