@@ -31,7 +31,6 @@ public class Constants {
 	public static String getHourFormDate(LocalDateTime debut) {
 		
 		String heure =  debut.format(formatter2);
-		System.err.println("Date convertie: " + heure);
 		return heure;
 	}
 

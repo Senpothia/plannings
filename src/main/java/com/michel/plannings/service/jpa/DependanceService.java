@@ -69,7 +69,6 @@ public class DependanceService implements DependanceAbstractService {
 
 				for (Dependance d : dependances) {
 
-					System.err.println(d.toString());
 					listeSuivantes[enregistreur] = d.getSuivante();
 					enregistreur++;
 
@@ -98,7 +97,6 @@ public class DependanceService implements DependanceAbstractService {
 
 				for (Dependance d : dependances) {
 
-					System.err.println(d.toString());
 					listePrecedantes[enregistreur] = d.getAntecedente();
 					enregistreur++;
 
@@ -163,7 +161,6 @@ public class DependanceService implements DependanceAbstractService {
 
 				for (Dependance d : dependances) {
 
-					System.err.println(d.toString());
 					listePrecedantes[enregistreur] = d.getAntecedente();
 					enregistreur++;
 				}
@@ -205,7 +202,6 @@ public class DependanceService implements DependanceAbstractService {
 
 				for (Dependance d : dependances) {
 
-					System.err.println(d.toString());
 					listeSuivantes[enregistreur] = d.getSuivante();
 					enregistreur++;
 

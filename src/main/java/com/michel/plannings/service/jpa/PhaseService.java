@@ -235,14 +235,6 @@ public class PhaseService implements PhaseAbstractService {
 
 			List<LocalDateTime> dates = obtenirDatesLimites(idPhase);
 
-			System.err.println("modifierPhaseSurLiaison");
-			System.err.println("Date debut: " + phase.getDateDebutString());
-			System.err.println("Date fin: " + phase.getDateFinString());
-			System.err.println("droite: " + phase.getDroite());
-			System.err.println("gauche: " + phase.getGauche());
-			System.err.println("Limite gauche: " + dates.get(0));
-			System.err.println("Limite droite: " + dates.get(1));
-
 			LocalDateTime debut = LocalDateTime.parse(phase.getDateDebutString() + " " + "00:00:00",
 					DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 			LocalDateTime fin = LocalDateTime.parse(phase.getDateFinString() + " " + "00:00:00",
@@ -257,14 +249,13 @@ public class PhaseService implements PhaseAbstractService {
 
 			if (dates.get(0) == null && dates.get(1) == null) {
 
-				System.err.println("enregistrement sans contrainte");
 				modifierDatesPhase(phase, idPhase);
 				return;
 			}
 
 			if (dates.get(0) != null) { // traitement d'une limite à gauche
 
-				System.err.println("enregistrement avec contraintes");
+		
 				if (debut.isBefore(dates.get(0))) {
 
 					if (phase.getGauche()) { // décalage à gauche autorisé
@@ -272,9 +263,8 @@ public class PhaseService implements PhaseAbstractService {
 						Duration duration = Duration.between(dates.get(0), debut);
 						hoursLeft = (int) duration.toHours();
 
-						System.err.println("heuresLeft: " + hoursLeft);
 						dependancesGauche = dependanceService.getDependenciesChainLeft(idPhase);
-						System.err.println("nbre dep gauche: " + dependancesGauche.size());
+						
 						if (!dependancesGauche.isEmpty()) {
 
 							decalageGauche = true;
@@ -296,9 +286,9 @@ public class PhaseService implements PhaseAbstractService {
 
 						Duration duration = Duration.between(dates.get(1), fin);
 						hoursRight = (int) duration.toHours();
-						System.err.println("heuresRight: " + hoursRight);
+
 						dependancesDroite = dependanceService.getDependenciesChainRight(idPhase);
-						System.err.println("nbre dep droite: " + dependancesDroite.size());
+
 						if (!dependancesDroite.isEmpty()) {
 
 							decalageDroite = true;
@@ -316,13 +306,11 @@ public class PhaseService implements PhaseAbstractService {
 
 			if (decalageDroite) {
 
-				System.err.println("Décalage droite requis");
 				decalerPhasesHeures(dependancesDroite, hoursRight);
 			}
 
 			if (decalageGauche) {
 
-				System.err.println("Décalage gauche requis");
 				decalerPhasesHeures(dependancesGauche, hoursLeft);
 			}
 
@@ -343,7 +331,6 @@ public class PhaseService implements PhaseAbstractService {
 
 	private void decalerPhases(List<Integer> dependances, Integer days) {
 
-		System.err.println("Nbre de days: " + days);
 		for (Integer d : dependances) {
 
 			Phase p = obtenirPhaseParId(d);
@@ -356,7 +343,6 @@ public class PhaseService implements PhaseAbstractService {
 
 	private void decalerPhasesHeures(List<Integer> dependances, long hours) {
 
-		System.err.println("Nbre d'heures: " + hours);
 		for (Integer d : dependances) {
 
 			Phase p = obtenirPhaseParId(d);
@@ -391,8 +377,6 @@ public class PhaseService implements PhaseAbstractService {
 
 		dates.add(limiteInf);
 
-		System.err.println("date limite inf:" + limiteInf);
-
 		List<Dependance> suivantes = dependanceService.listesAntecedents(idPhase);
 
 		for (Dependance d : suivantes) {
@@ -413,7 +397,6 @@ public class PhaseService implements PhaseAbstractService {
 
 		dates.add(limiteSup);
 
-		System.err.println("date limite sup:" + limiteSup);
 		return dates;
 	}
 
@@ -457,15 +440,15 @@ public class PhaseService implements PhaseAbstractService {
 	}
 
 	public void majTablePhase() {
-		
+
 		List<Phase> phases = phaseRepo.findAll();
-		for(Phase p: phases) {
-			
+		for (Phase p : phases) {
+
 			p.setAvancement(0);
 			phaseRepo.save(p);
-			
+
 		}
-		
+
 	}
 
 }

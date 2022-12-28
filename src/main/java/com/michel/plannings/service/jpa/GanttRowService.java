@@ -28,7 +28,6 @@ public class GanttRowService implements GanttRowAbstractServive {
 
 		}
 		
-		System.err.println("gantRow " + idPhase + " " + dependencies);
 		return dependencies;
 	}
 
