@@ -31,7 +31,7 @@ import com.michel.plannings.service.jpa.UserService;
 @RestController
 @RequestMapping("/projet")
 public class ProjectController {
-
+ 
 	@Autowired
 	ProjetService projetService;
 

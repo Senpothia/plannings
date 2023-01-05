@@ -1,5 +1,6 @@
 package com.michel.plannings.service.jpa;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,6 +89,22 @@ public class TacheService implements TacheAbstractService {
 		}
 		
 		return numero + 1;
+	}
+
+	public List<TacheAux> obtenirTachesParIdRessourceStatut(Integer idUtilisateur, boolean statut) {
+		
+		Utilisateur u  = userService.obtenirUserParId(idUtilisateur);
+		List<Tache> taches = u.getTaches();
+		List<Tache> tachesStatut = new ArrayList<>();
+		for( Tache t: taches) {
+			
+			if(t.getActif() == statut) {
+		
+				tachesStatut.add(t);
+			}
+		}
+		List<TacheAux> tAux = AuxiliaryUtils.makeListTacheAux(tachesStatut);
+		return tAux;
 	}
 
 }

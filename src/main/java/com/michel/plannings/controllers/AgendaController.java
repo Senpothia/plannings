@@ -63,6 +63,13 @@ public class AgendaController {
 		
 	}
 	
+	@GetMapping("/agenda/ressource/{idUtilisateur}/{statut}")
+	List<TacheAux> obtenirTachesParRessourceIdEtStatut(@RequestHeader("Authorization") String token, @PathVariable(name = "idUtilisateur") Integer idUtilisateur,@PathVariable(name = "statut") boolean statut){
+		
+		List<TacheAux> taches = tacheService.obtenirTachesParIdRessourceStatut(idUtilisateur, statut);	
+		return taches;
+	}
+	
 	
 
 }
