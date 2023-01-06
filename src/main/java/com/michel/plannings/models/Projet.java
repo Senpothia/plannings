@@ -24,6 +24,7 @@ public class Projet {
 	private LocalDateTime date;
 	private String type; // Verrouillage, contrôle d'accès
 	private Boolean statut;
+	private Boolean prive;
 
 	@ManyToOne
 	private Utilisateur chef; // Le chef produit ou responsable
@@ -48,7 +49,7 @@ public class Projet {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Projet(Integer id, String nom, String numero, LocalDateTime date, String type, Boolean statut,
+	public Projet(Integer id, String nom, String numero, LocalDateTime date, String type, Boolean statut, Boolean prive,
 			Utilisateur chef, List<Utilisateur> ressources, List<Phase> phases, List<NoteProjet> notes,
 			List<Alerte> alertes, List<Serie> series) {
 		super();
@@ -58,6 +59,7 @@ public class Projet {
 		this.date = date;
 		this.type = type;
 		this.statut = statut;
+		this.prive = prive;
 		this.chef = chef;
 		this.ressources = ressources;
 		this.phases = phases;
@@ -75,6 +77,7 @@ public class Projet {
 		this.date = projet.getDate();
 		this.type = projet.getType();
 		this.statut = projet.getStatut();
+		this.prive = projet.getPrive();
 		this.chef = chef;
 		this.ressources = ressources;
 		this.phases = phases;
@@ -175,6 +178,14 @@ public class Projet {
 
 	public void setSeries(List<Serie> series) {
 		this.series = series;
+	}
+
+	public Boolean getPrive() {
+		return prive;
+	}
+
+	public void setPrive(Boolean prive) {
+		this.prive = prive;
 	}
 
 }

@@ -19,14 +19,18 @@ public class ProjetAux implements Comparable<ProjetAux> {
 	private String nomChef;
 	private Boolean affecte;
 	private Boolean gantt;
+	private Boolean prive;
 
 	public ProjetAux() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
+	
+
 	public ProjetAux(Integer id, String nom, String numero, LocalDateTime date, String dateString, String type,
-			Boolean statut, String statutString, Integer chefId, String nomChef, Boolean affecte, Boolean gantt) {
+			Boolean statut, String statutString, Integer chefId, String nomChef, Boolean affecte, Boolean gantt,
+			Boolean prive) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -40,7 +44,10 @@ public class ProjetAux implements Comparable<ProjetAux> {
 		this.nomChef = nomChef;
 		this.affecte = affecte;
 		this.gantt = gantt;
+		this.prive = prive;
 	}
+
+
 
 	public ProjetAux(Projet projet) {
 		super();
@@ -54,6 +61,7 @@ public class ProjetAux implements Comparable<ProjetAux> {
 		this.nomChef = projet.getChef().getPrenom() + " " + projet.getChef().getNom();
 		this.chefId = projet.getChef().getId();
 		this.gantt = projet.getPhases().size()>1? true : false;
+		this.prive = projet.getPrive();
 
 	}
 
@@ -152,6 +160,20 @@ public class ProjetAux implements Comparable<ProjetAux> {
 	public void setGantt(Boolean gantt) {
 		this.gantt = gantt;
 	}
+	
+	
+
+	public Boolean getPrive() {
+		return prive;
+	}
+
+
+
+	public void setPrive(Boolean prive) {
+		this.prive = prive;
+	}
+
+
 
 	@Override
 	public int compareTo(ProjetAux p) {
