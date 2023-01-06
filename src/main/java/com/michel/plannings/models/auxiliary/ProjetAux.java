@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.michel.plannings.models.Projet;
 
-public class ProjetAux implements Comparable<ProjetAux>{
+public class ProjetAux implements Comparable<ProjetAux> {
 
 	private Integer id;
 	private String nom;
@@ -18,6 +18,7 @@ public class ProjetAux implements Comparable<ProjetAux>{
 	private Integer chefId;
 	private String nomChef;
 	private Boolean affecte;
+	private Boolean gantt;
 
 	public ProjetAux() {
 		super();
@@ -25,7 +26,7 @@ public class ProjetAux implements Comparable<ProjetAux>{
 	}
 
 	public ProjetAux(Integer id, String nom, String numero, LocalDateTime date, String dateString, String type,
-			Boolean statut, String statutString, Integer chefId, String nomChef, Boolean affecte) {
+			Boolean statut, String statutString, Integer chefId, String nomChef, Boolean affecte, Boolean gantt) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -38,6 +39,7 @@ public class ProjetAux implements Comparable<ProjetAux>{
 		this.chefId = chefId;
 		this.nomChef = nomChef;
 		this.affecte = affecte;
+		this.gantt = gantt;
 	}
 
 	public ProjetAux(Projet projet) {
@@ -51,6 +53,7 @@ public class ProjetAux implements Comparable<ProjetAux>{
 		this.statutString = projet.getStatut() ? "Actif" : "Inactif";
 		this.nomChef = projet.getChef().getPrenom() + " " + projet.getChef().getNom();
 		this.chefId = projet.getChef().getId();
+		this.gantt = projet.getPhases().size()>1? true : false;
 
 	}
 
@@ -142,9 +145,17 @@ public class ProjetAux implements Comparable<ProjetAux>{
 		this.statutString = statutString;
 	}
 
+	public Boolean getGantt() {
+		return gantt;
+	}
+
+	public void setGantt(Boolean gantt) {
+		this.gantt = gantt;
+	}
+
 	@Override
 	public int compareTo(ProjetAux p) {
-		
+
 		return (this.id - p.id);
 	}
 

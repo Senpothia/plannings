@@ -210,5 +210,15 @@ public class ProjectController {
 		}
 		return ganttRows;
 	}
+	
+	@GetMapping("/tous/{statut}")
+	List<ProjetAux> projetsParStatut(@RequestHeader("Authorization") String token,  @PathVariable(name = "statut") Boolean statut){
+		
+		List<Projet> projets = projetService.obtenirTousLesProjetsEnabled(statut);
+		List<ProjetAux> projetsAux = AuxiliaryUtils.makeListProjetsAux(projets);
+		return projetsAux;
+		
+
+	}
 
 }
