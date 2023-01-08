@@ -110,6 +110,10 @@ public class PhaseService implements PhaseAbstractService {
 			projetService.affecterRessourceProjet(idProjet, idRessource);
 		}
 		p.setAvancement(0);
+		if(projet.getPrive()) {
+			
+			p.setPrive(true);
+		}
 		phaseRepo.save(p);
 	}
 
@@ -445,6 +449,7 @@ public class PhaseService implements PhaseAbstractService {
 		for (Phase p : phases) {
 
 			p.setAvancement(0);
+			p.setPrive(false);
 			phaseRepo.save(p);
 
 		}

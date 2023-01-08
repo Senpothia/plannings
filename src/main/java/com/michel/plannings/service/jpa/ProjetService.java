@@ -99,7 +99,15 @@ public class ProjetService implements ProjetAbstractService {
 	public List<Projet> obtenirTousLesProjets() {
 		
 		List<Projet> projets = projetRepo.findAll();
-		return projets;
+		List<Projet> projetsPublics = new ArrayList<>();
+		for(Projet p: projets) {
+			
+			if(!p.getPrive()) {
+				
+				projetsPublics.add(p);
+			}
+		}
+		return projetsPublics;
 	}
 
 	public Projet changerStatut(Integer id) {
@@ -119,7 +127,8 @@ public class ProjetService implements ProjetAbstractService {
 
 	public List<Projet> obtenirProjetParChefId(Integer id) {
 		Utilisateur u = userService.obtenirUserParId(id);
-		List<Projet> projets = projetRepo.findByChef(u);
+		//List<Projet> projets = projetRepo.findByChef(u);
+		List<Projet> projets = projetRepo.findByChefAndPrive(u, false);
 		return projets;
 		
 	}
@@ -128,7 +137,8 @@ public class ProjetService implements ProjetAbstractService {
 	@Override
 	public List<Projet> obtenirTousLesProjetsEnabled(Boolean enabled) {
 		
-		List<Projet> projets = projetRepo.findByStatut(enabled);
+		//List<Projet> projets = projetRepo.findByStatut(enabled);
+		List<Projet> projets = projetRepo.findByStatutAndPrive(enabled, false);
 		return projets;
 	}
 
@@ -207,6 +217,21 @@ public class ProjetService implements ProjetAbstractService {
 
 	public void affecterRessource(Utilisateur ressource) {
 		// TODO Auto-generated method stub
+		
+	}
+
+	public List<Projet> obtenirTousLesProjetsPrives() {
+		
+		List<Projet> projets = projetRepo.findAll();
+		List<Projet> projetsPrives = new ArrayList<>();
+		for(Projet p: projets) {
+			
+			if(p.getPrive()) {
+				
+				projetsPrives.add(p);
+			}
+		}
+		return projetsPrives;
 		
 	}
 

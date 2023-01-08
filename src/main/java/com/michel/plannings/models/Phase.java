@@ -42,6 +42,7 @@ public class Phase implements Comparable<Phase> {
 	private Boolean actif;
 	private Boolean suspendu;
 	private Integer avancement;
+	private Boolean prive;
 
 	@OneToMany(mappedBy = "phase")
 	private List<Fiche> fiches;
@@ -57,10 +58,12 @@ public class Phase implements Comparable<Phase> {
 		// TODO Auto-generated constructor stub
 	}
 
+	
+
 	public Phase(Integer id, Integer numero, Projet projet, String nom, LocalDateTime debut, LocalDateTime fin,
 			Utilisateur ressource, String description, String complement, String resultat, String reserve,
-			Boolean passable, Boolean conforme, Boolean actif, Boolean suspendu, Integer avancement, List<Fiche> fiches,
-			List<NotePhase> notes, List<Suite> suites) {
+			Boolean passable, Boolean conforme, Boolean actif, Boolean suspendu, Integer avancement, Boolean prive,
+			List<Fiche> fiches, List<NotePhase> notes, List<Suite> suites) {
 		super();
 		this.id = id;
 		this.numero = numero;
@@ -78,10 +81,13 @@ public class Phase implements Comparable<Phase> {
 		this.actif = actif;
 		this.suspendu = suspendu;
 		this.avancement = avancement;
+		this.prive = prive;
 		this.fiches = fiches;
 		this.notes = notes;
 		this.suites = suites;
 	}
+
+
 
 	public Integer getId() {
 		return id;
@@ -234,6 +240,20 @@ public class Phase implements Comparable<Phase> {
 	public void setAvancement(Integer avancement) {
 		this.avancement = avancement;
 	}
+	
+	
+
+	public Boolean getPrive() {
+		return prive;
+	}
+
+
+
+	public void setPrive(Boolean prive) {
+		this.prive = prive;
+	}
+
+
 
 	@Override
 	public int compareTo(Phase p) {

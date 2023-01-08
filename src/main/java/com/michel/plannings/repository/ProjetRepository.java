@@ -17,4 +17,8 @@ public interface ProjetRepository extends JpaRepository<Projet, Integer>{
 
 	List<Projet> findByStatut(Boolean enabled);
 
+	List<Projet> findByChefAndPrive(Utilisateur u, boolean b);
+
+	List<Projet> findByStatutAndPrive(Boolean enabled, boolean b);
+
 }

@@ -87,7 +87,7 @@ public class ProjectController {
 			
 			for(Projet p: projetsInvolved) {
 				
-				if(p.getStatut()) {
+				if(p.getStatut() && !p.getPrive()) {
 					projetsActifs.add(p);
 				}
 			}
@@ -111,7 +111,6 @@ public class ProjectController {
 	public List<ProjetAux> projetsTous(@RequestHeader("Authorization") String token) {
 
 		List<Projet> projets = projetService.obtenirTousLesProjets();
-
 		List<ProjetAux> projetsAux = AuxiliaryUtils.makeListProjetsAux(projets);
 		return projetsAux;
 
@@ -218,7 +217,14 @@ public class ProjectController {
 		List<ProjetAux> projetsAux = AuxiliaryUtils.makeListProjetsAux(projets);
 		return projetsAux;
 		
-
+	}
+	
+	@GetMapping("/prives")
+	List<ProjetAux> projetsTousPrives(@RequestHeader("Authorization") String token){
+		
+		List<Projet> projets = projetService.obtenirTousLesProjetsPrives();
+		List<ProjetAux> projetsAux = AuxiliaryUtils.makeListProjetsAux(projets);
+		return projetsAux;
 	}
 
 }

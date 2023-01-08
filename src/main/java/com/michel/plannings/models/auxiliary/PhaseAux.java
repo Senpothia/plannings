@@ -47,6 +47,7 @@ public class PhaseAux implements Comparable<PhaseAux> {
 	private LocalDateTime limiteSup;
 	private String limInfString;
 	private String limSupString;
+	private Boolean prive;
 
 	public PhaseAux() {
 		super();
@@ -59,8 +60,8 @@ public class PhaseAux implements Comparable<PhaseAux> {
 			String passableString, Boolean conforme, Boolean actif, Boolean suspendu, String conformeString,
 			String actifString, String suspenduString, List<FicheAux> fiches, Integer avancement, Boolean liaison,
 			List<PhaseAux> dependances, Boolean conflit, Boolean antecedent, Integer decalage, Boolean droite,
-			Boolean gauche, LocalDateTime limiteInf, LocalDateTime limiteSup, String limInfString,
-			String limSupString) {
+			Boolean gauche, LocalDateTime limiteInf, LocalDateTime limiteSup, String limInfString, String limSupString,
+			Boolean prive) {
 		super();
 		this.id = id;
 		this.numero = numero;
@@ -98,6 +99,7 @@ public class PhaseAux implements Comparable<PhaseAux> {
 		this.limiteSup = limiteSup;
 		this.limInfString = limInfString;
 		this.limSupString = limSupString;
+		this.prive = prive;
 	}
 
 	public PhaseAux(Phase phase) {
@@ -149,6 +151,7 @@ public class PhaseAux implements Comparable<PhaseAux> {
 		this.limiteSup = null;
 		this.limInfString = "";
 		this.limSupString = "";
+		this.prive = phase.getPrive();
 
 	}
 
@@ -444,6 +447,14 @@ public class PhaseAux implements Comparable<PhaseAux> {
 
 	public void setLimSupString(String limSupString) {
 		this.limSupString = limSupString;
+	}
+
+	public Boolean getPrive() {
+		return prive;
+	}
+
+	public void setPrive(Boolean prive) {
+		this.prive = prive;
 	}
 
 }
