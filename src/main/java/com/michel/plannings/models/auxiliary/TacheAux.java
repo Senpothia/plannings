@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import com.michel.plannings.constants.Constants;
 import com.michel.plannings.models.Tache;
 
-public class TacheAux implements Comparable<TacheAux>{
+public class TacheAux implements Comparable<TacheAux> {
 
 	private Integer id;
 	private Integer numero;
@@ -23,16 +23,17 @@ public class TacheAux implements Comparable<TacheAux>{
 	private Boolean suspendu;
 	private String suspenduString;
 	private UtilisateurAux ressource;
+	private Boolean prive;
 
 	public TacheAux() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	
 	public TacheAux(Integer id, Integer numero, LocalDateTime debut, String debutString, LocalDateTime fin,
 			String finString, String heureDebut, String heureFin, String texte, String commentaire, Integer urgence,
-			Boolean actif, String actifString, Boolean suspendu, String suspenduString, UtilisateurAux ressource) {
+			Boolean actif, String actifString, Boolean suspendu, String suspenduString, UtilisateurAux ressource,
+			Boolean prive) {
 		super();
 		this.id = id;
 		this.numero = numero;
@@ -50,8 +51,8 @@ public class TacheAux implements Comparable<TacheAux>{
 		this.suspendu = suspendu;
 		this.suspenduString = suspenduString;
 		this.ressource = ressource;
+		this.prive = prive;
 	}
-
 
 	public TacheAux(Tache tache) {
 		super();
@@ -67,10 +68,11 @@ public class TacheAux implements Comparable<TacheAux>{
 		this.commentaire = tache.getCommentaire();
 		this.urgence = tache.getUrgence();
 		this.actif = tache.getActif();
-		this.actifString = actif? "Active" : "Inactive";
+		this.actifString = actif ? "Active" : "Inactive";
 		this.suspendu = tache.getSuspendu();
-		this.suspenduString = suspendu? "Suspendue" : "En cours";
+		this.suspenduString = suspendu ? "Suspendue" : "En cours";
 		this.ressource = new UtilisateurAux(tache.getRessource());
+		this.prive = tache.getPrive();
 
 	}
 
@@ -178,8 +180,6 @@ public class TacheAux implements Comparable<TacheAux>{
 		this.heureDebut = heureDebut;
 	}
 
-	
-
 	public String getHeureFin() {
 		return heureFin;
 	}
@@ -187,32 +187,34 @@ public class TacheAux implements Comparable<TacheAux>{
 	public void setHeureFin(String heureFin) {
 		this.heureFin = heureFin;
 	}
-	
-	
 
 	public String getActifString() {
 		return actifString;
 	}
 
-
 	public void setActifString(String actifString) {
 		this.actifString = actifString;
 	}
-
 
 	public String getSuspenduString() {
 		return suspenduString;
 	}
 
-
 	public void setSuspenduString(String suspenduString) {
 		this.suspenduString = suspenduString;
 	}
 
+	public Boolean getPrive() {
+		return prive;
+	}
+
+	public void setPrive(Boolean prive) {
+		this.prive = prive;
+	}
 
 	@Override
 	public int compareTo(TacheAux t) {
-		
+
 		return (this.id - t.id);
 	}
 

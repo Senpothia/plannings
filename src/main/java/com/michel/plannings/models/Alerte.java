@@ -19,6 +19,7 @@ public class Alerte {
 	private Integer urgence; // dégré d'urgence 1 à 3
 	private Boolean actif;
 	private Boolean suspendu;
+	private Boolean prive;
 
 	@ManyToOne
 	private Utilisateur auteur;
@@ -32,7 +33,7 @@ public class Alerte {
 	}
 
 	public Alerte(Integer id, Integer numero, LocalDateTime date, String texte, Integer urgence, Boolean actif,
-			Boolean suspendu, Utilisateur auteur, Projet projet) {
+			Boolean suspendu, Boolean prive, Utilisateur auteur, Projet projet) {
 		super();
 		this.id = id;
 		this.numero = numero;
@@ -41,6 +42,7 @@ public class Alerte {
 		this.urgence = urgence;
 		this.actif = actif;
 		this.suspendu = suspendu;
+		this.prive = prive;
 		this.auteur = auteur;
 		this.projet = projet;
 	}
@@ -115,6 +117,14 @@ public class Alerte {
 
 	public void setSuspendu(Boolean suspendu) {
 		this.suspendu = suspendu;
+	}
+
+	public Boolean getPrive() {
+		return prive;
+	}
+
+	public void setPrive(Boolean prive) {
+		this.prive = prive;
 	}
 
 }

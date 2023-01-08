@@ -69,6 +69,7 @@ public class NoteAux implements Comparable<NoteAux> {
 		this.nomSuite = null;
 		this.active = note.getActive();
 		this.activeString = note.getActive() ? "Active" : "Inactive";
+		
 	}
 
 	public NoteAux(NotePhase note) {
@@ -91,6 +92,7 @@ public class NoteAux implements Comparable<NoteAux> {
 		}
 		this.active = note.getActive();
 		this.activeString = note.getActive() ? "Active" : "Inactive";
+
 	}
 
 	public Integer getId() {

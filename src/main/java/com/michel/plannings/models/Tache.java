@@ -12,7 +12,7 @@ import com.michel.plannings.models.auxiliary.TacheAux;
 
 @Entity
 public class Tache {
-	
+
 	@Id
 	@GeneratedValue
 	private Integer id;
@@ -24,7 +24,8 @@ public class Tache {
 	private Integer urgence; // dégré d'urgence 1 à 3
 	private Boolean actif;
 	private Boolean suspendu;
-	
+	private Boolean prive;
+
 	@ManyToOne
 	private Utilisateur ressource;
 
@@ -34,7 +35,7 @@ public class Tache {
 	}
 
 	public Tache(Integer id, Integer numero, LocalDateTime debut, LocalDateTime fin, String texte, String commentaire,
-			Integer urgence, Boolean actif, Boolean suspendu, Utilisateur ressource) {
+			Integer urgence, Boolean actif, Boolean suspendu, Boolean prive, Utilisateur ressource) {
 		super();
 		this.id = id;
 		this.numero = numero;
@@ -45,12 +46,12 @@ public class Tache {
 		this.urgence = urgence;
 		this.actif = actif;
 		this.suspendu = suspendu;
+		this.prive = prive;
 		this.ressource = ressource;
 	}
 
 	public Tache(TacheAux tache) {
 
-		
 		this.debut = AuxiliaryUtils.makeDateFromStrings(tache, 0);
 		this.fin = AuxiliaryUtils.makeDateFromStrings(tache, 1);
 		this.texte = tache.getTexte();
@@ -59,6 +60,7 @@ public class Tache {
 		this.actif = tache.getActif();
 		this.suspendu = tache.getSuspendu();
 		this.ressource = null;
+		this.prive = tache.getPrive();
 	}
 
 	public Integer getId() {
@@ -140,8 +142,13 @@ public class Tache {
 	public void setRessource(Utilisateur ressource) {
 		this.ressource = ressource;
 	}
-	
-	
-	
+
+	public Boolean getPrive() {
+		return prive;
+	}
+
+	public void setPrive(Boolean prive) {
+		this.prive = prive;
+	}
 
 }

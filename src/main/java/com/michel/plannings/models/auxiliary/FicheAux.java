@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import com.michel.plannings.constants.Constants;
 import com.michel.plannings.models.Fiche;
 
-public class FicheAux implements Comparable<FicheAux>{
+public class FicheAux implements Comparable<FicheAux> {
 
 	private Integer id;
 	private Integer numero;
@@ -33,19 +33,18 @@ public class FicheAux implements Comparable<FicheAux>{
 	private String statutString;
 	private Integer niveau;
 	private Integer idPhase;
+	private Boolean prive;
 
 	public FicheAux() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	
-	
-
 	public FicheAux(Integer id, Integer numero, LocalDateTime date, String dateString, String service, String degre,
 			String projet, String code, String produit, String circonstance, String observation, String document,
 			String incidence, String solution, String domaine, String objet, String reponse, Integer idAuteur,
-			String nomAuteur, String anomalie, Boolean statut, String statutString, Integer niveau, Integer idPhase) {
+			String nomAuteur, String anomalie, Boolean statut, String statutString, Integer niveau, Integer idPhase,
+			Boolean prive) {
 		super();
 		this.id = id;
 		this.numero = numero;
@@ -71,10 +70,8 @@ public class FicheAux implements Comparable<FicheAux>{
 		this.statutString = statutString;
 		this.niveau = niveau;
 		this.idPhase = idPhase;
+		this.prive = prive;
 	}
-
-
-
 
 	public FicheAux(Fiche fiche) {
 		super();
@@ -82,7 +79,7 @@ public class FicheAux implements Comparable<FicheAux>{
 		this.numero = fiche.getNumero();
 		this.date = fiche.getDate();
 		this.dateString = Constants.convertDateToString(date);
-		
+
 		this.service = fiche.getService();
 		this.degre = fiche.getDegre();
 		this.projet = fiche.getProjet();
@@ -96,19 +93,20 @@ public class FicheAux implements Comparable<FicheAux>{
 		this.domaine = fiche.getDomaine();
 		this.objet = fiche.getObjet();
 		this.reponse = fiche.getReponse();
-		
+
 		this.idAuteur = fiche.getAuteur().getId();
-		this.nomAuteur = fiche.getAuteur().getPrenom() + " "+ fiche.getAuteur().getNom();  
+		this.nomAuteur = fiche.getAuteur().getPrenom() + " " + fiche.getAuteur().getNom();
 		this.anomalie = fiche.getAnomalie();
 		this.statut = fiche.getStatut();
 		this.statutString = fiche.getStatut() ? "Active" : "Inactive";
 		this.niveau = fiche.getNiveau();
-		if(fiche.getPhase() != null) {
-		this.idPhase = fiche.getPhase().getId();
-		}else {
-			
+		if (fiche.getPhase() != null) {
+			this.idPhase = fiche.getPhase().getId();
+		} else {
+
 			this.idPhase = 0;
 		}
+		this.prive = fiche.getPrive();
 	}
 
 	public Integer getId() {
@@ -279,50 +277,37 @@ public class FicheAux implements Comparable<FicheAux>{
 		this.idPhase = idPhase;
 	}
 
-
-
-
 	public String getDateString() {
 		return dateString;
 	}
-
-
-
 
 	public void setDateString(String dateString) {
 		this.dateString = dateString;
 	}
 
-
-
-
 	public String getNomAuteur() {
 		return nomAuteur;
 	}
-
-
-
 
 	public void setNomAuteur(String nomAuteur) {
 		this.nomAuteur = nomAuteur;
 	}
 
-
-
-
 	public String getStatutString() {
 		return statutString;
 	}
-
-
-
 
 	public void setStatutString(String statutString) {
 		this.statutString = statutString;
 	}
 
+	public Boolean getPrive() {
+		return prive;
+	}
 
-
+	public void setPrive(Boolean prive) {
+		this.prive = prive;
+	}
 
 	@Override
 	public String toString() {
@@ -335,22 +320,10 @@ public class FicheAux implements Comparable<FicheAux>{
 				+ ", idPhase=" + idPhase + "]";
 	}
 
-
-
-
 	@Override
 	public int compareTo(FicheAux f) {
-		  return (this.numero - f.numero);
-		
+		return (this.numero - f.numero);
+
 	}
-
-
-
-
-
-	
-	
-	
-	
 
 }

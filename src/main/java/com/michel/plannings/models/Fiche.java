@@ -32,15 +32,14 @@ public class Fiche {
 	private String domaine; // électronique, mécanique
 	private String objet; // n° de carte, pièce mécanique, organe affecté
 	private String reponse;
-	private String anomalie;  // description du symptome, phénomène observé
+	private String anomalie; // description du symptome, phénomène observé
 	private Boolean statut; // ouverte, fermée
-	private Integer niveau;  // niveau de gravité
-
+	private Integer niveau; // niveau de gravité
+	private Boolean prive;
 
 	@ManyToOne
 	private Utilisateur auteur;
 
-	
 	@ManyToOne
 	private Phase phase;
 
@@ -51,8 +50,8 @@ public class Fiche {
 
 	public Fiche(Integer id, Integer numero, LocalDateTime date, String service, String degre, String projet,
 			String code, String produit, String circonstance, String observation, String document, String incidence,
-			String solution, String domaine, String objet, String reponse, Utilisateur auteur, String anomalie,
-			Boolean statut, Integer niveau, Phase phase) {
+			String solution, String domaine, String objet, String reponse, String anomalie, Boolean statut,
+			Integer niveau, Boolean prive, Utilisateur auteur, Phase phase) {
 		super();
 		this.id = id;
 		this.numero = numero;
@@ -70,13 +69,14 @@ public class Fiche {
 		this.domaine = domaine;
 		this.objet = objet;
 		this.reponse = reponse;
-		this.auteur = auteur;
 		this.anomalie = anomalie;
 		this.statut = statut;
 		this.niveau = niveau;
+		this.prive = prive;
+		this.auteur = auteur;
 		this.phase = phase;
 	}
-	
+
 	public Fiche(FicheAux f) {
 		super();
 		this.id = f.getId();
@@ -100,7 +100,7 @@ public class Fiche {
 		this.statut = f.getStatut();
 		this.niveau = f.getNiveau();
 		this.phase = null;
-		
+
 	}
 
 	public Integer getId() {
@@ -269,6 +269,14 @@ public class Fiche {
 
 	public void setReponse(String reponse) {
 		this.reponse = reponse;
+	}
+
+	public Boolean getPrive() {
+		return prive;
+	}
+
+	public void setPrive(Boolean prive) {
+		this.prive = prive;
 	}
 
 }
