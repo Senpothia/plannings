@@ -44,6 +44,7 @@ public class AlerteService implements AlerteAbstractService {
 		a.setActif(true);
 		a.setSuspendu(false);
 		a.setUrgence(alerte.getUrgence());
+		a.setPrive(alerte.getPrive());
 		alerteRepo.save(a);
 
 	}
