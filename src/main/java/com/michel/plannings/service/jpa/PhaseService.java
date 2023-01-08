@@ -62,14 +62,16 @@ public class PhaseService implements PhaseAbstractService {
 
 	@Override
 	public List<Phase> obtenirPhaseParRessource(Utilisateur ressource) {
-		List<Phase> phases = phaseRepo.findByRessource(ressource);
+		//List<Phase> phases = phaseRepo.findByRessource(ressource);
+		List<Phase> phases = phaseRepo.findByRessourceAndPrive(ressource, false);
 		return phases;
 	}
 
 	@Override
 	public List<Phase> obtenirPhaseParActif(Boolean actif) {
 
-		List<Phase> phases = phaseRepo.findByActif(actif);
+		//List<Phase> phases = phaseRepo.findByActif(actif);
+		List<Phase> phases = phaseRepo.findByActifAndPrive(actif, false);
 		return phases;
 	}
 
