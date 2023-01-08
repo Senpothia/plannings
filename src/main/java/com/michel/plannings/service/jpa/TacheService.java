@@ -39,6 +39,7 @@ public class TacheService implements TacheAbstractService {
 		t.setSuspendu(false);
 		t.setUrgence(tache.getUrgence());
 		t.setNumero(affecterNumero(u));
+		t.setPrive(tache.getPrive());
 		tacheRepository.save(t);
 		
 	}

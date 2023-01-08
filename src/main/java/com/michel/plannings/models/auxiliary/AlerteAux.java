@@ -24,17 +24,16 @@ public class AlerteAux implements Comparable<AlerteAux> {
 	private String actifString;
 	private Boolean suspendu;
 	private String suspenduString;
+	private Boolean prive;
 
 	public AlerteAux() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	
-
 	public AlerteAux(Integer id, Integer numero, LocalDateTime date, String stringDate, String texte, String nomAuteur,
 			Integer idAuteur, Integer idProjet, String nomProjet, Integer urgence, String urgenceString, Boolean actif,
-			String actifString, Boolean suspendu, String suspenduString) {
+			String actifString, Boolean suspendu, String suspenduString, Boolean prive) {
 		super();
 		this.id = id;
 		this.numero = numero;
@@ -51,9 +50,8 @@ public class AlerteAux implements Comparable<AlerteAux> {
 		this.actifString = actifString;
 		this.suspendu = suspendu;
 		this.suspenduString = suspenduString;
+		this.prive = prive;
 	}
-
-
 
 	public AlerteAux(Alerte alerte) {
 		super();
@@ -72,6 +70,7 @@ public class AlerteAux implements Comparable<AlerteAux> {
 		this.actifString = alerte.getActif() ? "Active" : "Inactive";
 		this.suspendu = alerte.getSuspendu();
 		this.suspenduString = alerte.getSuspendu() ? "Suspendue" : "En cours";
+		this.prive = alerte.getPrive();
 
 	}
 
@@ -186,27 +185,29 @@ public class AlerteAux implements Comparable<AlerteAux> {
 	public void setUrgenceString(String urgenceString) {
 		this.urgenceString = urgenceString;
 	}
-	
-	
 
 	public String getNomProjet() {
 		return nomProjet;
 	}
 
-
-
 	public void setNomProjet(String nomProjet) {
 		this.nomProjet = nomProjet;
 	}
+	
+	
 
+	public Boolean getPrive() {
+		return prive;
+	}
 
+	public void setPrive(Boolean prive) {
+		this.prive = prive;
+	}
 
 	@Override
 	public int compareTo(AlerteAux n) {
 
 		return (this.id - n.id);
 	}
-
-	
 
 }
