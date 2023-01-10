@@ -62,7 +62,7 @@ public class PhaseService implements PhaseAbstractService {
 
 	@Override
 	public List<Phase> obtenirPhaseParRessource(Utilisateur ressource) {
-		//List<Phase> phases = phaseRepo.findByRessource(ressource);
+		// List<Phase> phases = phaseRepo.findByRessource(ressource);
 		List<Phase> phases = phaseRepo.findByRessourceAndPrive(ressource, false);
 		return phases;
 	}
@@ -70,7 +70,7 @@ public class PhaseService implements PhaseAbstractService {
 	@Override
 	public List<Phase> obtenirPhaseParActif(Boolean actif) {
 
-		//List<Phase> phases = phaseRepo.findByActif(actif);
+		// List<Phase> phases = phaseRepo.findByActif(actif);
 		List<Phase> phases = phaseRepo.findByActifAndPrive(actif, false);
 		return phases;
 	}
@@ -112,10 +112,13 @@ public class PhaseService implements PhaseAbstractService {
 			projetService.affecterRessourceProjet(idProjet, idRessource);
 		}
 		p.setAvancement(0);
-		if(projet.getPrive()) {
-			
+		if (projet.getPrive()) {
+
 			p.setPrive(true);
+		} else {
+			p.setPrive(false);
 		}
+		;
 		phaseRepo.save(p);
 	}
 
@@ -261,7 +264,6 @@ public class PhaseService implements PhaseAbstractService {
 
 			if (dates.get(0) != null) { // traitement d'une limite à gauche
 
-		
 				if (debut.isBefore(dates.get(0))) {
 
 					if (phase.getGauche()) { // décalage à gauche autorisé
@@ -270,7 +272,7 @@ public class PhaseService implements PhaseAbstractService {
 						hoursLeft = (int) duration.toHours();
 
 						dependancesGauche = dependanceService.getDependenciesChainLeft(idPhase);
-						
+
 						if (!dependancesGauche.isEmpty()) {
 
 							decalageGauche = true;

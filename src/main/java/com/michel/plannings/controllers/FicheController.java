@@ -57,8 +57,6 @@ public class FicheController {
   	}
 		
 	
-	
-	
 	@GetMapping("/liste/phase/{phase}") // récupération de la liste de toutes les phases par phase
 	List<FicheAux> listeFicheParPhaseId(@RequestHeader("Authorization") String token, @PathVariable(name = "phase") Integer idPhase){
 		

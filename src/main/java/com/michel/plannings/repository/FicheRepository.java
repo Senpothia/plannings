@@ -17,4 +17,8 @@ public interface FicheRepository extends JpaRepository<Fiche, Integer>{
 
 	List<Fiche> findByStatut(Boolean statut);
 
+	List<Fiche> findByStatutAndPrive(Boolean statut, boolean b);
+
+	List<Fiche> findByAuteurAndPrive(Utilisateur auteur, boolean b);
+
 }

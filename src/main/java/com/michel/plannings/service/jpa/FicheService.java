@@ -43,7 +43,7 @@ public class FicheService implements FicheAbstractService {
 	@Override
 	public List<Fiche> obtenirFichesParAuteur(Utilisateur auteur) {
 
-		List<Fiche> fiches = ficheRepository.findByAuteur(auteur);
+		List<Fiche> fiches = ficheRepository.findByAuteurAndPrive(auteur, false);
 		return fiches;
 	}
 
@@ -63,7 +63,7 @@ public class FicheService implements FicheAbstractService {
 	@Override
 	public List<Fiche> obtenirFichesParStatut(Boolean statut) {
 
-		List<Fiche> fiches = ficheRepository.findByStatut(statut);
+		List<Fiche> fiches = ficheRepository.findByStatutAndPrive(statut, false);
 		return fiches;
 	}
 
@@ -91,6 +91,7 @@ public class FicheService implements FicheAbstractService {
 		f.setIncidence(fiche.getIncidence());
 		f.setObjet(fiche.getObjet());
 		f.setObservation(fiche.getObservation());
+		f.setAnomalie(fiche.getObservation());
 		f.setProduit(fiche.getProduit());
 		f.setProjet(fiche.getProjet());
 		f.setReponse(fiche.getReponse());
@@ -109,8 +110,6 @@ public class FicheService implements FicheAbstractService {
 
 	public Fiche convertirFormFiche(FormFiche ficheForm, Integer idPhase, Integer idRessource, Integer idProjet) {
 
-		
-
 		Utilisateur ressource = userService.obtenirUserParId(idRessource);
 		Fiche f = new Fiche();
 		
@@ -121,6 +120,7 @@ public class FicheService implements FicheAbstractService {
 			projet = phase.getProjet();
 			f.setProduit(projet.getNom());
 			f.setProjet(projet.getNom());
+			f.setPrive(projet.getPrive());
 		} 
 		
 		if (idPhase == 0 && idProjet == 0){
@@ -128,6 +128,8 @@ public class FicheService implements FicheAbstractService {
 			projet = null;
 			f.setProduit(ficheForm.getProduit());
 			f.setProjet(ficheForm.getProjet());
+			f.setPrive(false);
+			
 		}
 		
 		if (idPhase == 0 && idProjet != 0){
@@ -136,6 +138,7 @@ public class FicheService implements FicheAbstractService {
 			phase = phaseService.obtenirPhaseVide(0, projet);   // Phase contenant les fiches spontanées du projet
 			f.setProduit(projet.getNom());
 			f.setProjet(projet.getNom());
+			f.setPrive(projet.getPrive());
 		}
 		
 		f.setAuteur(ressource);
@@ -153,8 +156,6 @@ public class FicheService implements FicheAbstractService {
 		f.setIncidence(ficheForm.getIncidence());
 		f.setObjet(ficheForm.getObjet());
 		f.setObservation(ficheForm.getObservation());
-		//f.setProduit(projet.getNom());
-		//f.setProjet(projet.getNom());
 		f.setReponse(ficheForm.getReponse());
 		f.setService(ficheForm.getService());
 		f.setSolution(ficheForm.getSolution());
@@ -177,12 +178,28 @@ public class FicheService implements FicheAbstractService {
 	public List<Fiche> obtenirFichesParAuteurId(Integer idRessource) {
 		Utilisateur ressource = userService.obtenirUserParId(idRessource);
 		List<Fiche> fiches = ressource.getFiches();
+		List<Fiche> fichesPrivees = new ArrayList<>();
+		for(Fiche f: fiches) {
+			
+			if(f.getPrive()) {
+				fichesPrivees.add(f);
+			}
+		}
+		fiches.removeAll(fichesPrivees);
 		return fiches;
 	}
 
 	public List<Fiche> obtenirToutesLesFiches() {
 
 		List<Fiche> fiches = ficheRepository.findAll();
+		List<Fiche> fichesPrivees = new ArrayList<>();
+		for(Fiche f: fiches) {
+			
+			if(f.getPrive()) {
+				fichesPrivees.add(f);
+			}
+		}
+		fiches.removeAll(fichesPrivees);
 		return fiches;
 	}
 
@@ -210,6 +227,15 @@ public class FicheService implements FicheAbstractService {
 	public List<Fiche> obtenirToutesFichesSpontanees() {
 
 		List<Fiche> fiches = ficheRepository.findByPhaseNull();
+		List<Fiche> fichesPrivees = new ArrayList<>();
+		for(Fiche f: fiches) {
+			
+			if(f.getPrive()) {
+				
+				fichesPrivees.add(f);
+			}
+		}
+		fiches.removeAll(fichesPrivees);
 		return fiches;
 	}
 

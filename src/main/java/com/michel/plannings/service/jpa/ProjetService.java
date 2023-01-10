@@ -61,6 +61,7 @@ public class ProjetService implements ProjetAbstractService {
 		p.setStatut(true);
 		p.setDate(Constants.formatStringToDate(projet.getDateString()));
 		p.setNumero(affecterNumeroProjet());
+		p.setPrive(projet.getPrive());
 		projetRepo.save(p);
 		
 		Phase phaseVide = new Phase();
@@ -74,6 +75,7 @@ public class ProjetService implements ProjetAbstractService {
 		phaseVide.setSuspendu(true);
 		phaseVide.setPassable(false);
 		phaseVide.setAvancement(0);
+		phaseVide.setPrive(p.getPrive());
 		phaseService.enregistrerUnePhase(phaseVide);
 		
 	}
