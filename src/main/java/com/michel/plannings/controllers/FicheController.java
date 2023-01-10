@@ -54,7 +54,7 @@ public class FicheController {
 		Fiche fiche = ficheService.obtenirFicheParId(idFiche);
 		FicheAux ficheAux = new FicheAux(fiche);
 		return ficheAux;
-  	}
+   	}
 		
 	
 	@GetMapping("/liste/phase/{phase}") // récupération de la liste de toutes les phases par phase
