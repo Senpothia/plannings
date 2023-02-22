@@ -72,7 +72,7 @@ public class PhaseController {
 		List<Phase> phases = phaseService.obtenirPhaseParRessource(ressource);
 		List<PhaseAux> phasesAux = AuxiliaryUtils.makeListPhasesAux(phases);
 		return phasesAux;
-	}
+ 	}
 
 	@GetMapping("/liste/projet/{projet}") // récupération de la liste de toutes les phases par projet
 	public List<PhaseAux> phasesParProjetId(@RequestHeader("Authorization") String token,

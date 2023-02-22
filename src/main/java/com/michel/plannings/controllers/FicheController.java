@@ -70,7 +70,7 @@ public class FicheController {
 	public List<FicheAux> fichesParStatut(@RequestParam(name = "statut") Boolean statut){
 		
 		return null;
-	}
+	 }
 	
 	@GetMapping("/liste/niveau")  // récupération phase par niveau
 	public List<FicheAux> fichesParNiveau(@RequestParam(name = "niveau") Integer niveau){

@@ -13,7 +13,7 @@ public class Alerte {
 	@Id
 	@GeneratedValue
 	private Integer id;
-	private Integer numero;
+  	private Integer numero;
 	private LocalDateTime date;
 	private String texte;
 	private Integer urgence; // dégré d'urgence 1 à 3

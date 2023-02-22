@@ -6,7 +6,7 @@ import javax.persistence.Id;
 
 @Entity
 public class Dependance {
-
+ 
 	@Id
 	@GeneratedValue
 	private Integer id;

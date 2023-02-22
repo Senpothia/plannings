@@ -32,7 +32,7 @@ import com.michel.plannings.service.jpa.UserService;
 @RequestMapping("/projet")
 public class ProjectController {
  
-	@Autowired
+ 	@Autowired
 	ProjetService projetService;
 
 	@Autowired

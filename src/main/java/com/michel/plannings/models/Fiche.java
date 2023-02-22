@@ -13,7 +13,7 @@ import com.michel.plannings.models.auxiliary.FicheAux;
 
 @Entity
 public class Fiche {
-
+ 
 	@Id
 	@GeneratedValue
 	private Integer id;
