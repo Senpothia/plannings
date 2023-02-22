@@ -18,13 +18,16 @@ import org.springframework.web.bind.annotation.RestController;
 import com.michel.plannings.models.Dependance;
 import com.michel.plannings.models.Phase;
 import com.michel.plannings.models.Projet;
+
 import com.michel.plannings.models.Utilisateur;
 import com.michel.plannings.models.auxiliary.AuxiliaryUtils;
 import com.michel.plannings.models.auxiliary.PhaseAux;
 import com.michel.plannings.models.auxiliary.ProjetAux;
+import com.michel.plannings.models.auxiliary.TacheAux;
 import com.michel.plannings.service.jpa.DependanceService;
 import com.michel.plannings.service.jpa.PhaseService;
 import com.michel.plannings.service.jpa.ProjetService;
+import com.michel.plannings.service.jpa.TacheService;
 import com.michel.plannings.service.jpa.UserService;
  
 @RestController
@@ -42,7 +45,10 @@ public class PhaseController {
 
 	@Autowired
 	DependanceService dependanceService;
-
+	
+	@Autowired
+	TacheService tacheService;
+	
 	@PostMapping("/creer/{projet}/{ressource}")
 	public void creerPhase(@RequestHeader("Authorization") String token, @RequestBody PhaseAux phase,
 			@PathVariable(name = "projet") Integer idProjet, @PathVariable(name = "ressource") Integer idRessource) {
@@ -205,5 +211,12 @@ public class PhaseController {
 		phaseService.majTablePhase();
 		
 	}
-
+	
+	
+	@PostMapping("/convertir/{phase}")
+	void convertirPhase(@RequestHeader("Authorization") String token, @PathVariable(name = "phase") Integer idPhase, @RequestBody TacheAux tacheAux) {
+	
+		tacheService.convertir(tacheAux);
+		
+	}
 }

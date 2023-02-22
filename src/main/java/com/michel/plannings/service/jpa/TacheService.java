@@ -15,24 +15,24 @@ import com.michel.plannings.service.TacheAbstractService;
 
 @Service
 public class TacheService implements TacheAbstractService {
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	TacheRepository tacheRepository;
 
 	public List<TacheAux> obtenirTachesParIdRessource(Integer idUtilisateur) {
-		
-		Utilisateur u  = userService.obtenirUserParId(idUtilisateur);
+
+		Utilisateur u = userService.obtenirUserParId(idUtilisateur);
 		List<Tache> Taches = u.getTaches();
 		List<TacheAux> tAux = AuxiliaryUtils.makeListTacheAux(Taches);
 		return tAux;
 	}
 
 	public void enregistrerTache(TacheAux tache) {
-		
-		Utilisateur u  = userService.obtenirUserParId(tache.getRessource().getId());
+
+		Utilisateur u = userService.obtenirUserParId(tache.getRessource().getId());
 		Tache t = new Tache(tache);
 		t.setRessource(u);
 		t.setActif(true);
@@ -40,12 +40,34 @@ public class TacheService implements TacheAbstractService {
 		t.setUrgence(tache.getUrgence());
 		t.setNumero(affecterNumero(u));
 		t.setPrive(tache.getPrive());
+		t.setDebut(tache.getDebut());
+		t.setFin(tache.getFin());
 		tacheRepository.save(t);
+
+	}
+
+	public void convertir(TacheAux tache) {
+
+		Utilisateur u = userService.obtenirUserParId(tache.getRessource().getId());
 		
+		Tache t = new Tache();
+		t.setDebut(tache.getDebut());
+		t.setFin(tache.getFin());
+		t.setTexte(tache.getTexte());
+		t.setCommentaire(tache.getCommentaire());
+		t.setUrgence(tache.getUrgence());
+		t.setActif(tache.getActif());
+		t.setSuspendu(tache.getSuspendu());
+		t.setRessource(u);
+		t.setNumero(affecterNumero(u));
+		t.setUrgence(2);
+		t.setPrive(tache.getPrive());
+		tacheRepository.save(t);
+
 	}
 
 	public Tache obtenirTacheParId(Integer idTache) {
-		
+
 		Tache tache = tacheRepository.getReferenceById(idTache);
 		return tache;
 	}
@@ -54,18 +76,18 @@ public class TacheService implements TacheAbstractService {
 		Tache tache = obtenirTacheParId(idTache);
 		tache.setActif(!tache.getActif());
 		tacheRepository.save(tache);
-		
+
 	}
 
 	public void supprimerTacheParId(Integer idTache) {
-		
+
 		Tache tache = obtenirTacheParId(idTache);
 		tacheRepository.delete(tache);
-		
+
 	}
 
 	public void modifierTache(TacheAux tache) {
-		
+
 		Integer idTache = tache.getId();
 		Tache t = obtenirTacheParId(idTache);
 		t.setTexte(tache.getTexte());
@@ -76,31 +98,31 @@ public class TacheService implements TacheAbstractService {
 		t.setSuspendu(tache.getSuspendu());
 		tacheRepository.save(t);
 	}
-	
+
 	private Integer affecterNumero(Utilisateur u) {
-		
+
 		Integer numero = 0;
 		List<Tache> taches = u.getTaches();
-		for(Tache t : taches) {
-			
+		for (Tache t : taches) {
+
 			Integer num = t.getNumero();
-			if(num>numero) {
+			if (num > numero) {
 				numero = num;
 			}
 		}
-		
+
 		return numero + 1;
 	}
 
 	public List<TacheAux> obtenirTachesParIdRessourceStatut(Integer idUtilisateur, boolean statut) {
-		
-		Utilisateur u  = userService.obtenirUserParId(idUtilisateur);
+
+		Utilisateur u = userService.obtenirUserParId(idUtilisateur);
 		List<Tache> taches = u.getTaches();
 		List<Tache> tachesStatut = new ArrayList<>();
-		for( Tache t: taches) {
-			
-			if(t.getActif() == statut) {
-		
+		for (Tache t : taches) {
+
+			if (t.getActif() == statut) {
+
 				tachesStatut.add(t);
 			}
 		}

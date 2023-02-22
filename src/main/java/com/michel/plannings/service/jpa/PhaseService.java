@@ -16,6 +16,7 @@ import com.michel.plannings.models.NotePhase;
 import com.michel.plannings.models.Phase;
 import com.michel.plannings.models.Projet;
 import com.michel.plannings.models.Suite;
+import com.michel.plannings.models.Tache;
 import com.michel.plannings.models.Utilisateur;
 import com.michel.plannings.models.auxiliary.PhaseAux;
 import com.michel.plannings.repository.NotePhaseRepository;
@@ -46,6 +47,9 @@ public class PhaseService implements PhaseAbstractService {
 
 	@Autowired
 	SuiteRepository suiteRepo;
+	
+	@Autowired
+	TacheService tacheService;
 
 	@Override
 	public Phase obtenirPhaseParId(Integer id) {
@@ -459,5 +463,7 @@ public class PhaseService implements PhaseAbstractService {
 		}
 
 	}
+
+	
 
 }
